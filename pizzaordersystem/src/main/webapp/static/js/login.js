@@ -2,6 +2,18 @@ $(window).on("load", function() {
 
 });
 
+function required(field,str){
+	var flag=true;
+	if(field===""){
+		$("#"+str+"Error").html(str+" is Required");
+		$("#"+str+"Error").show();
+		flag=false;
+	} else {
+		$("#"+str+"Error").hide();
+	}
+	return flag;
+}
+
 $("#login").on("click", function() {
 	var username = $("#userName").val();
 	var password = $("#password").val();
@@ -9,21 +21,11 @@ $("#login").on("click", function() {
 		userName: username,
 		password: password
 	}
-	if(username===""){
-		$("#usernameError").html("Username is Required");
-		$("#usernameError").show();
-	} else {
-		$("#usernameError").hide();
-	}
 	
-	if(password===""){
-		$("#passwordError").html("Password is Required");
-		$("#passwordError").show();
-	} else {
-		$("#passwordError").hide();
-	}
+	var usernameFlag=required(username,"username");
+	var passwordFlag=required(password,"password");
 	
-	if(username!=="" && password!==""){
+	if(usernameFlag && passwordFlag){
 	$.ajax({
 		url: "http://localhost:8080/pizzaordersystem/login",
 		type: 'POST',
@@ -35,6 +37,7 @@ $("#login").on("click", function() {
 		},
 		error: function(request) {
 			$("#credentialError").html(request.responseJSON.message);
+			$('#credentialError').show();
 		}
 	});
 	}
@@ -79,6 +82,9 @@ $("#addCustomer").on("click", function() {
 		userName: username,
 		password: password
 	}
+	
+	
+	
 	$.ajax({
 		url: "http://localhost:8080/pizzaordersystem/add/customer",
 		type: 'POST',

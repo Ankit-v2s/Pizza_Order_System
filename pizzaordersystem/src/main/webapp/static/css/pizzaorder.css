@@ -121,7 +121,7 @@ form {
 }
 
 .tab-pane {
-	margin-top: 10%;
+	
 }
 
 .my-custom-scrollbar {
@@ -133,4 +133,9 @@ form {
 
 .table-wrapper-scroll-y {
 	display: block;
+}
+
+.login-body{
+	 text-align: center;
+    margin-top: 5%;
 }
