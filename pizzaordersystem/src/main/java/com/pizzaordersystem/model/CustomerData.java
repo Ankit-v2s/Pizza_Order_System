@@ -11,7 +11,7 @@ public class CustomerData {
 	private String country;
 	private String gender;
 	private String email;
-	private String phoneNumber;
+	private long phoneNumber;
 
 	public int getCustomerId() {
 		return customerId;
@@ -85,11 +85,11 @@ public class CustomerData {
 		this.email = email;
 	}
 
-	public String getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

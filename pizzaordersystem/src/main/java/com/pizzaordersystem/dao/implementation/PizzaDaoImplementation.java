@@ -103,7 +103,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 			customerData.setCountry(resultSet.getString(resultSet.getMetaData().getColumnName(7)));
 			customerData.setGender(resultSet.getString(resultSet.getMetaData().getColumnName(8)));
 			customerData.setEmail(resultSet.getString(resultSet.getMetaData().getColumnName(9)));
-			customerData.setPhoneNumber(resultSet.getString(resultSet.getMetaData().getColumnName(10)));
+			customerData.setPhoneNumber(resultSet.getLong(resultSet.getMetaData().getColumnName(10)));
 			customerDataList.add(customerData);
 		}
 		return customerDataList;
@@ -161,7 +161,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 			employee.setCityName(resultSet.getString(resultSet.getMetaData().getColumnName(7)));
 			employee.setStateName(resultSet.getString(resultSet.getMetaData().getColumnName(8)));
 			employee.setCountryName(resultSet.getString(resultSet.getMetaData().getColumnName(9)));
-			employee.setPhoneNumber(resultSet.getString(resultSet.getMetaData().getColumnName(10)));
+			employee.setPhoneNumber(resultSet.getLong(resultSet.getMetaData().getColumnName(10)));
 		}
 		return employee;
 	}
@@ -186,7 +186,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 			customerData.setCity(resultSet.getString(resultSet.getMetaData().getColumnName(7)));
 			customerData.setState(resultSet.getString(resultSet.getMetaData().getColumnName(8)));
 			customerData.setCountry(resultSet.getString(resultSet.getMetaData().getColumnName(9)));
-			customerData.setPhoneNumber(resultSet.getString(resultSet.getMetaData().getColumnName(10)));
+			customerData.setPhoneNumber(resultSet.getLong(resultSet.getMetaData().getColumnName(10)));
 		}
 		return customerData;
 	}
@@ -320,7 +320,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement.setString(6, details.getCountry());
 		preparedStatement.setString(7, details.getGender());
 		preparedStatement.setString(8, details.getEmail());
-		preparedStatement.setString(9, details.getPhoneNumber());
+		preparedStatement.setLong(9, details.getPhoneNumber());
 		preparedStatement.executeUpdate();
 
 		preparedStatement = connection.prepareStatement("insert into login(username,password,customer_id)\n"
@@ -477,7 +477,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement.setString(4, employee.getCityName());
 		preparedStatement.setString(5, employee.getStateName());
 		preparedStatement.setString(6, employee.getCountryName());
-		preparedStatement.setString(7, employee.getPhoneNumber());
+		preparedStatement.setLong(7, employee.getPhoneNumber());
 		preparedStatement.setInt(8, employee.getEmployeeId());
 		preparedStatement.executeUpdate();
 	}
@@ -495,7 +495,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement.setString(4, customerData.getCity());
 		preparedStatement.setString(5, customerData.getState());
 		preparedStatement.setString(6, customerData.getCountry());
-		preparedStatement.setString(7, customerData.getPhoneNumber());
+		preparedStatement.setLong(7, customerData.getPhoneNumber());
 		preparedStatement.setInt(8, customerData.getCustomerId());
 		preparedStatement.executeUpdate();
 	}

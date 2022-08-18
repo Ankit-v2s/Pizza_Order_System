@@ -9,7 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Sign Up</title>
-<link rel="stylesheet" href="<c:url value="/static/css/pizzaorder.css" />" />
+<link rel="stylesheet"
+	href="<c:url value="/static/css/pizzaorder.css" />" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -20,79 +21,102 @@
 <body>
 	<div class="container mt-2">
 		<div class="row m-auto p-2 mt-1">
-			<div class="col-md-6 jumbotron offset-md-3 " style="padding-top: 25px">
+			<div class="col-md-6 jumbotron offset-md-3 sign-up-jubmotron">
 				<h3 class="text-center">Register Here</h3>
+				<div class="signup-wrapper-scroll-y signup-custom-scrollbar">
 				<div class="form-group">
 					<label for="name">Name</label> <input type="text"
 						class="form-control" id="name" name="name" placeholder="Name">
+					<div id="nameError" class="error"></div>
 				</div>
 				<div class="form-group">
 					<label for="inputAddress">Address Line 1</label> <input type="text"
 						class="form-control" id="addressLine1" name="addressLine1"
 						placeholder="Address 1">
+					<div id="address1Error" class="error"></div>
 				</div>
 				<div class="form-group">
 					<label for="inputAddress2">Address Line 2</label> <input
 						type="text" class="form-control" id="addressLine2"
 						name="addressLine2" placeholder="Address 2">
+					<div id="address2Error" class="error"></div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="city">City</label>
-							<select class="form-control" id="city" onchange="getCityDetails()" name="city" >
-									<option selected disabled value="">Select City</option>
-									<c:forEach items="${cityList}" var="city">
-										<option value="${city.cityName}">${city.cityName}</option>
-									</c:forEach>
-								</select>
+						<label for="city">City</label> <select class="form-control"
+							id="city" onchange="getCityDetails()" name="city">
+							<option selected disabled value="">Select City</option>
+							<c:forEach items="${cityList}" var="city">
+								<option value="${city.cityName}">${city.cityName}</option>
+							</c:forEach>
+						</select>
+						<div id="cityError" class="error"></div>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="state">State</label> <input type="text" disabled="disabled"
-							class="form-control" id="state" name="state" placeholder="State">
+						<label for="state">State</label> <input type="text"
+							disabled="disabled" class="form-control" id="state" name="state"
+							placeholder="State">
+						<div id="stateError" class="error"></div>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="country">Country</label> <input type="text" disabled="disabled"
-							class="form-control" id="country" name="country" placeholder="Country">
+						<label for="country">Country</label> <input type="text"
+							disabled="disabled" class="form-control" id="country"
+							name="country" placeholder="Country">
+						<div id="countryError" class="error"></div>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="email">Email</label> <input type="text"
 							class="form-control" id="email" name="email" placeholder="Email">
+						<div id="emailError" class="error"></div>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-							<label class="col-sm-4 control-label">Gender</label>
-							<div class="col-sm-12">
-								<label class="radio-inline"><input type="radio"name="gender" id="gender" value="M" checked> Male</label> 
-								<label class="radio-inline ml-3"><input type="radio" name="gender" id="gender" value="F"> Female</label> 
-							</div>
+						<label class="col-sm-4 control-label">Gender</label>
+						<div class="col-sm-12">
+							<label class="radio-inline"><input type="radio"
+								name="gender" id="gender" value="M" checked> Male</label> <label
+								class="radio-inline ml-3"><input type="radio"
+								name="gender" id="gender" value="F"> Female</label>
 						</div>
+					</div>
 					<div class="form-group col-md-6">
 						<label for="phone">Phone Number</label> <input type="text"
-							class="form-control" id="phone" name="phone" placeholder="Phone Number">
+							class="form-control" id="phone" name="phone"
+							placeholder="Phone Number">
+						<div id="phoneError" class="error"></div>
 					</div>
 				</div>
-				<div class="form-row">
+				<div class="row">
 					<div class="form-group col-md-6">
 						<label for="username">Username</label> <input type="text"
-							class="form-control" id="username" name="username" placeholder="UserName">
+							class="form-control" id="username" name="username"
+							placeholder="UserName">
+						<div id="usernameError" class="error"></div>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="password">Password</label> <input type="password"
-							class="form-control" id="password" name="password" placeholder="Password">
+							class="form-control" id="password" name="password"
+							placeholder="Password">
+						<div id="passwordError" class="error"></div>
 					</div>
 				</div>
-				
-				<button type="button" id="backLogin" class="col-md-5 btn btn-danger">Back</button>
-				<span class="col-md-2"></span>
-				<button type="submit" class="col-md-5 btn btn-primary"
-					id="addCustomer">Sign in</button>
+				<div class="row">
+					<div class="form-group col-md-6">
+						<button type="button" id="backLogin"
+							class="col-md-10 btn btn-danger">Back</button>
+					</div>
+					<div class="form-group col-md-6">
+						<button type="submit" class="col-md-10 btn btn-primary"
+							id="addCustomer">Sign in</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
+</div>
 	<script type="text/javascript"
 		src="<c:url value="/static/js/login.js" />"></script>
 </body>

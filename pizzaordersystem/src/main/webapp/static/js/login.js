@@ -1,15 +1,28 @@
 $(window).on("load", function() {
 
 });
+var flag = true;
 
-function required(field,str){
-	var flag=true;
-	if(field===""){
-		$("#"+str+"Error").html(str+" is Required");
-		$("#"+str+"Error").show();
-		flag=false;
+function required(field, str) {
+	if (field === "" || field == null) {
+		$("#" + str + "Error").html(str + " is Required");
+		$("#" + str + "Error").show();
+		flag = false;
 	} else {
-		$("#"+str+"Error").hide();
+		$("#" + str + "Error").hide();
+		flag = true;
+	}
+	return flag;
+}
+
+function phoneLength(field) {
+	if (field.length < 10) {
+		$("#phoneError").html("Phone Number should be of minimum 10 digits");
+		$("#phoneError").show();
+		flag = false;
+	} else {
+		$("#phoneError").hide();
+		flag = true;
 	}
 	return flag;
 }
@@ -21,25 +34,25 @@ $("#login").on("click", function() {
 		userName: username,
 		password: password
 	}
-	
-	var usernameFlag=required(username,"username");
-	var passwordFlag=required(password,"password");
-	
-	if(usernameFlag && passwordFlag){
-	$.ajax({
-		url: "http://localhost:8080/pizzaordersystem/login",
-		type: 'POST',
-		data: JSON.stringify(loginCredentials),
-		contentType: 'application/json',
-		success: function(response) {
-			window.location.href = "/pizzaordersystem/" + response;
-			$('#credentialError').hide();
-		},
-		error: function(request) {
-			$("#credentialError").html(request.responseJSON.message);
-			$('#credentialError').show();
-		}
-	});
+
+	var usernameFlag = required(username, "username");
+	var passwordFlag = required(password, "password");
+
+	if (usernameFlag && passwordFlag) {
+		$.ajax({
+			url: "http://localhost:8080/pizzaordersystem/login",
+			type: 'POST',
+			data: JSON.stringify(loginCredentials),
+			contentType: 'application/json',
+			success: function(response) {
+				window.location.href = "/pizzaordersystem/" + response;
+				$('#credentialError').hide();
+			},
+			error: function(request) {
+				$("#credentialError").html(request.responseJSON.message);
+				$('#credentialError').show();
+			}
+		});
 	}
 });
 
@@ -82,18 +95,34 @@ $("#addCustomer").on("click", function() {
 		userName: username,
 		password: password
 	}
-	
-	
-	
-	$.ajax({
-		url: "http://localhost:8080/pizzaordersystem/add/customer",
-		type: 'POST',
-		data: JSON.stringify(register),
-		contentType: 'application/json',
-		success: function() {
-			window.location.href = "/pizzaordersystem/";
-		}
-	});
+
+	var nameFLag = required(name, "name");
+	var address1FLag = required(address1, "address1");
+	var address2FLag = required(address2, "address2");
+	var cityFLag = required(city, "city");
+	var stateFLag = required(state, "state");
+	var countryFLag = required(country, "country");
+	var emailFLag = required(email, "email");
+	var phoneNumberFLag = required(phoneNumber, "phone");
+	if (phoneNumberFLag) {
+		var phoneLengthFlag=phoneLength(phoneNumber);
+	}
+	var usernameFLag = required(username, "username");
+	var passwordFLag = required(password, "password");
+
+	if (nameFLag && address1FLag && address2FLag && cityFLag && stateFLag && countryFLag && emailFLag && phoneNumberFLag
+		&& usernameFLag && passwordFLag && phoneLengthFlag) {
+		$.ajax({
+			url: "http://localhost:8080/pizzaordersystem/add/customer",
+			type: 'POST',
+			data: JSON.stringify(register),
+			contentType: 'application/json',
+			success: function() {
+				window.location.href = "/pizzaordersystem/";
+			}
+		});
+	}
+
 });
 
 $("#backLogin").on("click", function() {
@@ -328,7 +357,7 @@ $("#updateCustomer").on("click", function() {
 		type: 'PUT',
 		data: JSON.stringify(customerdetails),
 		contentType: 'application/json',
-		success: function(response) {
+		success: function() {
 			location.reload(true);
 			console.log("success");
 		},
@@ -366,7 +395,7 @@ $("#addItem").on("click", function() {
 		pizzaName: pizzaName,
 		quantity: quantity
 	}
-	
+
 	$("#pizzaOrder").show();
 	$.ajax({
 		url: "http://localhost:8080/pizzaordersystem/add/item",
@@ -389,7 +418,7 @@ $("#pizzaOrder").on("click", function() {
 		success: function(response) {
 			$("#amount").val(response);
 			$("#totalAmount").val(response);
-			
+
 		}
 	});
 });
@@ -413,13 +442,13 @@ function applyCoupons() {
 }
 
 $("#pay").on("click", function() {
-	var mode=$("#mode").val();	
-	var coupon=$("#coupon").val();
-	var amount=$("#totalAmount").val();
-	var payment={
-		mode:mode,
-		couponCode:coupon,
-		amount:amount
+	var mode = $("#mode").val();
+	var coupon = $("#coupon").val();
+	var amount = $("#totalAmount").val();
+	var payment = {
+		mode: mode,
+		couponCode: coupon,
+		amount: amount
 	}
 	$.ajax({
 		url: "http://localhost:8080/pizzaordersystem/pay/order",

@@ -11,7 +11,7 @@ public class Employee {
 	private String cityName;
 	private String stateName;
 	private String countryName;
-	private String phoneNumber;
+	private long phoneNumber;
 
 	public int getEmployeeId() {
 		return employeeId;
@@ -85,11 +85,11 @@ public class Employee {
 		this.countryName = countryName;
 	}
 
-	public String getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

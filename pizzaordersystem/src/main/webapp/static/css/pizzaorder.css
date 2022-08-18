@@ -120,8 +120,21 @@ form {
 	font-size: 20px;
 }
 
-.tab-pane {
-	
+
+.signup-custom-scrollbar {
+	position: relative;
+	height: 560px;
+	overflow: auto;
+}
+
+.signup-wrapper-scroll-y {
+	display: block;
+}
+
+.sign-up-jubmotron {
+	padding-top: 20px; 
+	margin-left: 10%; 
+	margin-bottom: 0% !important;
 }
 
 .my-custom-scrollbar {
