@@ -27,6 +27,32 @@ function phoneLength(field) {
 	return flag;
 }
 
+function emailFormat(field) {
+	var emailRegex = new RegExp('^[a-z]+[a-z0-9.+]+@[A-Za-z]+[.]{1}[A-Za-z]{2,}$');
+	if (!emailRegex.test(field)) {
+		$("#emailError").html("Email should be in proper format");
+		$("#emailError").show();
+		flag = false;
+	} else {
+		$("#phoneError").hide();
+		flag = true;
+	}
+	return flag;
+}
+
+function onlyAlphabetsAndSpaces(field) {
+	var alphabetRegex = new RegExp('^[a-zA-Z ]*$');
+	if (!alphabetRegex.test(field)) {
+		$("#nameError").html("Name should be only contain alphabets");
+		$("#nameError").show();
+		flag = false;
+	} else {
+		$("#nameError").hide();
+		flag = true;
+	}
+	return flag;
+}
+
 $("#login").on("click", function() {
 	var username = $("#userName").val();
 	var password = $("#password").val();
@@ -63,7 +89,6 @@ function getCityDetails() {
 		type: 'GET',
 		contentType: 'application/json',
 		success: function(response) {
-			console.log("success");
 			$("#state").val(response.stateName);
 			$("#country").val(response.countryName);
 		}
@@ -97,21 +122,27 @@ $("#addCustomer").on("click", function() {
 	}
 
 	var nameFLag = required(name, "name");
+	if (nameFLag) {
+		var nameFormatFlag = onlyAlphabetsAndSpaces(name);
+	}
 	var address1FLag = required(address1, "address1");
 	var address2FLag = required(address2, "address2");
 	var cityFLag = required(city, "city");
 	var stateFLag = required(state, "state");
 	var countryFLag = required(country, "country");
 	var emailFLag = required(email, "email");
+	if (emailFLag) {
+		var emailFormatFlag = emailFormat(email);
+	}
 	var phoneNumberFLag = required(phoneNumber, "phone");
 	if (phoneNumberFLag) {
-		var phoneLengthFlag=phoneLength(phoneNumber);
+		var phoneLengthFlag = phoneLength(phoneNumber);
 	}
 	var usernameFLag = required(username, "username");
 	var passwordFLag = required(password, "password");
 
 	if (nameFLag && address1FLag && address2FLag && cityFLag && stateFLag && countryFLag && emailFLag && phoneNumberFLag
-		&& usernameFLag && passwordFLag && phoneLengthFlag) {
+		&& usernameFLag && passwordFLag && phoneLengthFlag && emailFormatFlag && nameFormatFlag) {
 		$.ajax({
 			url: "http://localhost:8080/pizzaordersystem/add/customer",
 			type: 'POST',
@@ -396,19 +427,24 @@ $("#addItem").on("click", function() {
 		quantity: quantity
 	}
 
-	$("#pizzaOrder").show();
-	$.ajax({
-		url: "http://localhost:8080/pizzaordersystem/add/item",
-		type: 'POST',
-		data: JSON.stringify(pizza),
-		contentType: 'application/json',
-		success: function() {
-			$("#pizzaName").val("");
-			$("#quantity").val("");
-			$("#itemAddedSuccess").show();
-			$("#itemAddedSuccess").delay(8000).fadeOut("slow");
-		}
-	});
+	var pizzaNameFlag = required(pizzaName, "pizzaname");
+	var quantityFlag = required(quantity, "quantity");
+
+	if (pizzaNameFlag && quantityFlag) {
+		$("#pizzaOrder").show();
+		$.ajax({
+			url: "http://localhost:8080/pizzaordersystem/add/item",
+			type: 'POST',
+			data: JSON.stringify(pizza),
+			contentType: 'application/json',
+			success: function() {
+				$("#pizzaName").val("");
+				$("#quantity").val("");
+				$("#itemAddedSuccess").show();
+				$("#itemAddedSuccess").delay(8000).fadeOut("slow");
+			}
+		});
+	}
 });
 
 $("#pizzaOrder").on("click", function() {
@@ -450,17 +486,26 @@ $("#pay").on("click", function() {
 		couponCode: coupon,
 		amount: amount
 	}
-	$.ajax({
-		url: "http://localhost:8080/pizzaordersystem/pay/order",
-		type: 'POST',
-		data: JSON.stringify(payment),
-		contentType: 'application/json',
-		success: function() {
-			$("#pizzaName").val("");
-			$("#quantity").val("");
-			$("#coupon").val("");
-			$("#mode").val("");
-		}
-	});
+
+	var modeFlag = required(mode, "paymentmode");
+
+	if (modeFlag) {
+		$.ajax({
+			url: "http://localhost:8080/pizzaordersystem/pay/order",
+			type: 'POST',
+			data: JSON.stringify(payment),
+			contentType: 'application/json',
+			success: function() {
+				$("#pizzaName").val("");
+				$("#quantity").val("");
+				$("#coupon").val("");
+				$("#mode").val("");
+				$('.close').click();	
+				$("#pizzaOrder").hide();
+				$("#paymentSuccess").show();
+				$("#paymentSuccess").delay(8000).fadeOut("slow");
+			}
+		});
+	}
 });
 
