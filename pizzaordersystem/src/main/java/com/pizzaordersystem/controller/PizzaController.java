@@ -3,7 +3,11 @@ package com.pizzaordersystem.controller;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,9 +71,9 @@ public class PizzaController {
 	}
 
 	@PostMapping("/login")
-	public String checkLogin(@RequestBody LoginCredentials loginCredentials, ModelAndView modelAndView)
-			throws ClassNotFoundException, SQLException, CredentialCheckerException {
-		return pizzaServiceImplementation.credentialChecker(loginCredentials);
+	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials,BindingResult result)
+			throws ClassNotFoundException, SQLException, CredentialCheckerException, MethodArgumentNotValidException {
+			return pizzaServiceImplementation.credentialChecker(loginCredentials, result);
 	}
 
 	@GetMapping("/city/{city}")

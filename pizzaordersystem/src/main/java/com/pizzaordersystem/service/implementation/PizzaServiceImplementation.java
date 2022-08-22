@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.pizzaordersystem.dao.PizzaDao;
 import com.pizzaordersystem.exception.CredentialCheckerException;
@@ -35,27 +39,31 @@ public class PizzaServiceImplementation implements PizzaService {
 	LoginCredentials loginCredentials;
 	PizzaOrder pizzaOrder;
 	Connection connection;
-	
+
 	public void createConnection() throws ClassNotFoundException {
 		pizzaDaoImplementation.getConnection();
 	}
 
 	@Override
-	public String credentialChecker(LoginCredentials loginCredentials) throws SQLException, ClassNotFoundException, CredentialCheckerException {
+	public String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result)
+			throws SQLException, ClassNotFoundException, CredentialCheckerException, MethodArgumentNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
-		this.connection=pizzaDaoImplementation.getConnection();
-		for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
-			if (credentials.getUserName().equals(loginCredentials.getUserName())
-					&& credentials.getPassword().equals(loginCredentials.getPassword())) {
-				this.loginCredentials = credentials;
-				if (credentials.getEmployeeId() != 0) {
-					return "employeehome";
-				} else if (credentials.getCustomerId() != 0) {
-					return "customerhome";
+		this.connection = pizzaDaoImplementation.getConnection();
+		if (!result.hasErrors()) {
+			for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
+				if (credentials.getUserName().equals(loginCredentials.getUserName())
+						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
+					this.loginCredentials = credentials;
+					if (credentials.getEmployeeId() != 0) {
+						return "employeehome";
+					} else if (credentials.getCustomerId() != 0) {
+						return "customerhome";
+					}
 				}
 			}
+			throw new CredentialCheckerException("Invalid Credentials");
 		}
-		throw new CredentialCheckerException("Invalid Credentials");
+		throw new MethodArgumentNotValidException(null, result);
 	}
 
 	@Override
@@ -136,13 +144,13 @@ public class PizzaServiceImplementation implements PizzaService {
 
 	@Override
 	public void addEditPizza(PizzaMenu pizzaMenu) throws ClassNotFoundException, SQLException {
-		if(pizzaMenu.getPizzaId()==0) {
+		if (pizzaMenu.getPizzaId() == 0) {
 			pizzaDaoImplementation.addPizza(pizzaMenu);
 		} else {
 			pizzaDaoImplementation.updatePizza(pizzaMenu);
 		}
 	}
-	
+
 	@Override
 	public void addCustomer(RegisterDetails details) throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.addCustomer(details);
@@ -152,7 +160,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	public void deletePizza(int pizzaId) throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.deletePizza(pizzaId);
 	}
-	
+
 	@Override
 	public Coupon fetchCoupon(int couponId) throws ClassNotFoundException, SQLException {
 		return pizzaDaoImplementation.getcoupon(couponId);
@@ -160,7 +168,7 @@ public class PizzaServiceImplementation implements PizzaService {
 
 	@Override
 	public void addEditCoupon(Coupon coupon) throws ClassNotFoundException, SQLException {
-		if(coupon.getCouponId()==0) {
+		if (coupon.getCouponId() == 0) {
 			pizzaDaoImplementation.addCoupon(coupon);
 		} else {
 			pizzaDaoImplementation.updateCoupon(coupon);
@@ -177,73 +185,73 @@ public class PizzaServiceImplementation implements PizzaService {
 		List<Order> orderList = new ArrayList<>();
 		return pizzaDaoImplementation.getOrdersByStatusType(orderList, statusType);
 	}
-	
+
 	@Override
 	public List<Order> fetchOrdersByDate(Date date) throws SQLException, ClassNotFoundException {
 		List<Order> orderList = new ArrayList<>();
 		return pizzaDaoImplementation.getOrdersByDate(orderList, date);
 	}
-	
+
 	@Override
 	public List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException, ClassNotFoundException {
 		List<Payment> paymentList = new ArrayList<>();
 		return pizzaDaoImplementation.getPaymentByMode(paymentList, paymentMode);
 	}
-	
+
 	@Override
 	public List<City> fetchCity() throws SQLException, ClassNotFoundException {
 		List<City> cityList = new ArrayList<>();
 		return pizzaDaoImplementation.getcity(cityList);
 	}
-	
+
 	@Override
 	public void updateEmployee(Employee employee) throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.updateEmployee(employee);
 	}
-	
+
 	@Override
 	public void updateCustomer(CustomerData customerData) throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.updateCustomer(customerData);
 	}
-	
+
 	@Override
 	public City fetchCityDetails(String city) throws ClassNotFoundException, SQLException {
-		for(City cityDetails: fetchCity()) {
-			if(cityDetails.getCityName().equals(city)) {
+		for (City cityDetails : fetchCity()) {
+			if (cityDetails.getCityName().equals(city)) {
 				return cityDetails;
 			}
 		}
 		throw new NullPointerException();
 	}
-	
+
 	@Override
 	public void addFeedback(Feedback feedback) throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.addFeedback(feedback, loginCredentials);
 	}
-	
+
 	@Override
 	public int orderPizza() throws ClassNotFoundException, SQLException {
 		return pizzaDaoImplementation.pizzaOrder();
 	}
-	
+
 	@Override
 	public void addOrder() throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.addOrder(loginCredentials);
 	}
-	
+
 	@Override
 	public void addItem(PizzaOrder pizza) throws ClassNotFoundException, SQLException {
-		this.pizzaOrder=pizza;
+		this.pizzaOrder = pizza;
 		pizzaDaoImplementation.addItem(pizza);
 	}
-	
+
 	@Override
 	public int discountPrice(PizzaOrder pizzaOrder) throws ClassNotFoundException, SQLException {
-		pizzaOrder.setAmount(pizzaOrder.getAmount()-pizzaDaoImplementation.discountPrice(pizzaOrder));
+		pizzaOrder.setAmount(pizzaOrder.getAmount() - pizzaDaoImplementation.discountPrice(pizzaOrder));
 		this.pizzaOrder.setAmount(pizzaOrder.getAmount());
 		return pizzaOrder.getAmount();
 	}
-	
+
 	@Override
 	public void addPayment(Payment payment) throws ClassNotFoundException, SQLException {
 		pizzaDaoImplementation.addPayment(loginCredentials, payment);

@@ -4,6 +4,11 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import com.pizzaordersystem.exception.CredentialCheckerException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.Coupon;
@@ -21,10 +26,11 @@ import com.pizzaordersystem.model.PizzaOrder;
 import com.pizzaordersystem.model.RegisterDetails;
 
 public interface PizzaService {
-	
+
 	void createConnection() throws ClassNotFoundException;
 
-	String credentialChecker(LoginCredentials loginCredentials) throws SQLException, ClassNotFoundException,CredentialCheckerException;
+	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result)
+			throws SQLException, ClassNotFoundException, CredentialCheckerException, MethodArgumentNotValidException;
 
 	List<Order> fetchOrders() throws SQLException, ClassNotFoundException;
 

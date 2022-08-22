@@ -65,6 +65,8 @@ $("#login").on("click", function() {
 	var passwordFlag = required(password, "password");
 
 	if (usernameFlag && passwordFlag) {
+		$('#usernameError').html("");
+		$('#passwordError').html("");
 		$.ajax({
 			url: "http://localhost:8080/pizzaordersystem/login",
 			type: 'POST',
@@ -74,12 +76,16 @@ $("#login").on("click", function() {
 				window.location.href = "/pizzaordersystem/" + response;
 				$('#credentialError').hide();
 			},
-			error: function(request) {
-				$("#credentialError").html(request.responseJSON.message);
+			error: function(response) {
+				$("#usernameError").html(response.responseJSON.userName);
+				$('#usernameError').show();
+				$("#passwordError").html(response.responseJSON.password);
+				$('#passwordError').show();
+				$("#credentialError").html(response.responseJSON.message);
 				$('#credentialError').show();
 			}
 		});
-	}
+	} s
 });
 
 function getCityDetails() {
@@ -500,7 +506,7 @@ $("#pay").on("click", function() {
 				$("#quantity").val("");
 				$("#coupon").val("");
 				$("#mode").val("");
-				$('.close').click();	
+				$('.close').click();
 				$("#pizzaOrder").hide();
 				$("#paymentSuccess").show();
 				$("#paymentSuccess").delay(8000).fadeOut("slow");
