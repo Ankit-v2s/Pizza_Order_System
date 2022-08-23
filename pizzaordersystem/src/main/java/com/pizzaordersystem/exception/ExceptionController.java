@@ -11,7 +11,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 import com.pizzaordersystem.model.ExceptionDetails;
 
@@ -40,8 +39,7 @@ public class ExceptionController {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<?> getMethodArgumentNotValidException(MethodArgumentNotValidException ex,
-			WebRequest response) {
+	public ResponseEntity<?> getMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 		Map<String, String> map = new HashMap<>();
 		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
 			String filedName = ((FieldError) error).getField();

@@ -60,7 +60,8 @@ public interface PizzaService {
 
 	void addEditPizza(PizzaMenu pizzaMenu) throws ClassNotFoundException, SQLException;
 
-	void addCustomer(RegisterDetails details) throws ClassNotFoundException, SQLException;
+	void addCustomer(RegisterDetails details, BindingResult result)
+			throws ClassNotFoundException, SQLException, MethodArgumentNotValidException;
 
 	void deletePizza(int pizzaId) throws ClassNotFoundException, SQLException;
 

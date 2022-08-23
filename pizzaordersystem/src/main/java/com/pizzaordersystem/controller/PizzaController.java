@@ -186,9 +186,9 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/customer")
-	public void addCustomer(@RequestBody RegisterDetails details)
-			throws ClassNotFoundException, SQLException {
-		pizzaServiceImplementation.addCustomer(details);
+	public void addCustomer(@Valid @RequestBody RegisterDetails details,BindingResult result)
+			throws ClassNotFoundException, SQLException, MethodArgumentNotValidException {
+		pizzaServiceImplementation.addCustomer(details,result);
 	}
 
 	@DeleteMapping("/delete/pizza/{pizzaId}")

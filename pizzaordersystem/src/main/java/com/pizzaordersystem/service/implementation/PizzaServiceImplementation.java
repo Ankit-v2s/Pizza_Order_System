@@ -45,7 +45,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result)
+	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
 			throws SQLException, ClassNotFoundException, CredentialCheckerException, MethodArgumentNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
 		this.connection = pizzaDaoImplementation.getConnection();
@@ -152,8 +152,12 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void addCustomer(RegisterDetails details) throws ClassNotFoundException, SQLException {
-		pizzaDaoImplementation.addCustomer(details);
+	public void addCustomer(@Valid RegisterDetails details,BindingResult result) throws ClassNotFoundException, SQLException, MethodArgumentNotValidException {
+		if(!result.hasErrors()) {
+			pizzaDaoImplementation.addCustomer(details);
+		}else {
+			throw new MethodArgumentNotValidException(null, result);
+		}
 	}
 
 	@Override

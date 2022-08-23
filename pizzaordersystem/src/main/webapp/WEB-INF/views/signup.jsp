@@ -83,7 +83,7 @@
 						</div>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="phone"><spring:message code="signup.label.phone.number" /></label> <input type="text"
+						<label for="phone"><spring:message code="signup.label.phone.number" /></label> <input type="number"
 							class="form-control" id="phone" name="phone"
 							placeholder="<spring:message code="signup.placeholder.phone.number" />">
 						<div id="phoneError" class="error"></div>
@@ -106,11 +106,11 @@
 				<div class="row">
 					<div class="form-group col-md-6">
 						<button type="button" id="backLogin"
-							class="col-md-10 btn btn-danger"><spring:message code="signup.label.label.back" /></button>
+							class="col-md-10 btn btn-danger"><spring:message code="signup.button.label.back" /></button>
 					</div>
 					<div class="form-group col-md-6">
 						<button type="submit" class="col-md-10 btn btn-primary"
-							id="addCustomer"><spring:message code="signup.label.label.signin" /></button>
+							id="addCustomer"><spring:message code="signup.button.label.signin" /></button>
 					</div>
 				</div>
 			</div>
