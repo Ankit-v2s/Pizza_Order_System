@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
+<%-- <input type="text" value="${customerid}"> --%>
 	<ul class="nav nav-tabs">
 				<li><a class="main-header-nav" href="/pizzaordersystem/customerhome"><spring:message code="employee.header.main" /></a></li>
 				<li><a href="/pizzaordersystem/editcustomer"><spring:message code="customer.home.nav.edit" /></a></li>

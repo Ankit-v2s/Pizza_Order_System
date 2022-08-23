@@ -83,7 +83,7 @@
 						</div>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="phone"><spring:message code="signup.label.phone.number" /></label> <input type="number"
+						<label for="phone"><spring:message code="signup.label.phone.number" /></label> <input type="text"
 							class="form-control" id="phone" name="phone"
 							placeholder="<spring:message code="signup.placeholder.phone.number" />">
 						<div id="phoneError" class="error"></div>

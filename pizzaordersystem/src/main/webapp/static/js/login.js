@@ -127,7 +127,7 @@ $("#addCustomer").on("click", function() {
 		password: password
 	}
 
-	/*var nameFLag = required(name, "name");
+	var nameFLag = required(name, "name");
 	if (nameFLag) {
 		var nameFormatFlag = onlyAlphabetsAndSpaces(name);
 	}
@@ -148,7 +148,17 @@ $("#addCustomer").on("click", function() {
 	var passwordFLag = required(password, "password");
 
 	if (nameFLag && address1FLag && address2FLag && cityFLag && stateFLag && countryFLag && emailFLag && phoneNumberFLag
-		&& usernameFLag && passwordFLag && phoneLengthFlag && emailFormatFlag && nameFormatFlag) {*/
+		&& usernameFLag && passwordFLag && phoneLengthFlag && emailFormatFlag && nameFormatFlag) {
+		$("#nameError").html("");
+		$("#address1Error").html("");
+		$("#address2Error").html("");
+		$("#cityError").html("");
+		$("#stateError").html("");
+		$("#countryError").html("");
+		$("#emailError").html("");
+		$("#phoneError").html("");
+		$("#usernameError").html("");
+		$("#passwordError").html("");
 		$.ajax({
 			url: "http://192.168.20.184:8080/pizzaordersystem/add/customer",
 			type: 'POST',
@@ -180,7 +190,7 @@ $("#addCustomer").on("click", function() {
 				$('#passwordError').show();
 			}
 		});
-	/*}*/
+	}
 
 });
 

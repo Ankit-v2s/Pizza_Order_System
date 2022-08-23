@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,29 +66,30 @@ public class PizzaController {
 
 	@RequestMapping("/")
 	public ModelAndView loginPage(ModelAndView modelAndView) throws ClassNotFoundException {
-		pizzaServiceImplementation.createConnection();
+		pizzaServiceImplementation.logout();
 		modelAndView.setViewName(LOGIN);
 		return modelAndView;
 	}
 
 	@PostMapping("/login")
-	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials,BindingResult result)
+	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result, Model model)
 			throws ClassNotFoundException, SQLException, CredentialCheckerException, MethodArgumentNotValidException {
-			return pizzaServiceImplementation.credentialChecker(loginCredentials, result);
+		pizzaServiceImplementation.createConnection();
+		return pizzaServiceImplementation.credentialChecker(loginCredentials, result, model);
 	}
 
 	@GetMapping("/city/{city}")
 	public City loadCityDetails(@PathVariable String city) throws ClassNotFoundException, SQLException {
 		return pizzaServiceImplementation.fetchCityDetails(city);
 	}
-	
+
 	@GetMapping("/employeehome")
 	public ModelAndView employeeDashboard(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
 		modelAndView.addObject(ORDERLIST, pizzaServiceImplementation.fetchOrders());
 		modelAndView.setViewName(EMPLOYEEHOME);
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/customerhome")
 	public ModelAndView customerDashboard(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
 		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
@@ -96,7 +98,7 @@ public class PizzaController {
 		modelAndView.setViewName("customerhome");
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/editcustomer")
 	public ModelAndView customer(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
 		modelAndView.addObject("customer", pizzaServiceImplementation.fetchCustomerDetails());
@@ -104,7 +106,7 @@ public class PizzaController {
 		modelAndView.setViewName("customerdetails");
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/feedback")
 	public ModelAndView addFeedback(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
 		modelAndView.addObject(FEEDBACKLIST, pizzaServiceImplementation.fetchFeedbackStatus());
@@ -166,6 +168,7 @@ public class PizzaController {
 
 	@GetMapping("/signup")
 	public ModelAndView signUp(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
+		pizzaServiceImplementation.createConnection();
 		modelAndView.addObject(CITY_LIST, pizzaServiceImplementation.fetchCity());
 		modelAndView.setViewName("signup");
 		return modelAndView;
@@ -186,9 +189,9 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/customer")
-	public void addCustomer(@Valid @RequestBody RegisterDetails details,BindingResult result)
+	public void addCustomer(@Valid @RequestBody RegisterDetails details, BindingResult result)
 			throws ClassNotFoundException, SQLException, MethodArgumentNotValidException {
-		pizzaServiceImplementation.addCustomer(details,result);
+		pizzaServiceImplementation.addCustomer(details, result);
 	}
 
 	@DeleteMapping("/delete/pizza/{pizzaId}")
@@ -202,8 +205,7 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/coupon")
-	public void addCoupon(@RequestBody Coupon coupon)
-			throws ClassNotFoundException, SQLException {
+	public void addCoupon(@RequestBody Coupon coupon) throws ClassNotFoundException, SQLException {
 		pizzaServiceImplementation.addEditCoupon(coupon);
 	}
 
@@ -240,37 +242,35 @@ public class PizzaController {
 	}
 
 	@PutMapping("/employee/update")
-	public void updateEmployee(@RequestBody Employee employee)
-			throws ClassNotFoundException, SQLException {
+	public void updateEmployee(@RequestBody Employee employee) throws ClassNotFoundException, SQLException {
 		pizzaServiceImplementation.updateEmployee(employee);
 	}
-	
+
 	@PutMapping("/customer/update")
 	public void updateCustomer(@RequestBody CustomerData customerData) throws ClassNotFoundException, SQLException {
 		pizzaServiceImplementation.updateCustomer(customerData);
 	}
-	
+
 	@PostMapping("/add/feedback")
-	public void addFeedback(@RequestBody Feedback feedback)
-			throws ClassNotFoundException, SQLException {
+	public void addFeedback(@RequestBody Feedback feedback) throws ClassNotFoundException, SQLException {
 		pizzaServiceImplementation.addFeedback(feedback);
 	}
-	
+
 	@PostMapping("/add/item")
 	public void orderPizza(@RequestBody PizzaOrder pizza) throws ClassNotFoundException, SQLException {
 		pizzaServiceImplementation.addItem(pizza);
 	}
-	
+
 	@GetMapping("/order/pizza")
 	public int orderDetails() throws ClassNotFoundException, SQLException {
 		return pizzaServiceImplementation.orderPizza();
 	}
-	
+
 	@PostMapping("/order/pizza/discount")
 	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws ClassNotFoundException, SQLException {
 		return pizzaServiceImplementation.discountPrice(pizzaOrder);
 	}
-	
+
 	@PostMapping("/pay/order")
 	public void addPayment(@RequestBody Payment payment) throws ClassNotFoundException, SQLException {
 		pizzaServiceImplementation.addOrder();

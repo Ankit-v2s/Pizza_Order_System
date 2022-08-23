@@ -14,6 +14,6 @@ public class CustomerData {
 	private String country;
 	private String gender;
 	private String email;
-	private long phoneNumber;
+	private String phoneNumber;
 
 }

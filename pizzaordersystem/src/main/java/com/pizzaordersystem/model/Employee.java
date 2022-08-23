@@ -14,6 +14,6 @@ public class Employee {
 	private String cityName;
 	private String stateName;
 	private String countryName;
-	private long phoneNumber;
+	private String phoneNumber;
 
 }

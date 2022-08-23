@@ -1,15 +1,17 @@
 package com.pizzaordersystem.model;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
 @Data
 public class RegisterDetails {
 
+	@NotBlank
+	@Pattern(regexp = "^[a-z]+[a-z0-9.+]+@[A-Za-z]+[.]{1}[A-Za-z]{2,}$",message = "Email should be in proper format")
+	private String email;
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z ]*$",message = "Only Alphabets allowed")
 	private String name;
@@ -23,13 +25,11 @@ public class RegisterDetails {
 	private String state;
 	@NotBlank
 	private String country;
-	@NotBlank
-	@Pattern(regexp = "^[a-z]+[a-z0-9.+]+@[A-Za-z]+[.]{1}[A-Za-z]{2,}$",message = "Email should be in proper format")
-	private String email;
 	private String gender;
-	@NotNull
-	@Min(value = 10,message = "Phone number should be of minimum 10 digits")
-	private long phoneNumber;
+	@NotBlank
+	@Pattern(regexp = "^(0|[1-9][0-9]*)$",message = "Only numbers allowed")
+	@Size(min = 10,message = "Phone number should be of minimum 10 digits")
+	private String phoneNumber;
 	@NotBlank
 	private String userName;
 	@NotBlank

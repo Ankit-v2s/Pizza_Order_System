@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -29,7 +30,7 @@ public interface PizzaService {
 
 	void createConnection() throws ClassNotFoundException;
 
-	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result)
+	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result,Model model)
 			throws SQLException, ClassNotFoundException, CredentialCheckerException, MethodArgumentNotValidException;
 
 	List<Order> fetchOrders() throws SQLException, ClassNotFoundException;

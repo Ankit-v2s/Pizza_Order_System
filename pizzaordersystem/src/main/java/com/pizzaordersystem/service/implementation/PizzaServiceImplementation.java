@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -45,7 +46,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
+	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result,Model model)
 			throws SQLException, ClassNotFoundException, CredentialCheckerException, MethodArgumentNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
 		this.connection = pizzaDaoImplementation.getConnection();
@@ -55,8 +56,10 @@ public class PizzaServiceImplementation implements PizzaService {
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
 					this.loginCredentials = credentials;
 					if (credentials.getEmployeeId() != 0) {
+//						model.addAttribute("employeeid", credentials.getEmployeeId());
 						return "employeehome";
 					} else if (credentials.getCustomerId() != 0) {
+//						model.addAttribute("customerid",credentials.getCustomerId());
 						return "customerhome";
 					}
 				}
