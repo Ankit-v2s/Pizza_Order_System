@@ -8,9 +8,9 @@ import javax.validation.Valid;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.pizzaordersystem.exception.CredentialCheckerException;
+import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -30,73 +30,72 @@ public interface PizzaService {
 
 	void createConnection() throws ClassNotFoundException;
 
-	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result,Model model)
-			throws SQLException, ClassNotFoundException, CredentialCheckerException, MethodArgumentNotValidException;
+	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result, Model model)
+			throws SQLException, CredentialCheckerException, InvalidFieldException;
 
-	List<Order> fetchOrders() throws SQLException, ClassNotFoundException;
+	List<Order> fetchOrders() throws SQLException;
 
-	List<Feedback> fetchFeedback() throws SQLException, ClassNotFoundException;
+	List<Feedback> fetchFeedback() throws SQLException;
 
-	List<CustomerData> fetchCustomer() throws SQLException, ClassNotFoundException;
+	List<CustomerData> fetchCustomer() throws SQLException;
 
-	List<PizzaMenu> fetchPizzaMenu() throws SQLException, ClassNotFoundException;
+	List<PizzaMenu> fetchPizzaMenu() throws SQLException;
 
 	Employee fetchEmployee() throws SQLException;
 
-	List<Coupon> fetchCoupons() throws SQLException, ClassNotFoundException;
+	List<Coupon> fetchCoupons() throws SQLException;
 
-	List<Order> fetchAllOrders() throws SQLException, ClassNotFoundException;
+	List<Order> fetchAllOrders() throws SQLException;
 
-	List<Payment> fetchPayments() throws SQLException, ClassNotFoundException;
+	List<Payment> fetchPayments() throws SQLException;
 
 	CustomerData fetchCustomerDetails() throws SQLException;
 
-	List<FeedbackStatus> fetchFeedbackStatus() throws SQLException, ClassNotFoundException;
+	List<FeedbackStatus> fetchFeedbackStatus() throws SQLException;
 
-	List<OrderStatus> fetchOrderStatus() throws SQLException, ClassNotFoundException;
+	List<OrderStatus> fetchOrderStatus() throws SQLException;
 
-	List<PaymentModes> fetchPaymentModes() throws SQLException, ClassNotFoundException;
+	List<PaymentModes> fetchPaymentModes() throws SQLException;
 
-	PizzaMenu fetchPizza(int pizzaId) throws ClassNotFoundException, SQLException;
+	PizzaMenu fetchPizza(int pizzaId) throws SQLException;
 
-	void addEditPizza(PizzaMenu pizzaMenu) throws ClassNotFoundException, SQLException;
+	void addEditPizza(PizzaMenu pizzaMenu) throws SQLException;
 
-	void addCustomer(RegisterDetails details, BindingResult result)
-			throws ClassNotFoundException, SQLException, MethodArgumentNotValidException;
+	void addCustomer(RegisterDetails details, BindingResult result) throws SQLException, InvalidFieldException;
 
-	void deletePizza(int pizzaId) throws ClassNotFoundException, SQLException;
+	void deletePizza(int pizzaId) throws SQLException;
 
-	Coupon fetchCoupon(int couponId) throws ClassNotFoundException, SQLException;
+	Coupon fetchCoupon(int couponId) throws SQLException;
 
-	void addEditCoupon(Coupon coupon) throws ClassNotFoundException, SQLException;
+	void addEditCoupon(Coupon coupon) throws SQLException;
 
-	void deleteCoupon(int couponId) throws ClassNotFoundException, SQLException;
+	void deleteCoupon(int couponId) throws SQLException;
 
-	List<Order> fetchOrdersByStatusType(String statusType) throws SQLException, ClassNotFoundException;
+	List<Order> fetchOrdersByStatusType(String statusType) throws SQLException;
 
-	List<Order> fetchOrdersByDate(Date date) throws SQLException, ClassNotFoundException;
+	List<Order> fetchOrdersByDate(Date date) throws SQLException;
 
-	List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException, ClassNotFoundException;
+	List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException;
 
-	List<City> fetchCity() throws SQLException, ClassNotFoundException;
+	List<City> fetchCity() throws SQLException;
 
-	void updateEmployee(Employee employee) throws ClassNotFoundException, SQLException;
+	void updateEmployee(Employee employee, BindingResult result) throws SQLException, InvalidFieldException;
 
-	void updateCustomer(CustomerData customerData) throws ClassNotFoundException, SQLException;
+	void updateCustomer(CustomerData customerData, BindingResult result) throws SQLException, InvalidFieldException;
 
-	City fetchCityDetails(String city) throws ClassNotFoundException, SQLException;
+	City fetchCityDetails(String city) throws SQLException;
 
-	void addFeedback(Feedback feedback) throws ClassNotFoundException, SQLException;
+	void addFeedback(Feedback feedback) throws SQLException;
 
-	int orderPizza() throws ClassNotFoundException, SQLException;
+	int orderPizza() throws SQLException;
 
-	void addOrder() throws ClassNotFoundException, SQLException;
+	void addOrder(BindingResult result) throws SQLException, InvalidFieldException;
 
-	void addItem(PizzaOrder pizza) throws ClassNotFoundException, SQLException;
+	void addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException;
 
-	int discountPrice(PizzaOrder pizzaOrder) throws ClassNotFoundException, SQLException;
+	int discountPrice(PizzaOrder pizzaOrder) throws SQLException;
 
-	void addPayment(Payment payment) throws ClassNotFoundException, SQLException;
+	void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException;
 
 	void logout();
 

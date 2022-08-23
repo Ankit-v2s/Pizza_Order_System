@@ -94,6 +94,7 @@
 								<div class="col-sm-8">
 									<input type="email" class="form-control" id="email"
 										value="${employee.email}" name="email">
+										<div id="emailError" class="error"></div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -101,6 +102,7 @@
 									Line 1</label>
 								<div class="col-sm-8">
 									<textarea class="form-control" id="address1" name="address1">${employee.addressLine1}</textarea>
+									<div id="address1Error" class="error"></div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -108,6 +110,7 @@
 									Line 2</label>
 								<div class="col-sm-8">
 									<textarea class="form-control" id="address2" name="address2">${employee.addressLine2}</textarea>
+									<div id="address2Error" class="error"></div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -121,6 +124,7 @@
 											<option value="${city.cityName}">${city.cityName}</option>
 										</c:forEach>
 									</select>
+									<div id="cityError" class="error"></div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -128,6 +132,7 @@
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="state" disabled="disabled"
 										value="${employee.stateName}" name="state">
+										<div id="stateError" class="error"></div>
 								</div>
 							</div>
 
@@ -136,6 +141,7 @@
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="country" disabled="disabled"
 										value="${employee.countryName}" name="country">
+										<div id="countryError" class="error"></div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -144,6 +150,7 @@
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="phoneNumber"
 										value="${employee.phoneNumber}" name="phoneNumber">
+										<div id="phoneError" class="error"></div>
 								</div>
 							</div>
 						</div>
@@ -151,7 +158,7 @@
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
 							<button type="button" class="btn btn-primary"
-								data-dismiss="modal" id="updateEmployee">Submit</button>
+								 id="updateEmployee">Submit</button>
 						</div>
 					</div>
 				</div>

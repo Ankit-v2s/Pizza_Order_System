@@ -27,6 +27,19 @@ function phoneLength(field) {
 	return flag;
 }
 
+function phoneFormat(field) {
+	var phoneRegex = new RegExp('^(0|[1-9][0-9]*)$');
+	if (!phoneRegex.test(field)) {
+		$("#phoneError").html("Phone Number should only have numbers");
+		$("#phoneError").show();
+		flag = false;
+	} else {
+		$("#phoneError").hide();
+		flag = true;
+	}
+	return flag;
+}
+
 function emailFormat(field) {
 	var emailRegex = new RegExp('^[a-z]+[a-z0-9.+]+@[A-Za-z]+[.]{1}[A-Za-z]{2,}$');
 	if (!emailRegex.test(field)) {
@@ -142,13 +155,16 @@ $("#addCustomer").on("click", function() {
 	}
 	var phoneNumberFLag = required(phoneNumber, "phone");
 	if (phoneNumberFLag) {
-		var phoneLengthFlag = phoneLength(phoneNumber);
+		var phoneFormatFlag = phoneFormat(phoneNumber);
+		if (phoneFormatFlag) {
+			var phoneLengthFlag = phoneLength(phoneNumber);
+		}
 	}
 	var usernameFLag = required(username, "username");
 	var passwordFLag = required(password, "password");
 
 	if (nameFLag && address1FLag && address2FLag && cityFLag && stateFLag && countryFLag && emailFLag && phoneNumberFLag
-		&& usernameFLag && passwordFLag && phoneLengthFlag && emailFormatFlag && nameFormatFlag) {
+		&& usernameFLag && passwordFLag && phoneLengthFlag && emailFormatFlag && nameFormatFlag && phoneFormatFlag) {
 		$("#nameError").html("");
 		$("#address1Error").html("");
 		$("#address2Error").html("");
@@ -207,6 +223,7 @@ $("#addEditPizza").on("click", function() {
 		pizzaName: pizzaname,
 		price: price
 	}
+
 	$.ajax({
 		url: "http://192.168.20.184:8080/pizzaordersystem/add/pizza",
 		type: 'POST',
@@ -387,19 +404,59 @@ $("#updateEmployee").on("click", function() {
 		countryName: country,
 		phoneNumber: phoneNumber
 	}
-	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/employee/update",
-		type: 'PUT',
-		data: JSON.stringify(employeeDetails),
-		contentType: 'application/json',
-		success: function() {
-			location.reload(true);
-			console.log("success");
-		},
-		error: function() {
-			console.log("error")
+
+	var emailFlag = required(email, "email");
+	if (emailFlag) {
+		var emailFormatFlag = emailFormat(email);
+	}
+	var address1Flag = required(address1, "address1");
+	var address2Flag = required(address2, "address2");
+	var cityFlag = required(city, "city");
+	var stateFlag = required(state, "state");
+	var countryFlag = required(country, "country");
+	var phoneFlag = required(phoneNumber, "phone");
+	if (phoneFlag) {
+		var phoneFormatFlag = phoneFormat(phoneNumber);
+		if (phoneFormatFlag) {
+			var phoneLengthFlag = phoneLength(phoneNumber);
 		}
-	});
+	}
+
+	if (emailFlag && address1Flag && address2Flag && cityFlag && stateFlag && countryFlag && phoneFlag && emailFormatFlag && phoneFormatFlag && phoneLengthFlag) {
+		$("#address1Error").html("");
+		$("#address2Error").html("");
+		$("#cityError").html("");
+		$("#stateError").html("");
+		$("#countryError").html("");
+		$("#emailError").html("");
+		$("#phoneError").html("");
+		$.ajax({
+			url: "http://192.168.20.184:8080/pizzaordersystem/employee/update",
+			type: 'PUT',
+			data: JSON.stringify(employeeDetails),
+			contentType: 'application/json',
+			success: function() {
+				location.reload(true);
+				$('.close').click();
+			},
+			error: function(response) {
+				$("#address1Error").html(response.responseJSON.addressLine1);
+				$('#address1Error').show();
+				$("#address2Error").html(response.responseJSON.addressLine2);
+				$('#address2Error').show();
+				$("#cityError").html(response.responseJSON.city);
+				$('#cityError').show();
+				$("#stateError").html(response.responseJSON.state);
+				$('#stateError').show();
+				$("#countryError").html(response.responseJSON.country);
+				$('#countryError').show();
+				$("#emailError").html(response.responseJSON.email);
+				$('#emailError').show();
+				$("#phoneError").html(response.responseJSON.phoneNumber);
+				$('#phoneError').show();
+			}
+		});
+	}
 });
 
 $("#updateCustomer").on("click", function() {
@@ -421,19 +478,59 @@ $("#updateCustomer").on("click", function() {
 		country: country,
 		phoneNumber: phoneNumber
 	}
-	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/customer/update",
-		type: 'PUT',
-		data: JSON.stringify(customerdetails),
-		contentType: 'application/json',
-		success: function() {
-			location.reload(true);
-			console.log("success");
-		},
-		error: function() {
-			console.log("error")
+
+	var emailFlag = required(email, "email");
+	if (emailFlag) {
+		var emailFormatFlag = emailFormat(email);
+	}
+	var address1Flag = required(address1, "address1");
+	var address2Flag = required(address2, "address2");
+	var cityFlag = required(city, "city");
+	var stateFlag = required(state, "state");
+	var countryFlag = required(country, "country");
+	var phoneFlag = required(phoneNumber, "phone");
+	if (phoneFlag) {
+		var phoneFormatFlag = phoneFormat(phoneNumber);
+		if (phoneFormatFlag) {
+			var phoneLengthFlag = phoneLength(phoneNumber);
 		}
-	});
+	}
+
+	if (emailFlag && address1Flag && address2Flag && cityFlag && stateFlag && countryFlag && phoneFlag && emailFormatFlag && phoneFormatFlag && phoneLengthFlag) {
+		$("#address1Error").html("");
+		$("#address2Error").html("");
+		$("#cityError").html("");
+		$("#stateError").html("");
+		$("#countryError").html("");
+		$("#emailError").html("");
+		$("#phoneError").html("");
+		$.ajax({
+			url: "http://192.168.20.184:8080/pizzaordersystem/customer/update",
+			type: 'PUT',
+			data: JSON.stringify(customerdetails),
+			contentType: 'application/json',
+			success: function() {
+				location.reload(true);
+				$('.close').click();
+			},
+			error: function(response) {
+				$("#address1Error").html(response.responseJSON.address1);
+				$('#address1Error').show();
+				$("#address2Error").html(response.responseJSON.address2);
+				$('#address2Error').show();
+				$("#cityError").html(response.responseJSON.city);
+				$('#cityError').show();
+				$("#stateError").html(response.responseJSON.state);
+				$('#stateError').show();
+				$("#countryError").html(response.responseJSON.country);
+				$('#countryError').show();
+				$("#emailError").html(response.responseJSON.email);
+				$('#emailError').show();
+				$("#phoneError").html(response.responseJSON.phoneNumber);
+				$('#phoneError').show();
+			}
+		});
+	}
 });
 
 $("#addfeedback").on("click", function() {
@@ -469,17 +566,25 @@ $("#addItem").on("click", function() {
 	var quantityFlag = required(quantity, "quantity");
 
 	if (pizzaNameFlag && quantityFlag) {
-		$("#pizzaOrder").show();
+		$("#pizzanameError").html("");
+		$("#quantityError").html("");
 		$.ajax({
 			url: "http://192.168.20.184:8080/pizzaordersystem/add/item",
 			type: 'POST',
 			data: JSON.stringify(pizza),
 			contentType: 'application/json',
 			success: function() {
+				$("#pizzaOrder").show();
 				$("#pizzaName").val("");
 				$("#quantity").val("");
 				$("#itemAddedSuccess").show();
 				$("#itemAddedSuccess").delay(8000).fadeOut("slow");
+			},
+			error: function(response) {
+				$("#pizzanameError").html(response.responseJSON.pizzaName);
+				$('#pizzanameError').show();
+				$("#quantityError").html(response.responseJSON.quantity);
+				$('#quantityError').show();
 			}
 		});
 	}
@@ -542,6 +647,10 @@ $("#pay").on("click", function() {
 				$("#pizzaOrder").hide();
 				$("#paymentSuccess").show();
 				$("#paymentSuccess").delay(8000).fadeOut("slow");
+			},
+			error: function(response) {
+				$("#paymentmodeError").html(response.responseJSON.pizzaName);
+				$('#paymentmodeError').show();
 			}
 		});
 	}

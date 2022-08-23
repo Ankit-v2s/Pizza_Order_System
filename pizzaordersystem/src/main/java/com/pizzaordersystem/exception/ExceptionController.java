@@ -48,4 +48,15 @@ public class ExceptionController {
 		}
 		return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
 	}
+	
+	@ExceptionHandler(InvalidFieldException.class)
+	public ResponseEntity<?> getInvalidFieldException(InvalidFieldException ex) {
+		Map<String, String> map = new HashMap<>();
+		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+			String filedName = ((FieldError) error).getField();
+			String message = error.getDefaultMessage();
+			map.put(filedName, message);
+		}
+		return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+	}
 }
