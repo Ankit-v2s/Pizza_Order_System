@@ -144,11 +144,15 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void addEditPizza(PizzaMenu pizzaMenu) throws SQLException {
-		if (pizzaMenu.getPizzaId() == 0) {
-			pizzaDaoImplementation.addPizza(pizzaMenu);
+	public void addEditPizza(PizzaMenu pizzaMenu,BindingResult result) throws SQLException, InvalidFieldException {
+		if(!result.hasErrors()) {
+			if (pizzaMenu.getPizzaId() == 0) {
+				pizzaDaoImplementation.addPizza(pizzaMenu);
+			} else {
+				pizzaDaoImplementation.updatePizza(pizzaMenu);
+			}
 		} else {
-			pizzaDaoImplementation.updatePizza(pizzaMenu);
+			throw new InvalidFieldException(result);
 		}
 	}
 
@@ -173,11 +177,15 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void addEditCoupon(Coupon coupon) throws SQLException {
-		if (coupon.getCouponId() == 0) {
-			pizzaDaoImplementation.addCoupon(coupon);
+	public void addEditCoupon(Coupon coupon,BindingResult result) throws SQLException, InvalidFieldException {
+		if(!result.hasErrors()) {
+			if (coupon.getCouponId() == 0) {
+				pizzaDaoImplementation.addCoupon(coupon);
+			} else {
+				pizzaDaoImplementation.updateCoupon(coupon);
+			}
 		} else {
-			pizzaDaoImplementation.updateCoupon(coupon);
+			throw new InvalidFieldException(result);
 		}
 	}
 

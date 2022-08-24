@@ -22,7 +22,12 @@
 	<div class="wrapper">
 		<div class="container">
 			<%@include file="employeenavbar.jsp"%>
-
+			<div id="problemCoupon" class="col-sm-12" style="display: none;">
+				<div class="alert alert-danger">
+					<strong><em class="fa fa-thumbs-down"></em> </strong> 
+					<span>Something went wrong !!</span>
+				</div>
+			</div>
 			<!-- Modal -->
 			<div class="modal" id="couponAddEdit" role="dialog">
 				<div class="modal-dialog" role="document">
@@ -43,11 +48,13 @@
 										<label for="couponcode">Coupon Code</label> <input type="text"
 											class="form-control" id="couponcode"
 											placeholder="Enter Coupon Name">
+											<div id="couponcodeError" class="error"></div>
 									</div>
 									<div class="form-group ">
 										<label for="discount">Discount</label> <input type="number"
 											class="form-control" id="discount"
 											placeholder="Enter Discount">
+											<div id="discountError" class="error"></div>
 									</div>
 								</div>
 							</div>
@@ -55,8 +62,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" id="addEditCoupon"
-								data-dismiss="modal">Save changes</button>
+							<button type="button" class="btn btn-primary" id="addEditCoupon">Save changes</button>
 						</div>
 					</div>
 				</div>

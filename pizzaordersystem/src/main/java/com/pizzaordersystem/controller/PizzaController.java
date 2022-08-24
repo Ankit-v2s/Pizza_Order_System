@@ -180,8 +180,9 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/pizza")
-	public ModelAndView addPizza(@RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView) throws SQLException {
-		pizzaServiceImplementation.addEditPizza(pizzaMenu);
+	public ModelAndView addPizza(@Valid @RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView,
+			BindingResult result) throws SQLException,InvalidFieldException {
+		pizzaServiceImplementation.addEditPizza(pizzaMenu,result);
 		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
 		return modelAndView;
@@ -204,8 +205,8 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/coupon")
-	public void addCoupon(@RequestBody Coupon coupon) throws SQLException {
-		pizzaServiceImplementation.addEditCoupon(coupon);
+	public void addCoupon(@Valid @RequestBody Coupon coupon,BindingResult result) throws SQLException,InvalidFieldException {
+		pizzaServiceImplementation.addEditCoupon(coupon,result);
 	}
 
 	@DeleteMapping("/delete/coupon/{couponId}")
@@ -251,8 +252,9 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/feedback")
-	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addFeedback(feedback,result);
+	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result)
+			throws SQLException, InvalidFieldException {
+		pizzaServiceImplementation.addFeedback(feedback, result);
 	}
 
 	@PostMapping("/add/item")

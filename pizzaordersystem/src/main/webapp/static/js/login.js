@@ -224,19 +224,33 @@ $("#addEditPizza").on("click", function() {
 		price: price
 	}
 
-	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/add/pizza",
-		type: 'POST',
-		data: JSON.stringify(pizzaMenu),
-		contentType: 'application/json',
-		success: function(data) {
-			$("body").html(data);
-			console.log("success");
-		}
-	});
+	var pizzaNameFlag = required(pizzaname, "pizzaname");
+	var priceFlag = required(price, "price");
+
+	if (pizzaNameFlag && priceFlag) {
+		$("#pizzanameError").html("");
+		$("#priceError").html("");
+		$.ajax({
+			url: "http://192.168.20.184:8080/pizzaordersystem/add/pizza",
+			type: 'POST',
+			data: JSON.stringify(pizzaMenu),
+			contentType: 'application/json',
+			success: function(data) {
+				$("body").html(data);
+				$('.close').click();
+			}, error: function(response) {
+				$("#pizzanameError").html(response.responseJSON.pizzaName);
+				$('#pizzanameError').show();
+				$("#priceError").html(response.responseJSON.price);
+				$('#priceError').show();
+			}
+		});
+	}
 });
 
 function editPizzaData(pizzaId) {
+	$("#pizzanameError").html("");
+	$("#priceError").html("");
 	$.ajax({
 		type: "GET",
 		url: "http://192.168.20.184:8080/pizzaordersystem/pizza/" + pizzaId,
@@ -246,7 +260,8 @@ function editPizzaData(pizzaId) {
 			$("#price").val(response.price);
 		},
 		error: function() {
-			console.log("Error");
+			$("#problemPizza").show();
+			$("#problemPizza").delay(8000).fadeOut("slow");
 		}
 	});
 }
@@ -255,6 +270,8 @@ function addPizza() {
 	$("#pizzaId").val("");
 	$("#pizzaname").val("");
 	$("#price").val("");
+	$("#pizzanameError").html("");
+	$("#priceError").html("");
 }
 
 
@@ -266,10 +283,10 @@ function deletePizzaData(pizzaId) {
 			type: 'DELETE',
 			success: function() {
 				location.reload(true);
-				console.log("success");
 			},
 			error: function() {
-				console.log("error");
+				$("#problemPizza").show();
+				$("#problemPizza").delay(8000).fadeOut("slow");
 			}
 		});
 	});
@@ -291,7 +308,8 @@ function editCouponData(couponId) {
 			$("#discount").val(response.discount);
 		},
 		error: function() {
-			console.log("Error");
+			$("#problemCoupon").show();
+			$("#problemCoupon").delay(8000).fadeOut("slow");
 		}
 	});
 }
@@ -305,16 +323,28 @@ $("#addEditCoupon").on("click", function() {
 		couponCode: couponcode,
 		discount: discount
 	}
-	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/add/coupon",
-		type: 'POST',
-		data: JSON.stringify(coupon),
-		contentType: 'application/json',
-		success: function(data) {
-			$("body").html(data);
-			console.log("success");
-		}
-	});
+
+	var couponcodeFlag = required(couponcode, "couponcode");
+	var discountFlag = required(discount, "discount");
+
+	if (couponcodeFlag && discountFlag) {
+		$("#couponcodeError").html("");
+		$("#discountError").html("");
+		$.ajax({
+			url: "http://192.168.20.184:8080/pizzaordersystem/add/coupon",
+			type: 'POST',
+			data: JSON.stringify(coupon),
+			contentType: 'application/json',
+			success: function(data) {
+				location.reload(true);
+			}, error: function(response) {
+				$("#couponcodeError").html(response.responseJSON.couponCode);
+				$("#couponcodeError").show()
+				$("#discountError").html(response.responseJSON.discount);
+				$("#couponcodeError").show();
+			}
+		});
+	}
 });
 
 
@@ -326,10 +356,10 @@ function deleteCouponData(couponId) {
 			type: 'DELETE',
 			success: function() {
 				location.reload(true);
-				console.log("success");
 			},
 			error: function() {
-				console.log("error");
+				$("#problemCoupon").show();
+				$("#problemCoupon").delay(8000).fadeOut("slow");
 			}
 		});
 	});

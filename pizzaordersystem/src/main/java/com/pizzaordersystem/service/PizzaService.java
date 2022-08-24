@@ -59,7 +59,7 @@ public interface PizzaService {
 
 	PizzaMenu fetchPizza(int pizzaId) throws SQLException;
 
-	void addEditPizza(PizzaMenu pizzaMenu) throws SQLException;
+	void addEditPizza(PizzaMenu pizzaMenu,BindingResult result) throws SQLException, InvalidFieldException;
 
 	void addCustomer(RegisterDetails details, BindingResult result) throws SQLException, InvalidFieldException;
 
@@ -67,7 +67,7 @@ public interface PizzaService {
 
 	Coupon fetchCoupon(int couponId) throws SQLException;
 
-	void addEditCoupon(Coupon coupon) throws SQLException;
+	void addEditCoupon(Coupon coupon,BindingResult result) throws SQLException,InvalidFieldException;
 
 	void deleteCoupon(int couponId) throws SQLException;
 

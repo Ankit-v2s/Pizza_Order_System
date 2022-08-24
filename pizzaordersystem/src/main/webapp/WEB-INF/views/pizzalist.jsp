@@ -22,7 +22,12 @@
 	<div class="wrapper">
 		<div class="container">
 			<%@include file="employeenavbar.jsp"%>
-
+			<div id="problemPizza" class="col-sm-12" style="display: none;">
+				<div class="alert alert-danger">
+					<strong><em class="fa fa-thumbs-down"></em> </strong> 
+					<span>Something went wrong !!</span>
+				</div>
+			</div>
 			<!-- Modal -->
 			<div class="modal" id="pizzaAddEdit" role="dialog">
 				<div class="modal-dialog" role="document">
@@ -43,10 +48,12 @@
 										<label for="pizzaname">Pizza Name</label> <input type="text"
 											class="form-control" id="pizzaname"
 											placeholder="Enter Pizza Name">
+											<div id="pizzanameError" class="error"></div>
 									</div>
 									<div class="form-group ">
 										<label for="price">Price</label> <input type="number"
 											class="form-control" id="price" placeholder="Enter Price">
+											<div id="priceError" class="error"></div>
 									</div>
 								</div>
 							</div>
@@ -55,7 +62,7 @@
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
 							<button type="button" class="btn btn-primary"
-								data-dismiss="modal" id="addEditPizza">Save changes</button>
+								 id="addEditPizza">Save changes</button>
 						</div>
 					</div>
 				</div>
