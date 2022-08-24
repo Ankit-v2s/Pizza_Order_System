@@ -37,9 +37,11 @@
 									<option value="${feedback.feedbackStatusType}">${feedback.feedbackStatusType}</option>
 								</c:forEach>
 							</select>
+							<div id="feedbackStatusError" class="error"></div>
 						</div>
 						<div class="form-group row col-md-8">
 							<textarea id="comments" class="textbox" placeholder="Comments"></textarea>
+							<div id="commentsError" class="error"></div>
 						</div>
 						<div class="form-group row col-md-8">
 							<button type="button" id="addfeedback"

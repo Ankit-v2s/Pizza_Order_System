@@ -540,18 +540,32 @@ $("#addfeedback").on("click", function() {
 		feedbackStatusType: feedbackStatus,
 		comments: comments,
 	}
-	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/add/feedback",
-		type: 'POST',
-		data: JSON.stringify(feedback),
-		contentType: 'application/json',
-		success: function() {
-			$("#addSuccess").show();
-			$("#addSuccess").delay(8000).fadeOut("slow");
-			$("#feedbackStatus").val("");
-			$("#comments").val("");
-		}
-	});
+
+	var feedbackStatusFlag = required(feedbackStatus, "feedbackStatus");
+	var commentsFlag = required(comments, "comments");
+
+	if (feedbackStatusFlag && commentsFlag) {
+		$("#feedbackStatusError").html("");
+		$("#commentsError").html("");
+		$.ajax({
+			url: "http://192.168.20.184:8080/pizzaordersystem/add/feedback",
+			type: 'POST',
+			data: JSON.stringify(feedback),
+			contentType: 'application/json',
+			success: function() {
+				$("#addSuccess").show();
+				$("#addSuccess").delay(8000).fadeOut("slow");
+				$("#feedbackStatus").val("");
+				$("#comments").val("");
+			},
+			error: function(response) {
+				$("#feedbackStatusError").html(response.responseJSON.feedbackStatusType);
+				$('#feedbackStatusError').show();
+				$("#commentsError").html(response.responseJSON.comments);
+				$('#commentsError').show();
+			}
+		});
+	}
 });
 
 $("#addItem").on("click", function() {

@@ -180,8 +180,7 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/pizza")
-	public ModelAndView addPizza(@RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView)
-			throws SQLException {
+	public ModelAndView addPizza(@RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView) throws SQLException {
 		pizzaServiceImplementation.addEditPizza(pizzaMenu);
 		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
@@ -224,8 +223,7 @@ public class PizzaController {
 	}
 
 	@GetMapping("/order/date/{date}")
-	public ModelAndView filterOrderByDate(@PathVariable Date date, ModelAndView modelAndView)
-			throws SQLException {
+	public ModelAndView filterOrderByDate(@PathVariable Date date, ModelAndView modelAndView) throws SQLException {
 		modelAndView.addObject(ORDERSTATUSLIST, pizzaServiceImplementation.fetchOrderStatus());
 		modelAndView.addObject(FULLORDERLIST, pizzaServiceImplementation.fetchOrdersByDate(date));
 		modelAndView.setViewName(ORDERLIST);
@@ -233,8 +231,7 @@ public class PizzaController {
 	}
 
 	@GetMapping("/payment/{paymentMode}")
-	public ModelAndView filterPayment(@PathVariable String paymentMode, ModelAndView modelAndView)
-			throws SQLException {
+	public ModelAndView filterPayment(@PathVariable String paymentMode, ModelAndView modelAndView) throws SQLException {
 		modelAndView.addObject(PAYMENTMODELIST, pizzaServiceImplementation.fetchPaymentModes());
 		modelAndView.addObject(PAYMENTLIST, pizzaServiceImplementation.fetchPaymentByMode(paymentMode));
 		modelAndView.setViewName(PAYMENTLIST);
@@ -242,18 +239,20 @@ public class PizzaController {
 	}
 
 	@PutMapping("/employee/update")
-	public void updateEmployee(@Valid @RequestBody Employee employee,BindingResult result) throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.updateEmployee(employee,result);
+	public void updateEmployee(@Valid @RequestBody Employee employee, BindingResult result)
+			throws SQLException, InvalidFieldException {
+		pizzaServiceImplementation.updateEmployee(employee, result);
 	}
 
 	@PutMapping("/customer/update")
-	public void updateCustomer(@Valid @RequestBody CustomerData customerData,BindingResult result) throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.updateCustomer(customerData,result);
+	public void updateCustomer(@Valid @RequestBody CustomerData customerData, BindingResult result)
+			throws SQLException, InvalidFieldException {
+		pizzaServiceImplementation.updateCustomer(customerData, result);
 	}
 
 	@PostMapping("/add/feedback")
-	public void addFeedback(@RequestBody Feedback feedback) throws SQLException {
-		pizzaServiceImplementation.addFeedback(feedback);
+	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException {
+		pizzaServiceImplementation.addFeedback(feedback,result);
 	}
 
 	@PostMapping("/add/item")
@@ -273,8 +272,9 @@ public class PizzaController {
 	}
 
 	@PostMapping("/pay/order")
-	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result) throws SQLException, InvalidFieldException {
+	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result)
+			throws SQLException, InvalidFieldException {
 		pizzaServiceImplementation.addOrder(result);
-		pizzaServiceImplementation.addPayment(payment,result);
+		pizzaServiceImplementation.addPayment(payment, result);
 	}
 }

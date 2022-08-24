@@ -240,8 +240,12 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void addFeedback(Feedback feedback) throws SQLException {
-		pizzaDaoImplementation.addFeedback(feedback, loginCredentials);
+	public void addFeedback(Feedback feedback,BindingResult result) throws SQLException,InvalidFieldException {
+		if(!result.hasErrors()) {
+			pizzaDaoImplementation.addFeedback(feedback, loginCredentials);
+		} else {
+			throw new InvalidFieldException(result);
+		}
 	}
 
 	@Override

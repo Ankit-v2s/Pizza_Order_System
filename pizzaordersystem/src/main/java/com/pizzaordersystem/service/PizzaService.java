@@ -85,7 +85,7 @@ public interface PizzaService {
 
 	City fetchCityDetails(String city) throws SQLException;
 
-	void addFeedback(Feedback feedback) throws SQLException;
+	void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException;
 
 	int orderPizza() throws SQLException;
 
