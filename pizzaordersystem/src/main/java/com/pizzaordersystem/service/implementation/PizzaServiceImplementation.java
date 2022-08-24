@@ -55,10 +55,8 @@ public class PizzaServiceImplementation implements PizzaService {
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
 					this.loginCredentials = credentials;
 					if (credentials.getEmployeeId() != 0) {
-//						model.addAttribute("employeeid", credentials.getEmployeeId());
 						return "employeehome";
 					} else if (credentials.getCustomerId() != 0) {
-//						model.addAttribute("customerid",credentials.getCustomerId());
 						return "customerhome";
 					}
 				}

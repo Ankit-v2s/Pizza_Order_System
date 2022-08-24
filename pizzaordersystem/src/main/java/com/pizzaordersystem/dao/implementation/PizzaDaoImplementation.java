@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -229,8 +231,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement = connection
 				.prepareStatement("select payment_id,customer_name,coupon_code,amount,mode from payment "
 						+ "inner join customer using(customer_id) inner join coupons using(coupon_id)"
-						+ "inner join payment_modes using(mode_id) " + "inner join orders using(order_id) "
-						+ "order by payment_id;");
+						+ "inner join payment_modes using(mode_id) " + "inner join orders using(order_id) ");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Payment payment = new Payment();
@@ -241,6 +242,24 @@ public class PizzaDaoImplementation implements PizzaDao {
 			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
 			paymentList.add(payment);
 		}
+
+		preparedStatement = connection.prepareStatement("select payment_id,customer_name,amount,mode from payment "
+				+ "inner join customer using(customer_id) "
+				+ "inner join payment_modes using(mode_id) inner join orders using(order_id) where coupon_id=0 ");
+		resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Payment payment = new Payment();
+			payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+			payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+			payment.setCouponCode("null");
+			payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+			paymentList.add(payment);
+		}
+
+		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
+				.collect(Collectors.toList());
+
 		return paymentList;
 	}
 
@@ -412,8 +431,8 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement = connection
 				.prepareStatement("select payment_id,customer_name,coupon_code,amount,mode from payment "
 						+ "inner join customer using(customer_id) inner join coupons using(coupon_id)"
-						+ "inner join payment_modes using(mode_id) " + "inner join orders using(order_id) where mode=? "
-						+ "order by payment_id;");
+						+ "inner join payment_modes using(mode_id) "
+						+ "inner join orders using(order_id) where mode=? ");
 		preparedStatement.setString(1, paymentMode);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
@@ -425,6 +444,25 @@ public class PizzaDaoImplementation implements PizzaDao {
 			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
 			paymentList.add(payment);
 		}
+
+		preparedStatement = connection.prepareStatement(
+				"select payment_id,customer_name,amount,mode from payment " + "inner join customer using(customer_id) "
+						+ "inner join payment_modes using(mode_id) inner join orders using(order_id) "
+						+ "where coupon_id=0 and mode=? ");
+		preparedStatement.setString(1, paymentMode);
+		resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Payment payment = new Payment();
+			payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+			payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+			payment.setCouponCode("null");
+			payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+			paymentList.add(payment);
+		}
+
+		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
+				.collect(Collectors.toList());
 		return paymentList;
 	}
 
@@ -512,13 +550,14 @@ public class PizzaDaoImplementation implements PizzaDao {
 
 	@Override
 	public int pizzaOrder() throws SQLException {
+		int amount = 0;
 		preparedStatement = connection.prepareStatement("select sum(amount) from order_items where order_items_id=?;");
 		preparedStatement.setInt(1, orderItemsId);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			return resultSet.getInt(resultSet.getMetaData().getColumnName(1));
+			amount = resultSet.getInt(resultSet.getMetaData().getColumnName(1));
 		}
-		throw new NullPointerException();
+		return amount;
 	}
 
 	@Override
@@ -595,13 +634,14 @@ public class PizzaDaoImplementation implements PizzaDao {
 
 	@Override
 	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException {
+		int discount=0;
 		preparedStatement = connection.prepareStatement("select discount from coupons where coupon_code=?;");
 		preparedStatement.setString(1, pizzaOrder.getCouponCode());
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			return resultSet.getInt(resultSet.getMetaData().getColumnName(1));
+			discount = resultSet.getInt(resultSet.getMetaData().getColumnName(1));
 		}
-		throw new NullPointerException();
+		return discount;
 	}
 
 	@Override
