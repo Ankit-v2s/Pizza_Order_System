@@ -12,8 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.pizzaordersystem.model.ExceptionDetails;
-
 @ControllerAdvice
 public class ExceptionController {
 
@@ -29,13 +27,7 @@ public class ExceptionController {
 
 	@ExceptionHandler(CredentialCheckerException.class)
 	public ResponseEntity<?> credentialCheckerExceptionException(CredentialCheckerException ex) {
-		ExceptionDetails details = new ExceptionDetails(ex.getMessage());
-		return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(NullPointerException.class)
-	public void nullPointerException(NullPointerException ex) {
-		System.err.println(ex.getMessage());
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,5 +50,10 @@ public class ExceptionController {
 			map.put(filedName, message);
 		}
 		return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public void exception(Exception ex) {
+		System.out.println("Something went wrong.");
 	}
 }
