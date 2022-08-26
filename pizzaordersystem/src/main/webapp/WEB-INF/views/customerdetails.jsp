@@ -164,5 +164,7 @@
 	</div>
 	<script type="text/javascript"
 		src="<c:url value="/static/js/login.js" />"></script>
+	<script type="text/javascript"
+		src="<c:url value="/static/js/customer-details.js" />"></script>
 </body>
 </html>

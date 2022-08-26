@@ -169,5 +169,7 @@
 		src="<c:url value="/static/js/login.js" />"></script>
 	<script type="text/javascript"
 		src="<c:url value="/static/js/validation.js" />"></script>
+	<script type="text/javascript"
+		src="<c:url value="/static/js/employee-detials.js" />"></script>
 </body>
 </html>

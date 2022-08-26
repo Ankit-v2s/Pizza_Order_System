@@ -64,5 +64,7 @@
 	</div>
 	<script type="text/javascript"
 		src="<c:url value="/static/js/login.js" />"></script>
+	<script type="text/javascript"
+		src="<c:url value="/static/js/orders.js" />"></script>
 </body>
 </html>
