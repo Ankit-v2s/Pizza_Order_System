@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.exception.CredentialCheckerException;
@@ -31,7 +30,7 @@ public interface PizzaService {
 
 	void createConnection() throws ClassNotFoundException;
 
-	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result, Model model)
+	String credentialChecker(@Valid LoginCredentials loginCredentials, BindingResult result)
 			throws SQLException, CredentialCheckerException, InvalidFieldException;
 
 	List<Order> fetchOrders() throws SQLException;

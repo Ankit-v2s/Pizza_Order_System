@@ -2,6 +2,7 @@ $(window).on("load", function() {
 
 });
 var flag = true;
+const uri = "http://192.168.20.184:8080/pizzaordersystem";
 
 function required(field, str) {
 	if (field === "" || field == null) {
@@ -81,7 +82,7 @@ $("#login").on("click", function() {
 		$('#usernameError').html("");
 		$('#passwordError').html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/login",
+			url: uri+"/login",
 			type: 'POST',
 			data: JSON.stringify(loginCredentials),
 			contentType: 'application/json',
@@ -104,7 +105,7 @@ $("#login").on("click", function() {
 function getCityDetails() {
 	var city = $("#city").val();
 	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/city/" + city,
+		url: uri+"/city/" + city,
 		type: 'GET',
 		contentType: 'application/json',
 		success: function(response) {
@@ -176,7 +177,7 @@ $("#addCustomer").on("click", function() {
 		$("#usernameError").html("");
 		$("#passwordError").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/add/customer",
+			url: uri+"/add/customer",
 			type: 'POST',
 			data: JSON.stringify(register),
 			contentType: 'application/json',
@@ -231,7 +232,7 @@ $("#addEditPizza").on("click", function() {
 		$("#pizzanameError").html("");
 		$("#priceError").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/add/pizza",
+			url: uri+"/add/pizza",
 			type: 'POST',
 			data: JSON.stringify(pizzaMenu),
 			contentType: 'application/json',
@@ -253,7 +254,7 @@ function editPizzaData(pizzaId) {
 	$("#priceError").html("");
 	$.ajax({
 		type: "GET",
-		url: "http://192.168.20.184:8080/pizzaordersystem/pizza/" + pizzaId,
+		url: uri+"/pizza/" + pizzaId,
 		success: function(response) {
 			$("#pizzaId").val(response.pizzaId);
 			$("#pizzaname").val(response.pizzaName);
@@ -279,7 +280,7 @@ function deletePizzaData(pizzaId) {
 
 	$("#confirmDeletePizza").on("click", function() {
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/delete/pizza/" + pizzaId,
+			url: uri+"/delete/pizza/" + pizzaId,
 			type: 'DELETE',
 			success: function() {
 				location.reload(true);
@@ -301,7 +302,7 @@ function addCoupon() {
 function editCouponData(couponId) {
 	$.ajax({
 		type: "GET",
-		url: "http://192.168.20.184:8080/pizzaordersystem/coupon/" + couponId,
+		url: uri+"/coupon/" + couponId,
 		success: function(response) {
 			$("#couponId").val(response.couponId);
 			$("#couponcode").val(response.couponCode);
@@ -331,11 +332,11 @@ $("#addEditCoupon").on("click", function() {
 		$("#couponcodeError").html("");
 		$("#discountError").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/add/coupon",
+			url: uri+"/add/coupon",
 			type: 'POST',
 			data: JSON.stringify(coupon),
 			contentType: 'application/json',
-			success: function(data) {
+			success: function() {
 				location.reload(true);
 			}, error: function(response) {
 				$("#couponcodeError").html(response.responseJSON.couponCode);
@@ -352,7 +353,7 @@ function deleteCouponData(couponId) {
 
 	$("#confirmDeleteCoupon").on("click", function() {
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/delete/coupon/" + couponId,
+			url: uri+"/delete/coupon/" + couponId,
 			type: 'DELETE',
 			success: function() {
 				location.reload(true);
@@ -369,10 +370,10 @@ function filterOrderByStatus() {
 	var statusType = $("#orderstatus").val();
 	var url;
 	if (statusType == "") {
-		url = "http://192.168.20.184:8080/pizzaordersystem/orders";
+		url = uri+"/orders";
 	}
 	else {
-		url = "http://192.168.20.184:8080/pizzaordersystem/order/" + statusType;
+		url = uri+"/order/" + statusType;
 	}
 	$.ajax({
 		url: url,
@@ -390,7 +391,7 @@ function filterOrderByDate() {
 	var dateOfOrder = $("#dateOfOrder").val();
 	console.log(dateOfOrder);
 	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/order/date/" + dateOfOrder,
+		url: uri+"/order/date/" + dateOfOrder,
 		type: 'GET',
 		success: function(data) {
 			$("body").html(data);
@@ -404,7 +405,7 @@ function filterOrderByDate() {
 function filterPaymentByMode() {
 	var paymentMode = $("#paymentmode").val();
 	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/payment/" + paymentMode,
+		url: uri+"/payment/" + paymentMode,
 		type: 'GET',
 		success: function(data) {
 			$("body").html(data);
@@ -461,7 +462,7 @@ $("#updateEmployee").on("click", function() {
 		$("#emailError").html("");
 		$("#phoneError").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/employee/update",
+			url: uri+"/employee/update",
 			type: 'PUT',
 			data: JSON.stringify(employeeDetails),
 			contentType: 'application/json',
@@ -535,7 +536,7 @@ $("#updateCustomer").on("click", function() {
 		$("#emailError").html("");
 		$("#phoneError").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/customer/update",
+			url: uri+"/customer/update",
 			type: 'PUT',
 			data: JSON.stringify(customerdetails),
 			contentType: 'application/json',
@@ -578,7 +579,7 @@ $("#addfeedback").on("click", function() {
 		$("#feedbackStatusError").html("");
 		$("#commentsError").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/add/feedback",
+			url: uri+"/add/feedback",
 			type: 'POST',
 			data: JSON.stringify(feedback),
 			contentType: 'application/json',
@@ -614,7 +615,7 @@ $("#addItem").on("click", function() {
 		$("#quantityError").html("");
 		$("#cart").html("");
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/add/item",
+			url: uri+"/add/item",
 			type: 'POST',
 			data: JSON.stringify(pizza),
 			contentType: 'application/json',
@@ -641,7 +642,7 @@ $("#addItem").on("click", function() {
 
 $("#pizzaOrder").on("click", function() {
 	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/order/pizza",
+		url: uri+"/order/pizza",
 		type: 'GET',
 		success: function(response) {
 			$("#amount").val(response);
@@ -660,7 +661,7 @@ function applyCoupons() {
 	}
 	$("#couponError").html("");
 	$.ajax({
-		url: "http://192.168.20.184:8080/pizzaordersystem/order/pizza/discount",
+		url: uri+"/order/pizza/discount",
 		type: 'POST',
 		data: JSON.stringify(pizzaOrder),
 		contentType: 'application/json',
@@ -687,7 +688,7 @@ $("#pay").on("click", function() {
 
 	if (modeFlag) {
 		$.ajax({
-			url: "http://192.168.20.184:8080/pizzaordersystem/pay/order",
+			url: uri+"/pay/order",
 			type: 'POST',
 			data: JSON.stringify(payment),
 			contentType: 'application/json',

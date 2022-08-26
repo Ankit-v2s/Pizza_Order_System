@@ -20,24 +20,12 @@ public class ExceptionController {
 	private static final String SOMETHING_WENT_WRONG = "Something went wrong : ";
 	private static final String ERROR = "Error";
 
-	@ExceptionHandler(SQLException.class)
-	public String sqlException(SQLException ex,ModelAndView modelAndView) {
-		System.out.println(SOMETHING_WENT_WRONG+ex.getMessage());
-		return ERROR;
-	}
-
-	@ExceptionHandler(ClassNotFoundException.class)
-	public String classNotFoundException(ClassNotFoundException ex,ModelAndView modelAndView) {
-		System.out.println(SOMETHING_WENT_WRONG+ex.getMessage());
-		return ERROR;
-	}
-
 	@ExceptionHandler(CredentialCheckerException.class)
 	public ResponseEntity<?> credentialCheckerException(CredentialCheckerException ex) {
 		ExceptionDetails details = new ExceptionDetails(ex.getMessage());
 		return new ResponseEntity<>(details, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	@ExceptionHandler(ZeroAmountException.class)
 	public ResponseEntity<?> zeroAmountException(ZeroAmountException ex) {
 		ExceptionDetails details = new ExceptionDetails(ex.getMessage());
@@ -52,12 +40,24 @@ public class ExceptionController {
 			String message = error.getDefaultMessage();
 			map.put(filedName, message);
 		}
-		return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
+	@ExceptionHandler(SQLException.class)
+	public String sqlException(SQLException ex, ModelAndView modelAndView) {
+		System.out.println(SOMETHING_WENT_WRONG + ex.getMessage());
+		return ERROR;
+	}
+
+	@ExceptionHandler(ClassNotFoundException.class)
+	public String classNotFoundException(ClassNotFoundException ex, ModelAndView modelAndView) {
+		System.out.println(SOMETHING_WENT_WRONG + ex.getMessage());
+		return ERROR;
+	}
+
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception ex) {
-		System.out.println(SOMETHING_WENT_WRONG+ex.getMessage());
+		System.out.println(SOMETHING_WENT_WRONG + ex.getMessage());
 		return ERROR;
 	}
 }
