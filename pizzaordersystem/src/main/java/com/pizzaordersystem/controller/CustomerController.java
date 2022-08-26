@@ -79,10 +79,10 @@ public class CustomerController {
 	 * @throws InvalidFieldException
 	 * Update the customer details
 	 */
-	@PutMapping("/customer/update")
-	public void updateCustomer(@Valid @RequestBody CustomerData customerData, BindingResult result)
+	@PutMapping("/customer/{customerId}")
+	public void updateCustomer(@Valid @RequestBody CustomerData customerData, int customerId, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.updateCustomer(customerData, result);
+		pizzaServiceImplementation.updateCustomer(customerData, customerId, result);
 	}
 
 	/**

@@ -485,7 +485,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	}
 
 	@Override
-	public void updateEmployee(Employee employee) throws SQLException {
+	public void updateEmployee(Employee employee,int employeeId) throws SQLException {
 		preparedStatement = connection.prepareStatement("update employee set employee_email=?, address_line1=?,"
 				+ "address_line2=?,city_id = (select city_id from city where city_name=?),state_id="
 				+ "(select state_id from state where state_name=?), country_id="
@@ -497,7 +497,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement.setString(5, employee.getStateName());
 		preparedStatement.setString(6, employee.getCountryName());
 		preparedStatement.setString(7, employee.getPhoneNumber());
-		preparedStatement.setInt(8, employee.getEmployeeId());
+		preparedStatement.setInt(8, employeeId);
 		preparedStatement.executeUpdate();
 	}
 
@@ -541,7 +541,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	}
 
 	@Override
-	public void updateCustomer(CustomerData customerData) throws SQLException {
+	public void updateCustomer(CustomerData customerData, int customerId) throws SQLException {
 		preparedStatement = connection.prepareStatement(
 				"update customer set email=?,address_line1=?,address_line2=?,city_id=(select city_id from city where city_name=?),"
 						+ "state_id=(select state_id from state where state_name=?),"
@@ -554,7 +554,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement.setString(5, customerData.getState());
 		preparedStatement.setString(6, customerData.getCountry());
 		preparedStatement.setString(7, customerData.getPhoneNumber());
-		preparedStatement.setInt(8, customerData.getCustomerId());
+		preparedStatement.setInt(8, customerId);
 		preparedStatement.executeUpdate();
 	}
 

@@ -134,9 +134,9 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void updateEmployee(Employee employee, BindingResult result) throws SQLException, InvalidFieldException {
+	public void updateEmployee(Employee employee, int employeeId, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaDaoImplementation.updateEmployee(employee);
+			pizzaDaoImplementation.updateEmployee(employee,employeeId);
 		} else {
 			throw new InvalidFieldException(result);
 		}
@@ -231,10 +231,10 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void updateCustomer(CustomerData customerData, BindingResult result)
+	public void updateCustomer(CustomerData customerData, int customerId, BindingResult result)
 			throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaDaoImplementation.updateCustomer(customerData);
+			pizzaDaoImplementation.updateCustomer(customerData,customerId);
 		} else {
 			throw new InvalidFieldException(result);
 		}

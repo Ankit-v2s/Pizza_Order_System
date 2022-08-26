@@ -150,14 +150,15 @@ public class EmployeeController {
 	/**
 	 * @param employee
 	 * @param result
+	 * @param employeeId
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * Update the employee details
 	 */
-	@PutMapping("/employee/update")
-	public void updateEmployee(@Valid @RequestBody Employee employee, BindingResult result)
+	@PutMapping("/employee/{employeeId}")
+	public void updateEmployee(@Valid @RequestBody Employee employee, @PathVariable int employeeId, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.updateEmployee(employee, result);
+		pizzaServiceImplementation.updateEmployee(employee,employeeId, result);
 	}
 
 	/**

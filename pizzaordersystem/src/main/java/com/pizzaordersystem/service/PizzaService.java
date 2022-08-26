@@ -79,9 +79,9 @@ public interface PizzaService {
 
 	List<City> fetchCity() throws SQLException;
 
-	void updateEmployee(Employee employee, BindingResult result) throws SQLException, InvalidFieldException;
+	void updateEmployee(Employee employee,int employeeId, BindingResult result) throws SQLException, InvalidFieldException;
 
-	void updateCustomer(CustomerData customerData, BindingResult result) throws SQLException, InvalidFieldException;
+	void updateCustomer(CustomerData customerData, int customerId, BindingResult result) throws SQLException, InvalidFieldException;
 
 	City fetchCityDetails(String city) throws SQLException;
 

@@ -2,7 +2,7 @@ $(window).on("load", function() {
 
 });
 var flag = true;
-const uri = "http://192.168.20.184:8080/pizzaordersystem";
+const uri = "http://127.0.0.1:8080/pizzaordersystem";
 
 function required(field, str) {
 	if (field === "" || field == null) {
@@ -462,7 +462,7 @@ $("#updateEmployee").on("click", function() {
 		$("#emailError").html("");
 		$("#phoneError").html("");
 		$.ajax({
-			url: uri+"/employee/update",
+			url: uri+"/employee/"+employeeId,
 			type: 'PUT',
 			data: JSON.stringify(employeeDetails),
 			contentType: 'application/json',
@@ -536,7 +536,7 @@ $("#updateCustomer").on("click", function() {
 		$("#emailError").html("");
 		$("#phoneError").html("");
 		$.ajax({
-			url: uri+"/customer/update",
+			url: uri+"/customer/"+customerId,
 			type: 'PUT',
 			data: JSON.stringify(customerdetails),
 			contentType: 'application/json',

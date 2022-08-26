@@ -76,9 +76,9 @@ public interface PizzaDao {
 
 	List<City> getcity(List<City> cityList) throws SQLException;
 
-	void updateEmployee(Employee employee) throws SQLException;
+	void updateEmployee(Employee employee,int employeeId) throws SQLException;
 
-	void updateCustomer(CustomerData customerData) throws SQLException;
+	void updateCustomer(CustomerData customerData, int customerId) throws SQLException;
 
 	void addFeedback(Feedback feedback, LoginCredentials loginCredentials) throws SQLException;
 
