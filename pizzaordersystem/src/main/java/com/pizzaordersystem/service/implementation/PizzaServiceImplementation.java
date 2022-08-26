@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import com.pizzaordersystem.dao.PizzaDao;
 import com.pizzaordersystem.exception.CredentialCheckerException;
 import com.pizzaordersystem.exception.InvalidFieldException;
+import com.pizzaordersystem.exception.ZeroAmountException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -40,6 +41,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	LoginCredentials loginCredentials;
 	PizzaOrder pizzaOrder;
 	Connection connection;
+	private List<PizzaOrder> cart=new ArrayList<>();
 
 	public void createConnection() throws ClassNotFoundException {
 		this.connection = pizzaDaoImplementation.getConnection();
@@ -253,6 +255,11 @@ public class PizzaServiceImplementation implements PizzaService {
 			throw new InvalidFieldException(result);
 		}
 	}
+	
+	@Override
+	public List<PizzaOrder> getCartList() {
+		return cart;
+	}
 
 	@Override
 	public int orderPizza() throws SQLException {
@@ -260,27 +267,28 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	@Override
-	public void addOrder(BindingResult result) throws SQLException, InvalidFieldException {
-		if (!result.hasErrors()) {
+	public void addOrder() throws SQLException {
 			pizzaDaoImplementation.addOrder(loginCredentials);
-		} else {
-			throw new InvalidFieldException(result);
-		}
+			pizzaDaoImplementation.addItem(cart);
 	}
 
 	@Override
-	public void addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException {
+	public List<PizzaOrder> addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
 			this.pizzaOrder = pizza;
-			pizzaDaoImplementation.addItem(pizza);
+			cart.add(pizza);
+			return cart;
 		} else {
 			throw new InvalidFieldException(result);
 		}
 	}
 
 	@Override
-	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException {
+	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
 		pizzaOrder.setAmount(pizzaOrder.getAmount() - pizzaDaoImplementation.discountPrice(pizzaOrder));
+		if(pizzaOrder.getAmount()<0) {
+			throw new ZeroAmountException("Coupon not apllicable");
+		}
 		this.pizzaOrder.setAmount(pizzaOrder.getAmount());
 		return pizzaOrder.getAmount();
 	}
@@ -288,6 +296,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	@Override
 	public void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
+			cart.clear();
 			pizzaDaoImplementation.addPayment(loginCredentials, payment);
 		} else {
 			throw new InvalidFieldException(result);

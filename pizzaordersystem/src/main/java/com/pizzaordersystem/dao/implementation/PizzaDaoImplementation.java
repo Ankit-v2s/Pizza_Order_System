@@ -37,7 +37,6 @@ public class PizzaDaoImplementation implements PizzaDao {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	int orderId = 0;
-	int orderItemsId = 0;
 
 	@Override
 	public Connection getConnection() throws ClassNotFoundException {
@@ -70,7 +69,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	@Override
 	public List<Order> getOrders(List<Order> orderList) throws SQLException {
 		preparedStatement = connection
-				.prepareStatement("select order_id,customer_name,date_of_order,status_type,order_items_id from orders "
+				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id)" + "inner join order_status using(status_id)"
 						+ "where date_of_order=curdate() order by order_id;");
 		resultSet = preparedStatement.executeQuery();
@@ -80,7 +79,6 @@ public class PizzaDaoImplementation implements PizzaDao {
 			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
 			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
 			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			order.setOrderItemsId(resultSet.getInt(resultSet.getMetaData().getColumnName(5)));
 			orderList.add(order);
 		}
 		return orderList;
@@ -210,7 +208,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	@Override
 	public List<Order> getAllOrders(List<Order> orderList) throws SQLException {
 		preparedStatement = connection
-				.prepareStatement("select order_id,customer_name,date_of_order,status_type,order_items_id from orders "
+				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) "
 						+ "inner join order_status using(status_id) order by order_id;");
 		resultSet = preparedStatement.executeQuery();
@@ -220,7 +218,6 @@ public class PizzaDaoImplementation implements PizzaDao {
 			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
 			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
 			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			order.setOrderItemsId(resultSet.getInt(resultSet.getMetaData().getColumnName(5)));
 			orderList.add(order);
 		}
 		return orderList;
@@ -231,7 +228,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement = connection
 				.prepareStatement("select payment_id,customer_name,coupon_code,amount,mode from payment "
 						+ "inner join customer using(customer_id) inner join coupons using(coupon_id)"
-						+ "inner join payment_modes using(mode_id) " + "inner join orders using(order_id) ");
+						+ "inner join payment_modes using(mode_id) " + "inner join orders using(order_id); ");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Payment payment = new Payment();
@@ -245,7 +242,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 
 		preparedStatement = connection.prepareStatement("select payment_id,customer_name,amount,mode from payment "
 				+ "inner join customer using(customer_id) "
-				+ "inner join payment_modes using(mode_id) inner join orders using(order_id) where coupon_id=0 ");
+				+ "inner join payment_modes using(mode_id) inner join orders using(order_id) where coupon_id is null; ");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Payment payment = new Payment();
@@ -389,7 +386,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	@Override
 	public List<Order> getOrdersByStatusType(List<Order> orderList, String statusType) throws SQLException {
 		preparedStatement = connection
-				.prepareStatement("select order_id,customer_name,date_of_order,status_type,order_items_id from orders "
+				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) "
 						+ "inner join order_status using(status_id) where status_type =? order by order_id;");
 		preparedStatement.setString(1, statusType);
@@ -400,7 +397,6 @@ public class PizzaDaoImplementation implements PizzaDao {
 			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
 			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
 			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			order.setOrderItemsId(resultSet.getInt(resultSet.getMetaData().getColumnName(5)));
 			orderList.add(order);
 		}
 		return orderList;
@@ -409,7 +405,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	@Override
 	public List<Order> getOrdersByDate(List<Order> orderList, Date date) throws SQLException {
 		preparedStatement = connection
-				.prepareStatement("select order_id,customer_name,date_of_order,status_type,order_items_id from orders "
+				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) "
 						+ "inner join order_status using(status_id) where date_of_order =? order by order_id;");
 		preparedStatement.setDate(1, date);
@@ -420,7 +416,6 @@ public class PizzaDaoImplementation implements PizzaDao {
 			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
 			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
 			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			order.setOrderItemsId(resultSet.getInt(resultSet.getMetaData().getColumnName(5)));
 			orderList.add(order);
 		}
 		return orderList;
@@ -448,7 +443,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement = connection.prepareStatement(
 				"select payment_id,customer_name,amount,mode from payment " + "inner join customer using(customer_id) "
 						+ "inner join payment_modes using(mode_id) inner join orders using(order_id) "
-						+ "where coupon_id=0 and mode=? ");
+						+ "where coupon_id is null and mode=? ");
 		preparedStatement.setString(1, paymentMode);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
@@ -551,8 +546,8 @@ public class PizzaDaoImplementation implements PizzaDao {
 	@Override
 	public int pizzaOrder() throws SQLException {
 		int amount = 0;
-		preparedStatement = connection.prepareStatement("select sum(amount) from order_items where order_items_id=?;");
-		preparedStatement.setInt(1, orderItemsId);
+		preparedStatement = connection.prepareStatement("select sum(amount) from order_items where order_id=?;");
+		preparedStatement.setInt(1, orderId);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			amount = resultSet.getInt(resultSet.getMetaData().getColumnName(1));
@@ -563,10 +558,9 @@ public class PizzaDaoImplementation implements PizzaDao {
 	@Override
 	public void addOrder(LoginCredentials loginCredentials) throws SQLException {
 		preparedStatement = connection.prepareStatement(
-				"insert into orders(customer_id,date_of_order,order_items_id) " + "values(?,curdate(),?);",
+				"insert into orders(customer_id,date_of_order) " + "values(?,curdate());",
 				Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setInt(1, loginCredentials.getCustomerId());
-		preparedStatement.setInt(2, orderItemsId);
 		preparedStatement.executeUpdate();
 		resultSet = preparedStatement.getGeneratedKeys();
 		while (resultSet.next()) {
@@ -575,48 +569,19 @@ public class PizzaDaoImplementation implements PizzaDao {
 	}
 
 	@Override
-	public boolean checkOrder() throws SQLException {
-		preparedStatement = connection.prepareStatement("select order_id from orders where order_items_id=?;");
-		preparedStatement.setInt(1, orderItemsId);
-		resultSet = preparedStatement.executeQuery();
-		while (resultSet.isBeforeFirst()) {
-			return true;
+	public void addItem(List<PizzaOrder> cart) throws SQLException {
+		for(PizzaOrder pizzaOrder:cart) {
+			preparedStatement = connection
+					.prepareStatement("insert into order_items(order_id,pizza_id,quantity,amount) "
+							+ "values(?,(select pizza_id from pizza_menu where pizza_name=?),?,"
+							+ "((select price from pizza_menu where pizza_name=?)*?));");
+			preparedStatement.setInt(1, orderId);
+			preparedStatement.setString(2, pizzaOrder.getPizzaName());
+			preparedStatement.setInt(3, pizzaOrder.getQuantity());
+			preparedStatement.setString(4, pizzaOrder.getPizzaName());
+			preparedStatement.setInt(5, pizzaOrder.getQuantity());
+			preparedStatement.executeUpdate();
 		}
-		return false;
-	}
-
-	@Override
-	public void getLastOrderItemId() throws SQLException {
-		boolean flag = true;
-		preparedStatement = connection
-				.prepareStatement("select order_items_id from order_items order by order_items_id desc limit 1;");
-		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			flag = false;
-			this.orderItemsId = resultSet.getInt(resultSet.getMetaData().getColumnName(1));
-			if (checkOrder()) {
-				this.orderItemsId += 1;
-			}
-			break;
-		}
-		if (flag) {
-			this.orderItemsId = 1;
-		}
-	}
-
-	@Override
-	public void addItem(PizzaOrder pizza) throws SQLException {
-		getLastOrderItemId();
-		preparedStatement = connection
-				.prepareStatement("insert into order_items(order_items_id,pizza_id,quantity,amount) "
-						+ "values(?,(select pizza_id from pizza_menu where pizza_name=?),?,"
-						+ "((select price from pizza_menu where pizza_name=?)*?));");
-		preparedStatement.setInt(1, orderItemsId);
-		preparedStatement.setString(2, pizza.getPizzaName());
-		preparedStatement.setInt(3, pizza.getQuantity());
-		preparedStatement.setString(4, pizza.getPizzaName());
-		preparedStatement.setInt(5, pizza.getQuantity());
-		preparedStatement.executeUpdate();
 	}
 
 	@Override

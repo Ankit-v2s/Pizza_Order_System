@@ -86,11 +86,7 @@ public interface PizzaDao {
 
 	void addOrder(LoginCredentials loginCredentials) throws SQLException;
 
-	boolean checkOrder() throws SQLException;
-
-	void getLastOrderItemId() throws SQLException;
-
-	void addItem(PizzaOrder pizza) throws SQLException;
+	void addItem(List<PizzaOrder> cart) throws SQLException;
 
 	void addPayment(LoginCredentials credentials, Payment payment) throws SQLException;
 

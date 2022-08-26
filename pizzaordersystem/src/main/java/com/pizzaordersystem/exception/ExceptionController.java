@@ -8,39 +8,42 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.pizzaordersystem.model.ExceptionDetails;
 
 @ControllerAdvice
 public class ExceptionController {
 
+	private static final String SOMETHING_WENT_WRONG = "Something went wrong : ";
+	private static final String ERROR = "Error";
+
 	@ExceptionHandler(SQLException.class)
-	public void sqlException(SQLException ex) {
-		System.out.println(ex.getMessage());
+	public String sqlException(SQLException ex,ModelAndView modelAndView) {
+		System.out.println(SOMETHING_WENT_WRONG+ex.getMessage());
+		return ERROR;
 	}
 
 	@ExceptionHandler(ClassNotFoundException.class)
-	public void classNotFoundException(ClassNotFoundException ex) {
-		System.out.println(ex.getMessage());
+	public String classNotFoundException(ClassNotFoundException ex,ModelAndView modelAndView) {
+		System.out.println(SOMETHING_WENT_WRONG+ex.getMessage());
+		return ERROR;
 	}
 
 	@ExceptionHandler(CredentialCheckerException.class)
-	public ResponseEntity<?> credentialCheckerExceptionException(CredentialCheckerException ex) {
-		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<?> getMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-		Map<String, String> map = new HashMap<>();
-		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-			String filedName = ((FieldError) error).getField();
-			String message = error.getDefaultMessage();
-			map.put(filedName, message);
-		}
-		return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+	public ResponseEntity<?> credentialCheckerException(CredentialCheckerException ex) {
+		ExceptionDetails details = new ExceptionDetails(ex.getMessage());
+		return new ResponseEntity<>(details, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ExceptionHandler(ZeroAmountException.class)
+	public ResponseEntity<?> zeroAmountException(ZeroAmountException ex) {
+		ExceptionDetails details = new ExceptionDetails(ex.getMessage());
+		return new ResponseEntity<>(details, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	@ExceptionHandler(InvalidFieldException.class)
 	public ResponseEntity<?> getInvalidFieldException(InvalidFieldException ex) {
 		Map<String, String> map = new HashMap<>();
@@ -53,7 +56,8 @@ public class ExceptionController {
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public void exception(Exception ex) {
-		System.out.println("Something went wrong.");
+	public String exception(Exception ex) {
+		System.out.println(SOMETHING_WENT_WRONG+ex.getMessage());
+		return ERROR;
 	}
 }

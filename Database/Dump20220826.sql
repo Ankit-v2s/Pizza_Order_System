@@ -259,11 +259,13 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_items` (
-  `order_items_id` int NOT NULL,
+  `order_id` int NOT NULL,
   `pizza_id` int NOT NULL,
   `quantity` int NOT NULL,
   `amount` int NOT NULL,
   KEY `pizza_id_FK3_idx` (`pizza_id`),
+  KEY `order_id_FK3_idx` (`order_id`),
+  CONSTRAINT `order_id_FK3` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON UPDATE CASCADE,
   CONSTRAINT `pizza_id_FK3` FOREIGN KEY (`pizza_id`) REFERENCES `pizza_menu` (`pizza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -274,7 +276,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` VALUES (1,2,3,1050),(1,1,2,200),(2,2,5,1750),(3,3,3,570),(3,3,2,380),(3,2,1,350),(4,1,4,400),(5,2,3,1050),(5,3,2,380),(6,3,3,570),(7,2,3,1050),(8,3,3,570),(9,2,2,700),(10,3,3,570),(11,3,2,380),(11,1,2,200),(12,2,2,700),(13,2,3,1050),(14,3,1,190),(15,2,1,350),(15,3,3,570),(18,1,1,101),(18,2,3,1050),(18,1,1,101),(18,3,1,190),(18,1,3,303),(18,3,3,570);
+INSERT INTO `order_items` VALUES (1,3,2,380),(1,1,3,303),(2,2,3,1050),(3,1,2,202),(3,3,4,760),(4,3,3,570),(4,1,1,101),(5,2,2,700),(5,1,1,101),(6,1,2,202),(6,3,5,950),(7,3,1,190),(7,1,3,303),(7,1,2,202),(7,1,2,202),(7,1,2,202),(7,2,2,700),(8,3,1,190),(8,2,1,350),(9,3,1,190),(9,1,3,303),(9,3,1,190),(10,2,4,1400),(11,2,2,700),(11,3,2,380);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,12 +316,10 @@ CREATE TABLE `orders` (
   `customer_id` int NOT NULL,
   `date_of_order` date DEFAULT NULL,
   `status_id` int NOT NULL DEFAULT '2',
-  `order_items_id` int NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `customer_dFK` (`customer_id`),
-  KEY `order_items_ifFK_idx` (`order_items_id`),
   CONSTRAINT `customer_dFK` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,7 +328,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,2,'2022-08-17',2,1),(3,2,'2022-08-17',1,2),(4,2,'2022-08-17',1,3),(6,11,'2022-08-18',2,4),(7,11,'2022-08-18',3,5),(8,11,'2022-08-18',1,6),(9,11,'2022-08-18',2,7),(10,7,'2022-08-18',2,8),(11,7,'2022-08-18',2,9),(12,7,'2022-08-18',1,10),(14,7,'2022-08-18',1,11),(15,7,'2022-08-18',2,12),(16,7,'2022-08-18',2,13),(17,7,'2022-08-18',3,14),(18,7,'2022-08-18',2,15),(19,11,'2022-08-23',1,16),(20,7,'2022-08-23',3,17),(21,3,'2022-08-24',2,18);
+INSERT INTO `orders` VALUES (1,11,'2022-08-25',2),(2,7,'2022-08-25',2),(3,2,'2022-08-25',2),(4,7,'2022-08-25',2),(5,7,'2022-08-25',2),(6,7,'2022-08-25',2),(7,7,'2022-08-25',2),(8,7,'2022-08-25',2),(9,2,'2022-08-25',2),(10,2,'2022-08-25',2),(11,10,'2022-08-25',2);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,11 +351,10 @@ CREATE TABLE `payment` (
   KEY `order_idFK3` (`order_id`),
   KEY `customer_idFK3` (`customer_id`),
   KEY `coupon_idFK_idx` (`coupon_id`),
-  CONSTRAINT `coupon_idFK` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`coupon_id`),
   CONSTRAINT `customer_idFK3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `mode_idFK` FOREIGN KEY (`mode_id`) REFERENCES `payment_modes` (`mode_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `order_idFK3` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +363,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (2,1,1,2,1125,3),(3,4,3,2,1500,2),(4,2,4,2,1120,1),(5,2,6,11,400,0),(6,1,7,11,1180,2),(7,2,8,11,570,0),(8,4,9,11,925,3),(9,2,10,7,570,0),(10,1,11,7,700,0),(11,3,12,7,570,0),(13,1,14,7,455,3),(14,4,15,7,575,3),(15,2,16,7,1050,0),(16,1,17,7,190,0),(17,2,18,7,740,1),(18,3,19,11,1050,0),(19,4,20,7,77,3),(20,3,21,3,2135,1);
+INSERT INTO `payment` VALUES (1,2,1,11,683,NULL),(2,1,2,7,870,1),(3,4,3,2,962,NULL),(4,2,4,7,546,3),(5,3,5,7,621,1),(6,4,6,7,1027,3),(7,1,7,7,1549,2),(8,2,8,7,540,NULL),(9,1,9,2,503,1),(10,3,10,2,1150,2),(11,2,11,10,900,1);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,6 +442,10 @@ LOCK TABLES `state` WRITE;
 INSERT INTO `state` VALUES (1,'ANDAMAN AND NICOBAR ISLANDS',1),(2,'ANDHRA PRADESH',1),(3,'ARUNACHAL PRADESH',1),(4,'ASSAM',1),(5,'BIHAR',1),(6,'CHATTISGARH',1),(7,'CHANDIGARH',1),(8,'DAMAN AND DIU',1),(9,'DELHI',1),(10,'DADRA AND NAGAR HAVELI',1),(11,'GOA',1),(12,'GUJARAT',1),(13,'HIMACHAL PRADESH',1),(14,'HARYANA',1),(15,'JAMMU AND KASHMIR',1),(16,'JHARKHAND',1),(17,'KERALA',1),(18,'KARNATAKA',1),(19,'LAKSHADWEEP',1),(20,'MEGHALAYA',1),(21,'MAHARASHTRA',1),(22,'MANIPUR',1),(23,'MADHYA PRADESH',1),(24,'MIZORAM',1),(25,'NAGALAND',1),(26,'ORISSA',1),(27,'PUNJAB',1),(28,'PONDICHERRY',1),(29,'RAJASTHAN',1),(30,'SIKKIM',1),(31,'TAMIL NADU',1),(32,'TRIPURA',1),(33,'UTTARAKHAND',1),(34,'UTTAR PRADESH',1),(35,'WEST BENGAL',1),(36,'TELANGANA',1);
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'pizza_order'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -453,4 +456,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-25 10:37:34
+-- Dump completed on 2022-08-26 10:04:54

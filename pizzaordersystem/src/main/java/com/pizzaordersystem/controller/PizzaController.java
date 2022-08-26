@@ -2,6 +2,7 @@ package com.pizzaordersystem.controller;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaordersystem.exception.CredentialCheckerException;
 import com.pizzaordersystem.exception.InvalidFieldException;
+import com.pizzaordersystem.exception.ZeroAmountException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -95,6 +97,7 @@ public class PizzaController {
 		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
 		modelAndView.addObject(PAYMENTMODELIST, pizzaServiceImplementation.fetchPaymentModes());
 		modelAndView.addObject(COUPONLIST, pizzaServiceImplementation.fetchCoupons());
+		modelAndView.addObject("cartList",pizzaServiceImplementation.getCartList());
 		modelAndView.setViewName("customerhome");
 		return modelAndView;
 	}
@@ -258,25 +261,25 @@ public class PizzaController {
 	}
 
 	@PostMapping("/add/item")
-	public void orderPizza(@Valid @RequestBody PizzaOrder pizza, BindingResult result)
+	public List<PizzaOrder> orderPizza(@Valid @RequestBody PizzaOrder pizza, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addItem(pizza, result);
+		return pizzaServiceImplementation.addItem(pizza, result);
 	}
 
 	@GetMapping("/order/pizza")
 	public int orderDetails() throws SQLException {
+		pizzaServiceImplementation.addOrder();
 		return pizzaServiceImplementation.orderPizza();
 	}
 
 	@PostMapping("/order/pizza/discount")
-	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws SQLException {
+	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
 		return pizzaServiceImplementation.discountPrice(pizzaOrder);
 	}
 
 	@PostMapping("/pay/order")
 	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addOrder(result);
 		pizzaServiceImplementation.addPayment(payment, result);
 	}
 }

@@ -48,7 +48,6 @@
 						<td><strong>Customer Name</strong></td>
 						<td><strong>Date Of Order</strong></td>
 						<td><strong>Status</strong></td>
-						<td><strong>Order Items Id</strong></td>
 					</tr>
 					<c:forEach items="${fullorderlist}" var="orders">
 						<tr>
@@ -56,7 +55,6 @@
 							<td>${orders.customerName}</td>
 							<td>${orders.dateOfOrder}</td>
 							<td>${orders.statusType}</td>
-							<td>${orders.orderItemsId}</td>
 						</tr>
 					</c:forEach>
 				</table>

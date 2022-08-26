@@ -90,12 +90,12 @@ $("#login").on("click", function() {
 				$('#credentialError').hide();
 			},
 			error: function(response) {
+				$("#credentialError").html(response.responseJSON.message);
+				$('#credentialError').show();
 				$("#usernameError").html(response.responseJSON.userName);
 				$('#usernameError').show();
 				$("#passwordError").html(response.responseJSON.password);
 				$('#passwordError').show();
-				$("#credentialError").html(response.responseJSON.message);
-				$('#credentialError').show();
 			}
 		});
 	}
@@ -612,25 +612,30 @@ $("#addItem").on("click", function() {
 	if (pizzaNameFlag && quantityFlag) {
 		$("#pizzanameError").html("");
 		$("#quantityError").html("");
+		$("#cart").html("");
 		$.ajax({
 			url: "http://192.168.20.184:8080/pizzaordersystem/add/item",
 			type: 'POST',
 			data: JSON.stringify(pizza),
 			contentType: 'application/json',
-			success: function() {
+			success: function(response) {
+				$("#cart-table").show();
 				$("#pizzaOrder").show();
 				$("#pizzaName").val("");
 				$("#quantity").val("");
 				$("#itemAddedSuccess").show();
 				$("#itemAddedSuccess").delay(8000).fadeOut("slow");
+				for (res in response) {
+					$("#cart").append("<tr><td>" + response[res].pizzaName + "</td><td>" + response[res].quantity + "</td></tr>");
+					}
 			},
-			error: function(response) {
-				$("#pizzanameError").html(response.responseJSON.pizzaName);
-				$('#pizzanameError').show();
-				$("#quantityError").html(response.responseJSON.quantity);
-				$('#quantityError').show();
-			}
-		});
+				error: function(response) {
+					$("#pizzanameError").html(response.responseJSON.pizzaName);
+					$('#pizzanameError').show();
+					$("#quantityError").html(response.responseJSON.quantity);
+					$('#quantityError').show();
+				}
+			});
 	}
 });
 
@@ -653,6 +658,7 @@ function applyCoupons() {
 		amount: amount,
 		couponCode: coupon
 	}
+	$("#couponError").html("");
 	$.ajax({
 		url: "http://192.168.20.184:8080/pizzaordersystem/order/pizza/discount",
 		type: 'POST',
@@ -660,6 +666,9 @@ function applyCoupons() {
 		contentType: 'application/json',
 		success: function(response) {
 			$("#totalAmount").val(response);
+		},
+		error: function(response) {
+			$("#couponError").html(response.responseJSON.message);
 		}
 	});
 }
@@ -689,6 +698,8 @@ $("#pay").on("click", function() {
 				$("#mode").val("");
 				$('.close').click();
 				$("#pizzaOrder").hide();
+				$("#cart-table").hide();
+				$("#cart").html("");
 				$("#paymentSuccess").show();
 				$("#paymentSuccess").delay(8000).fadeOut("slow");
 			},

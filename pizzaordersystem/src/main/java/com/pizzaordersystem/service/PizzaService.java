@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.exception.CredentialCheckerException;
 import com.pizzaordersystem.exception.InvalidFieldException;
+import com.pizzaordersystem.exception.ZeroAmountException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -59,7 +60,7 @@ public interface PizzaService {
 
 	PizzaMenu fetchPizza(int pizzaId) throws SQLException;
 
-	void addEditPizza(PizzaMenu pizzaMenu,BindingResult result) throws SQLException, InvalidFieldException;
+	void addEditPizza(PizzaMenu pizzaMenu, BindingResult result) throws SQLException, InvalidFieldException;
 
 	void addCustomer(RegisterDetails details, BindingResult result) throws SQLException, InvalidFieldException;
 
@@ -67,7 +68,7 @@ public interface PizzaService {
 
 	Coupon fetchCoupon(int couponId) throws SQLException;
 
-	void addEditCoupon(Coupon coupon,BindingResult result) throws SQLException,InvalidFieldException;
+	void addEditCoupon(Coupon coupon, BindingResult result) throws SQLException, InvalidFieldException;
 
 	void deleteCoupon(int couponId) throws SQLException;
 
@@ -87,13 +88,15 @@ public interface PizzaService {
 
 	void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException;
 
+	List<PizzaOrder> getCartList();
+	
 	int orderPizza() throws SQLException;
 
-	void addOrder(BindingResult result) throws SQLException, InvalidFieldException;
+	void addOrder() throws SQLException;
 
-	void addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException;
+	List<PizzaOrder> addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException;
 
-	int discountPrice(PizzaOrder pizzaOrder) throws SQLException;
+	int discountPrice(PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException;
 
 	void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException;
 
