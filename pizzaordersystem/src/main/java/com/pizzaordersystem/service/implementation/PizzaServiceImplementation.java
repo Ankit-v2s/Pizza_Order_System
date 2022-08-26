@@ -13,32 +13,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.dao.PizzaDao;
-import com.pizzaordersystem.exception.CredentialCheckerException;
-import com.pizzaordersystem.exception.InvalidFieldException;
-import com.pizzaordersystem.exception.ZeroAmountException;
-import com.pizzaordersystem.model.City;
-import com.pizzaordersystem.model.Coupon;
-import com.pizzaordersystem.model.CustomerData;
-import com.pizzaordersystem.model.Employee;
-import com.pizzaordersystem.model.Feedback;
-import com.pizzaordersystem.model.FeedbackStatus;
-import com.pizzaordersystem.model.LoginCredentials;
-import com.pizzaordersystem.model.Order;
-import com.pizzaordersystem.model.OrderStatus;
-import com.pizzaordersystem.model.Payment;
-import com.pizzaordersystem.model.PaymentModes;
-import com.pizzaordersystem.model.PizzaMenu;
-import com.pizzaordersystem.model.PizzaOrder;
-import com.pizzaordersystem.model.RegisterDetails;
+import com.pizzaordersystem.exception.*;
+import com.pizzaordersystem.model.*;
 import com.pizzaordersystem.service.PizzaService;
 
+/**
+ * @author Ankit Madhavi
+ *
+ */
 @Service
 public class PizzaServiceImplementation implements PizzaService {
 
 	@Autowired
 	private PizzaDao pizzaDaoImplementation;
-	LoginCredentials loginCredentials;
-	PizzaOrder pizzaOrder;
+	private LoginCredentials loginCredentials;
+	private PizzaOrder pizzaOrder;
 	Connection connection;
 	private List<PizzaOrder> cart = new ArrayList<>();
 

@@ -36,22 +36,34 @@ public class CustomerController {
 	private static final String COUPONLIST = "couponlist";
 
 	private static final String PIZZALIST = "pizzalist";
-	
+
 	private static final String CITY_LIST = "cityList";
-	
+
 	@Autowired
 	private PizzaService pizzaServiceImplementation;
-	
+
+	/**
+	 * @param modelAndView
+	 * @return ModelAndView
+	 * @throws SQLException. 
+	 * Load Customer Homepage
+	 */
 	@GetMapping("/customerhome")
 	public ModelAndView customerDashboard(ModelAndView modelAndView) throws SQLException {
 		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
 		modelAndView.addObject(PAYMENTMODELIST, pizzaServiceImplementation.fetchPaymentModes());
 		modelAndView.addObject(COUPONLIST, pizzaServiceImplementation.fetchCoupons());
-		modelAndView.addObject("cartList",pizzaServiceImplementation.getCartList());
+		modelAndView.addObject("cartList", pizzaServiceImplementation.getCartList());
 		modelAndView.setViewName("customerhome");
 		return modelAndView;
 	}
 
+	/**
+	 * @param modelAndView
+	 * @return ModelAndView
+	 * @throws SQLException
+	 * Fetch the details of the specific customer who is logged in
+	 */
 	@GetMapping("/editcustomer")
 	public ModelAndView customer(ModelAndView modelAndView) throws SQLException {
 		modelAndView.addObject("customer", pizzaServiceImplementation.fetchCustomerDetails());
@@ -60,42 +72,89 @@ public class CustomerController {
 		return modelAndView;
 	}
 
-	@GetMapping("/feedback")
-	public ModelAndView addFeedback(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(FEEDBACKLIST, pizzaServiceImplementation.fetchFeedbackStatus());
-		modelAndView.setViewName("feedback");
-		return modelAndView;
-	}
-	
+	/**
+	 * @param customerData
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
+	 * Update the customer details
+	 */
 	@PutMapping("/customer/update")
 	public void updateCustomer(@Valid @RequestBody CustomerData customerData, BindingResult result)
 			throws SQLException, InvalidFieldException {
 		pizzaServiceImplementation.updateCustomer(customerData, result);
 	}
 
+	/**
+	 * @param modelAndView
+	 * @return ModelAndView
+	 * @throws SQLException
+	 * Load feedback page
+	 */
+	@GetMapping("/feedback")
+	public ModelAndView addFeedback(ModelAndView modelAndView) throws SQLException {
+		modelAndView.addObject(FEEDBACKLIST, pizzaServiceImplementation.fetchFeedbackStatus());
+		modelAndView.setViewName("feedback");
+		return modelAndView;
+	}
+
+	/**
+	 * @param feedback
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
+	 * Add feedback
+	 */
 	@PostMapping("/add/feedback")
 	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result)
 			throws SQLException, InvalidFieldException {
 		pizzaServiceImplementation.addFeedback(feedback, result);
 	}
 
+	/**
+	 * @param pizza
+	 * @param result
+	 * @return List<PizzaOrder>
+	 * @throws SQLException
+	 * @throws InvalidFieldException
+	 * Load the cart table according to the pizza added
+	 */
 	@PostMapping("/add/item")
 	public List<PizzaOrder> orderPizza(@Valid @RequestBody PizzaOrder pizza, BindingResult result)
 			throws SQLException, InvalidFieldException {
 		return pizzaServiceImplementation.addItem(pizza, result);
 	}
 
+	/**
+	 * @return int
+	 * @throws SQLException
+	 * Add the order
+	 */
 	@GetMapping("/order/pizza")
 	public int orderDetails() throws SQLException {
 		pizzaServiceImplementation.addOrder();
 		return pizzaServiceImplementation.orderPizza();
 	}
 
+	/**
+	 * @param pizzaOrder
+	 * @return int
+	 * @throws SQLException
+	 * @throws ZeroAmountException
+	 * Apply discount according to the coupon
+	 */
 	@PostMapping("/order/pizza/discount")
 	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
 		return pizzaServiceImplementation.discountPrice(pizzaOrder);
 	}
 
+	/**
+	 * @param payment
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
+	 * Add payment
+	 */
 	@PostMapping("/pay/order")
 	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result)
 			throws SQLException, InvalidFieldException {
