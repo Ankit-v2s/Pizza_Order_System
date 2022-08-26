@@ -132,5 +132,7 @@
 
 	<script type="text/javascript"
 		src="<c:url value="/static/js/login.js" />"></script>
+	<script type="text/javascript"
+		src="<c:url value="/static/js/validation.js" />"></script>
 </body>
 </html>
