@@ -36,8 +36,8 @@ public class PizzaController {
 	private PizzaService pizzaServiceImplementation;
 
 	/**
-	 * @param ModelAndView
-	 * @return Login Page
+	 * @param modelAndView
+	 * @return ModelAndView
 	 * To load the application and open the first page 
 	 * Logout functionality
 	 */
