@@ -82,7 +82,7 @@ public interface PizzaDao {
 
 	void addFeedback(Feedback feedback, LoginCredentials loginCredentials) throws SQLException;
 
-	int pizzaOrder() throws SQLException;
+	int calculateAmount() throws SQLException;
 
 	void addOrder(LoginCredentials loginCredentials) throws SQLException;
 

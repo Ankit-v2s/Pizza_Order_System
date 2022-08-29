@@ -87,9 +87,7 @@ public interface PizzaService {
 
 	void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException;
 
-	List<PizzaOrder> getCartList();
-	
-	int orderPizza() throws SQLException;
+	int calculate() throws SQLException;
 
 	void addOrder() throws SQLException;
 
@@ -100,5 +98,7 @@ public interface PizzaService {
 	void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException;
 
 	void logout();
+	
+	List<PizzaOrder> getCartList();
 
 }

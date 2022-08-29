@@ -31,7 +31,7 @@
 							<div class="col-md-4">
 								<select class="txtbox" style="margin-left: 135px" id="orderstatus"
 									name="orderstatus" onchange="filterOrderByStatus()">
-									<option selected value="">Select Order Status</option>
+									<option selected value=""><spring:message code="employee.order.status.default.option" /></option>
 									<c:forEach items="${orderstatuslist}" var="orderstatus">
 										<option value="${orderstatus.statusType}">${orderstatus.statusType}</option>
 									</c:forEach>
@@ -44,10 +44,10 @@
 			<div class="table-wrapper-scroll-y my-custom-scrollbar">
 				<table class="table table-hover table-light">
 					<tr>
-						<td><strong>Order Id</strong></td>
-						<td><strong>Customer Name</strong></td>
-						<td><strong>Date Of Order</strong></td>
-						<td><strong>Status</strong></td>
+						<td><strong><spring:message code="employee.order.table.heading.id" /></strong></td>
+						<td><strong><spring:message code="employee.order.table.heading.name" /></strong></td>
+						<td><strong><spring:message code="employee.order.table.heading.date" /></strong></td>
+						<td><strong><spring:message code="employee.order.table.heading.status" /></strong></td>
 					</tr>
 					<c:forEach items="${fullorderlist}" var="orders">
 						<tr>

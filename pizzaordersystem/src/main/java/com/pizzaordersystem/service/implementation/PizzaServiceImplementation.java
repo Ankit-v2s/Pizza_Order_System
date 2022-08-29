@@ -30,13 +30,34 @@ public class PizzaServiceImplementation implements PizzaService {
 	private PizzaOrder pizzaOrder;
 	Connection connection;
 	private List<PizzaOrder> cart = new ArrayList<>();
+	
+	/**
+	 *@return List
+	 *getter for the List cart
+	 */
+	@Override
+	public List<PizzaOrder> getCartList() {
+		return cart;
+	}
 
-//	==========Connection==========
+	/**
+	 *@throws ClassNotFoundException
+	 *To make a connection database
+	 */
 	public void createConnection() throws ClassNotFoundException {
 		this.connection = pizzaDaoImplementation.getConnection();
 	}
 
 //	==========Login==========
+	/**
+	 *@param loginCredentials
+	 *@param result
+	 *@return String
+	 *@throws SQLException
+	 *@throws CredentialCheckerException
+	 *@throws InvalidFieldException
+	 *To check the credentials
+	 */
 	@Override
 	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
 			throws SQLException, CredentialCheckerException, InvalidFieldException {
@@ -59,6 +80,13 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 //	==========SignUp==========
+	/**
+	 *@param details
+	 *@param result
+	 *@throws SQLException
+	 *@throws InvalidFieldException
+	 *To add new customer 
+	 */
 	@Override
 	public void addCustomer(@Valid RegisterDetails details, BindingResult result)
 			throws SQLException, InvalidFieldException {
@@ -69,12 +97,23 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the cities in list
+	 */
 	@Override
 	public List<City> fetchCity() throws SQLException {
 		List<City> cityList = new ArrayList<>();
 		return pizzaDaoImplementation.getcity(cityList);
 	}
 
+	/**
+	 *@param city
+	 *@return City
+	 *@throws SQLException
+	 *To fetch the details of the particular city
+	 */
 	@Override
 	public City fetchCityDetails(String city) throws SQLException {
 		for (City cityDetails : fetchCity()) {
@@ -86,53 +125,103 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 //	==========Admin==========
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of orders for the present day;
+	 */
 	@Override
 	public List<Order> fetchOrders() throws SQLException {
 		List<Order> orderList = new ArrayList<>();
 		return pizzaDaoImplementation.getOrders(orderList);
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch list of all the available orders
+	 */
 	@Override
 	public List<Order> fetchAllOrders() throws SQLException {
 		List<Order> orderList = new ArrayList<>();
 		return pizzaDaoImplementation.getAllOrders(orderList);
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch list of order status available
+	 */
 	@Override
 	public List<OrderStatus> fetchOrderStatus() throws SQLException {
 		List<OrderStatus> orderStatusList = new ArrayList<>();
 		return pizzaDaoImplementation.getOrderStatus(orderStatusList);
 	}
 
+	/**
+	 *@param statusType
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of orders according to the order status selected
+	 */
 	@Override
 	public List<Order> fetchOrdersByStatusType(String statusType) throws SQLException {
 		List<Order> orderList = new ArrayList<>();
 		return pizzaDaoImplementation.getOrdersByStatusType(orderList, statusType);
 	}
 
+	/**
+	 *@param date
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of orders according to the date selected
+	 */
 	@Override
 	public List<Order> fetchOrdersByDate(Date date) throws SQLException {
 		List<Order> orderList = new ArrayList<>();
 		return pizzaDaoImplementation.getOrdersByDate(orderList, date);
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of all the feedbacks available
+	 */
 	@Override
 	public List<Feedback> fetchFeedback() throws SQLException {
 		List<Feedback> feedbackList = new ArrayList<>();
 		return pizzaDaoImplementation.getFeedback(feedbackList);
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of all the customers available
+	 */
 	@Override
 	public List<CustomerData> fetchCustomer() throws SQLException {
 		List<CustomerData> customerDataList = new ArrayList<>();
 		return pizzaDaoImplementation.getCustomerData(customerDataList);
 	}
 
+	/**
+	 *@return Employee
+	 *@throws SQLException
+	 *To fetch the data of the logged in employee
+	 */
 	@Override
 	public Employee fetchEmployee() throws SQLException {
 		return pizzaDaoImplementation.getEmployee(loginCredentials);
 	}
 
+	/**
+	 *@param employee
+	 *@param employeeId
+	 *@param result
+	 *@throws SQLException
+	 *@throws InvalidFieldException
+	 *To update the details of the employee
+	 */
 	@Override
 	public void updateEmployee(Employee employee, int employeeId, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
@@ -142,36 +231,58 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of all the payments available
+	 */
 	@Override
 	public List<Payment> fetchPayments() throws SQLException {
 		List<Payment> paymentList = new ArrayList<>();
 		return pizzaDaoImplementation.getPayments(paymentList);
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of all the payment modes available
+	 */
 	@Override
 	public List<PaymentModes> fetchPaymentModes() throws SQLException {
 		List<PaymentModes> paymentModeList = new ArrayList<>();
 		return pizzaDaoImplementation.getPaymentModes(paymentModeList);
 	}
 
+	/**
+	 *@param paymentMode
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of payments according to payment modes
+	 */
 	@Override
 	public List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException {
 		List<Payment> paymentList = new ArrayList<>();
 		return pizzaDaoImplementation.getPaymentByMode(paymentList, paymentMode);
 	}
 
-	@Override
-	public List<FeedbackStatus> fetchFeedbackStatus() throws SQLException {
-		List<FeedbackStatus> feedbackStatusList = new ArrayList<>();
-		return pizzaDaoImplementation.getFeedbackStatus(feedbackStatusList);
-	}
-
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch all the list of pizza available
+	 */
 	@Override
 	public List<PizzaMenu> fetchPizzaMenu() throws SQLException {
 		List<PizzaMenu> pizzaList = new ArrayList<>();
 		return pizzaDaoImplementation.getPizza(pizzaList);
 	}
 
+	/**
+	 *@param pizzaMenu
+	 *@param result
+	 *@throws SQLException
+	 *@throws InvalidFieldException
+	 *To add new pizza or edit the available pizza
+	 */
 	@Override
 	public void addEditPizza(PizzaMenu pizzaMenu, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
@@ -185,22 +296,45 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@param pizzaId
+	 *@return PizzaMenu
+	 *@throws SQLException
+	 *To fetch the details of the particular pizza 
+	 */
 	@Override
 	public PizzaMenu fetchPizza(int pizzaId) throws SQLException {
 		return pizzaDaoImplementation.getPizza(pizzaId);
 	}
 
+	/**
+	 *@param pizzaId
+	 *@throws SQLException
+	 *To delete the particular pizza
+	 */
 	@Override
 	public void deletePizza(int pizzaId) throws SQLException {
 		pizzaDaoImplementation.deletePizza(pizzaId);
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException
+	 *To fetch the list of all the coupons available
+	 */
 	@Override
 	public List<Coupon> fetchCoupons() throws SQLException {
 		List<Coupon> couponList = new ArrayList<>();
 		return pizzaDaoImplementation.getCoupons(couponList);
 	}
 
+	/**
+	 *@param coupon
+	 *@param result
+	 *@throws SQLException
+	 *@throws InvalidFieldException
+	 *To add new coupon or edit the existing coupon
+	 */
 	@Override
 	public void addEditCoupon(Coupon coupon, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
@@ -214,22 +348,46 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@param couponId
+	 *@return Coupon
+	 *@throws SQLException
+	 *To fetch the details of the particular coupon
+	 */
 	@Override
 	public Coupon fetchCoupon(int couponId) throws SQLException {
 		return pizzaDaoImplementation.getcoupon(couponId);
 	}
 
+	/**
+	 *@param couponId
+	 *@throws SQLException
+	 *To delete the particular coupon available
+	 */
 	@Override
 	public void deleteCoupon(int couponId) throws SQLException {
 		pizzaDaoImplementation.deleteCoupon(couponId);
 	}
 
 //	==========Customer==========
+	/**
+	 *@return CustomerData
+	 *@throws SQLException
+	 *To fetch the details of the particular customer who is logged in
+	 */
 	@Override
 	public CustomerData fetchCustomerDetails() throws SQLException {
 		return pizzaDaoImplementation.getCustomer(loginCredentials);
 	}
 
+	/**
+	 *@param customerData
+	 *@param customerId
+	 *@param result
+	 *@throws SQLException,
+	 *@throws InvalidFieldException
+	 *To update the details of customer
+	 */
 	@Override
 	public void updateCustomer(CustomerData customerData, int customerId, BindingResult result)
 			throws SQLException, InvalidFieldException {
@@ -240,6 +398,24 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@return List
+	 *@throws SQLException,
+	 *To fetch all the feedback Status available
+	 */
+	@Override
+	public List<FeedbackStatus> fetchFeedbackStatus() throws SQLException {
+		List<FeedbackStatus> feedbackStatusList = new ArrayList<>();
+		return pizzaDaoImplementation.getFeedbackStatus(feedbackStatusList);
+	}
+	
+	/**
+	 *@param feedback
+	 *@param result
+	 *@throws SQLException,
+	 *@throws InvalidFieldException
+	 *To add new feedback
+	 */
 	@Override
 	public void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
@@ -249,22 +425,33 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@return int
+	 *@throws SQLException,
+	 *To calculate total amount of the items available in cart
+	 */
 	@Override
-	public List<PizzaOrder> getCartList() {
-		return cart;
+	public int calculate() throws SQLException {
+		return pizzaDaoImplementation.calculateAmount();
 	}
 
-	@Override
-	public int orderPizza() throws SQLException {
-		return pizzaDaoImplementation.pizzaOrder();
-	}
-
+	/**
+	 *@throws SQLException,
+	 *To add new order and new order items
+	 */
 	@Override
 	public void addOrder() throws SQLException {
 		pizzaDaoImplementation.addOrder(loginCredentials);
 		pizzaDaoImplementation.addItem(cart);
 	}
 
+	/**
+	 *@param pizza
+	 *@param result
+	 *@throws SQLException,
+	 *@throws InvalidFieldException
+	 *To add the items to the cart list
+	 */
 	@Override
 	public List<PizzaOrder> addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
@@ -276,6 +463,13 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 	}
 
+	/**
+	 *@param pizzaOrder
+	 *@return int
+	 *@throws SQLException,
+	 *@throws ZeroAmountException
+	 *To deduct the amount according to the discount applied for the coupon
+	 */
 	@Override
 	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
 		pizzaOrder.setAmount(pizzaOrder.getAmount() - pizzaDaoImplementation.discountPrice(pizzaOrder));
@@ -286,6 +480,13 @@ public class PizzaServiceImplementation implements PizzaService {
 		return pizzaOrder.getAmount();
 	}
 
+	/**
+	 *@param payment
+	 *@param result
+	 *@throws SQLException,
+	 *@throws InvalidFieldException
+	 *To add new payment
+	 */
 	@Override
 	public void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
@@ -297,6 +498,9 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 //	==========Logout==========
+	/**
+	 *To logout and close the connection with the database
+	 */
 	@Override
 	public void logout() {
 		pizzaDaoImplementation.close();

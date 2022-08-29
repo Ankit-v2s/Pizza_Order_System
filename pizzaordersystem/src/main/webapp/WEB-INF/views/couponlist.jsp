@@ -25,7 +25,7 @@
 			<div id="problemCoupon" class="col-sm-12" style="display: none;">
 				<div class="alert alert-danger">
 					<strong><em class="fa fa-thumbs-down"></em> </strong> 
-					<span>Something went wrong !!</span>
+					<span><spring:message code="pizza.order.system.error.message" /></span>
 				</div>
 			</div>
 			<!-- Modal -->
@@ -33,8 +33,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Add/Edit
-								Coupon</h5>
+							<h5 class="modal-title" id="exampleModalLabel"><spring:message code="employee.coupon.add.edit.modal.heading" /></h5>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -45,15 +44,15 @@
 								<div class="col-md-12 ">
 									<input type="hidden" id="couponId">
 									<div class="form-group ">
-										<label for="couponcode">Coupon Code</label> <input type="text"
+										<label for="couponcode"><spring:message code="employee.coupon.add.edit.modal.coupon.code.label" /></label> <input type="text"
 											class="form-control" id="couponcode"
-											placeholder="Enter Coupon Name">
+											placeholder="<spring:message code="employee.coupon.add.edit.modal.coupon.code.placeholder" />">
 											<div id="couponcodeError" class="error"></div>
 									</div>
 									<div class="form-group ">
-										<label for="discount">Discount</label> <input type="number"
+										<label for="discount"><spring:message code="employee.coupon.add.edit.modal.discount.label" /></label> <input type="number"
 											class="form-control" id="discount"
-											placeholder="Enter Discount">
+											placeholder="<spring:message code="employee.coupon.add.edit.modal.discount.placeholder" />">
 											<div id="discountError" class="error"></div>
 									</div>
 								</div>
@@ -61,8 +60,8 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" id="addEditCoupon">Save changes</button>
+								data-dismiss="modal"><spring:message code="employee.coupon.add.edit.modal.button.close.label" /></button>
+							<button type="button" class="btn btn-primary" id="addEditCoupon"><spring:message code="employee.coupon.add.edit.modal.button.save.label" /></button>
 						</div>
 					</div>
 				</div>
@@ -71,14 +70,14 @@
 				<div class="main-body table-wrapper-scroll-y my-custom-scrollbar">
 				<button type="button" class="btn btn-primary mb-2"
 					data-toggle="modal" onclick="addCoupon()"
-					data-target="#couponAddEdit">Add</button>
+					data-target="#couponAddEdit"><spring:message code="employee.coupon.add.button.label" /></button>
 				<table class="table table-hover table-light">
 					<tr>
-						<td><strong>Coupon Id</strong></td>
-						<td><strong>Coupon Code</strong></td>
-						<td><strong>Discount</strong></td>
-						<td><strong>Edit</strong></td>
-						<td><strong>Delete</strong></td>
+						<td><strong><spring:message code="employee.coupon.table.header.id" /></strong></td>
+						<td><strong><spring:message code="employee.coupon.table.header.coupon.code" /></strong></td>
+						<td><strong><spring:message code="employee.coupon.table.header.discount" /></strong></td>
+						<td><strong><spring:message code="employee.coupon.table.header.edit" /></strong></td>
+						<td><strong><spring:message code="employee.coupon.table.header.delete" /></strong></td>
 					</tr>
 					<c:forEach items="${couponlist}" var="couponlist">
 						<tr>
@@ -107,17 +106,17 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					Confirm Delete
+					<spring:message code="employee.coupon.delete.modal.heading" />
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">Are you sure you wanna delete this ?</div>
+				<div class="modal-body"><spring:message code="employee.coupon.delete.modal.message" /></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.cancel.label" /></button>
 					<a class="btn btn-danger btn-ok" id="confirmDeleteCoupon"
-						data-dismiss="modal">Delete</a>
+						data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.delete.label" /></a>
 				</div>
 			</div>
 		</div>

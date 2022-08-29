@@ -24,10 +24,10 @@
 			<div class="table-wrapper-scroll-y my-custom-scrollbar">
 				<table class="table table-hover table-light">
 					<tr>
-						<td><strong>Feedback Id</strong></td>
-						<td><strong>Customer Name</strong></td>
-						<td><strong>Feedback Status</strong></td>
-						<td><strong>Comments</strong></td>
+						<td><strong><spring:message code="employee.feedback.table.heading.id" /></strong></td>
+						<td><strong><spring:message code="employee.feedback.table.heading.name" /></strong></td>
+						<td><strong><spring:message code="employee.feedback.table.heading.type" /></strong></td>
+						<td><strong><spring:message code="employee.feedback.table.heading.comments" /></strong></td>
 					</tr>
 					<c:forEach items="${feedbacklist}" var="feedback">
 						<tr>

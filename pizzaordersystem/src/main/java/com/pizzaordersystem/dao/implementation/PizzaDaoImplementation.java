@@ -569,7 +569,7 @@ public class PizzaDaoImplementation implements PizzaDao {
 	}
 
 	@Override
-	public int pizzaOrder() throws SQLException {
+	public int calculateAmount() throws SQLException {
 		int amount = 0;
 		preparedStatement = connection.prepareStatement("select sum(amount) from order_items where order_id=?;");
 		preparedStatement.setInt(1, orderId);

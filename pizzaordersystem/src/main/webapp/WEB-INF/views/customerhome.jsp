@@ -74,8 +74,8 @@
 				style="height: 275px;">
 				<table class="table table-hover table-light" id="cart-table" style="display: none;">
 					<tr>
-						<td><strong>Pizza Name</strong></td>
-						<td><strong>Quantity</strong></td>
+						<td><strong><spring:message code="customer.home.table.heading.name" /></strong></td>
+						<td><strong><spring:message code="customer.home.table.heading.quantity" /></strong></td>
 					</tr>
 					<tbody id="cart">
 					</tbody>

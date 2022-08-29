@@ -23,16 +23,16 @@
 			<div class="main-body">
 				<table class="table table-hover table-light" style="width:70%">
 					<tr>
-						<td><strong>Customer Id</strong></td>
-						<td><strong>Customer Name</strong></td>
-						<td><strong>Address Line 1</strong></td>
-						<td><strong>Address Line 2</strong></td>
-						<td><strong>City Name</strong></td>
-						<td><strong>State Name</strong></td>
-						<td><strong>Country Name</strong></td>
-						<td><strong>Gender</strong></td>
-						<td><strong>Email</strong></td>
-						<td><strong>Phone Number</strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.id" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.name" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.address.line.1" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.address.line.2" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.city" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.state" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.country" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.gender" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.email" /></strong></td>
+						<td><strong><spring:message code="employee.customer.list.table.heading.phone" /></strong></td>
 					</tr>
 					<c:forEach items="${customerlist}" var="customer">
 						<tr>

@@ -26,7 +26,7 @@ import com.pizzaordersystem.service.PizzaService;
  *
  */
 @RestController
-public class PizzaController {
+public class HomeController {
 
 	private static final String CITY_LIST = "cityList";
 
@@ -40,7 +40,7 @@ public class PizzaController {
 	 * @return ModelAndView
 	 * To load the application and open the first page 
 	 * Logout functionality
-	 */
+	 */ 
 	@RequestMapping("/")
 	public ModelAndView loginPage(ModelAndView modelAndView) {
 		pizzaServiceImplementation.logout();

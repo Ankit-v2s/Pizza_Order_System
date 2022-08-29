@@ -133,7 +133,7 @@ public class CustomerController {
 	@GetMapping("/order/pizza")
 	public int orderDetails() throws SQLException {
 		pizzaServiceImplementation.addOrder();
-		return pizzaServiceImplementation.orderPizza();
+		return pizzaServiceImplementation.calculate();
 	}
 
 	/**

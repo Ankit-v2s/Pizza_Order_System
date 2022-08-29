@@ -25,14 +25,13 @@
 					<div class="col-md-8 ">
 					<div id="addSuccess" class="form-group row col-md-8" style="display: none;">
 						<div class="alert alert-success">
-							<strong><em class="fa fa-thumbs-up"></em> </strong> <span>Data
-								Add Successfully</span>
+							<strong><em class="fa fa-thumbs-up"></em> </strong> <span><spring:message code="customer.feedback.successfully.added" /></span>
 						</div>
 					</div>
 						<div class="form-group row col-md-8">
 							<select class="textbox" id="feedbackStatus" name="feedbackStatus"
 								required="required">
-								<option selected disabled value="">Select Feedback Type</option>
+								<option selected disabled value=""><spring:message code="customer.feedback.type.disabled.option" /></option>
 								<c:forEach items="${feedbacklist}" var="feedback">
 									<option value="${feedback.feedbackStatusType}">${feedback.feedbackStatusType}</option>
 								</c:forEach>
@@ -40,12 +39,12 @@
 							<div id="feedbackStatusError" class="error"></div>
 						</div>
 						<div class="form-group row col-md-8">
-							<textarea id="comments" class="textbox" placeholder="Comments"></textarea>
+							<textarea id="comments" class="textbox" placeholder="<spring:message code="customer.feedback.comments.placeholder" />"></textarea>
 							<div id="commentsError" class="error"></div>
 						</div>
 						<div class="form-group row col-md-8">
 							<button type="button" id="addfeedback"
-								class="btn btn-primary btn-block">Add Feedback</button>
+								class="btn btn-primary btn-block"><spring:message code="customer.feedback.button.label.add" /></button>
 						</div>
 					</div>
 				</div>

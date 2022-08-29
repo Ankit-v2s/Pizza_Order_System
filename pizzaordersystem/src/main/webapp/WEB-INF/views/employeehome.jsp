@@ -25,10 +25,10 @@
 			<div class="main-body table-wrapper-scroll-y my-custom-scrollbar">
 				<table class="table table-light table-hover">
 					<tr>
-						<td><strong>Order Id</strong></td>
-						<td><strong>Customer Name</strong></td>
-						<td><strong>Date Of Order</strong></td>
-						<td><strong>Status</strong></td>
+						<td><strong><spring:message code="employee.home.table.heading.id" /></strong></td>
+						<td><strong><spring:message code="employee.home.table.heading.name" /></strong></td>
+						<td><strong><spring:message code="employee.home.table.heading.date" /></strong></td>
+						<td><strong><spring:message code="employee.home.table.heading.status" /></strong></td>
 					</tr>
 					<c:forEach items="${orderlist}" var="orders">
 						<tr>

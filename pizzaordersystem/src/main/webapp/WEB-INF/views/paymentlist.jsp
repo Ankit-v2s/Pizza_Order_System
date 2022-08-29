@@ -28,7 +28,7 @@
 						<div class="form-group">
 							<select class="txtbox col-md-5" id="paymentmode"
 								name="paymentmode" onchange="filterPaymentByMode()">
-								<option selected disabled value="">Select Payment Mode</option>
+								<option selected disabled value=""><spring:message code="employee.payment.mode.default.option" /></option>
 								<c:forEach items="${paymentmodelist}" var="paymentmode">
 									<option value="${paymentmode.mode}">${paymentmode.mode}</option>
 								</c:forEach>
@@ -39,11 +39,11 @@
 				<div class="table-wrapper-scroll-y my-custom-scrollbar">
 				<table class="table table-hover table-light">
 					<tr>
-						<td><strong>Payment Id</strong></td>
-						<td><strong>Customer Name</strong></td>
-						<td><strong>Coupon Code</strong></td>
-						<td><strong>Amount Paid</strong></td>
-						<td><strong>Mode</strong></td>
+						<td><strong><spring:message code="employee.payment.table.heading.id" /></strong></td>
+						<td><strong><spring:message code="employee.payment.table.heading.name" /></strong></td>
+						<td><strong><spring:message code="employee.payment.table.heading.coupon" /></strong></td>
+						<td><strong><spring:message code="employee.payment.table.heading.amount" /></strong></td>
+						<td><strong><spring:message code="employee.payment.table.heading.mode" /></strong></td>
 					</tr>
 					<c:forEach items="${paymentlist}" var="payment">
 						<tr>
