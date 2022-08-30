@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import com.pizzaordersystem.dao.PizzaDao;
+import com.pizzaordersystem.dao.CustomerDao;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.exception.ZeroAmountException;
 import com.pizzaordersystem.model.CustomerData;
@@ -17,12 +18,11 @@ import com.pizzaordersystem.model.Payment;
 import com.pizzaordersystem.model.PizzaOrder;
 import com.pizzaordersystem.service.CustomerService;
 
-public class CustomerServiceImplementation implements CustomerService {
+@Service
+public class CustomerServiceImplementation extends PizzaServiceImplementation implements CustomerService {
 
 	@Autowired
-	private PizzaDao pizzaDaoImplementation;
-	@Autowired
-	private PizzaServiceImplementation pizzaServiceImplementation;
+	private CustomerDao customerDao;
 	
 	/**
 	 *@return CustomerData
@@ -31,7 +31,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	 */
 	@Override
 	public CustomerData fetchCustomerDetails() throws SQLException {
-		return pizzaDaoImplementation.getCustomer(pizzaServiceImplementation.getLoginCredentials());
+		return customerDao.getCustomer(loginCredentials);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	public void updateCustomer(CustomerData customerData, int customerId, BindingResult result)
 			throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaDaoImplementation.updateCustomer(customerData,customerId);
+			customerDao.updateCustomer(customerData,customerId);
 		} else {
 			throw new InvalidFieldException(result);
 		}
@@ -60,7 +60,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	@Override
 	public List<FeedbackStatus> fetchFeedbackStatus() throws SQLException {
 		List<FeedbackStatus> feedbackStatusList = new ArrayList<>();
-		return pizzaDaoImplementation.getFeedbackStatus(feedbackStatusList);
+		return customerDao.getFeedbackStatus(feedbackStatusList);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	@Override
 	public void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaDaoImplementation.addFeedback(feedback, pizzaServiceImplementation.getLoginCredentials());
+			customerDao.addFeedback(feedback, loginCredentials);
 		} else {
 			throw new InvalidFieldException(result);
 		}
@@ -86,7 +86,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	 */
 	@Override
 	public int calculate() throws SQLException {
-		return pizzaDaoImplementation.calculateAmount();
+		return customerDao.calculateAmount();
 	}
 
 	/**
@@ -95,8 +95,8 @@ public class CustomerServiceImplementation implements CustomerService {
 	 */
 	@Override
 	public void addOrder() throws SQLException {
-		pizzaDaoImplementation.addOrder(pizzaServiceImplementation.getLoginCredentials());
-		pizzaDaoImplementation.addItem(pizzaServiceImplementation.getCartList());
+		customerDao.addOrder(loginCredentials);
+		customerDao.addItem(getCartList());
 	}
 
 	/**
@@ -109,9 +109,9 @@ public class CustomerServiceImplementation implements CustomerService {
 	@Override
 	public List<PizzaOrder> addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaServiceImplementation.setPizzaOrder(pizza);
-			pizzaServiceImplementation.getCartList().add(pizza);
-			return pizzaServiceImplementation.getCartList();
+			PizzaServiceImplementation.pizzaOrder = pizza;
+			cart.add(pizza);
+			return cart;
 		} else {
 			throw new InvalidFieldException(result);
 		}
@@ -126,11 +126,11 @@ public class CustomerServiceImplementation implements CustomerService {
 	 */
 	@Override
 	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
-		pizzaOrder.setAmount(pizzaOrder.getAmount() - pizzaDaoImplementation.discountPrice(pizzaOrder));
+		pizzaOrder.setAmount(pizzaOrder.getAmount() - customerDao.discountPrice(pizzaOrder));
 		if (pizzaOrder.getAmount() < 0) {
 			throw new ZeroAmountException("Coupon not apllicable");
 		}
-		pizzaServiceImplementation.getPizzaOrder().setAmount(pizzaOrder.getAmount());
+		pizzaOrder.setAmount(pizzaOrder.getAmount());
 		return pizzaOrder.getAmount();
 	}
 
@@ -144,8 +144,8 @@ public class CustomerServiceImplementation implements CustomerService {
 	@Override
 	public void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaServiceImplementation.getCartList().clear();
-			pizzaDaoImplementation.addPayment(pizzaServiceImplementation.getLoginCredentials(), payment);
+			cart.clear();
+			customerDao.addPayment(loginCredentials, payment);
 		} else {
 			throw new InvalidFieldException(result);
 		}

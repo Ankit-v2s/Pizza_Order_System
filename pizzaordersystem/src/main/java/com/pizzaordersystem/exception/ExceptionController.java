@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,6 +21,8 @@ public class ExceptionController {
 
 	private static final String SOMETHING_WENT_WRONG = "Something went wrong : ";
 	private static final String ERROR = "Error";
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionController.class);
+
 
 	@ExceptionHandler(CredentialCheckerException.class)
 	public ResponseEntity<?> credentialCheckerException(CredentialCheckerException ex) {
@@ -45,19 +49,19 @@ public class ExceptionController {
 
 	@ExceptionHandler(SQLException.class)
 	public String sqlException(SQLException ex, ModelAndView modelAndView) {
-		System.out.println(SOMETHING_WENT_WRONG + ex.getMessage());
+		LOGGER.info(SOMETHING_WENT_WRONG + ex.getMessage());
 		return ERROR;
 	}
 
 	@ExceptionHandler(ClassNotFoundException.class)
 	public String classNotFoundException(ClassNotFoundException ex, ModelAndView modelAndView) {
-		System.out.println(SOMETHING_WENT_WRONG + ex.getMessage());
+		LOGGER.info(SOMETHING_WENT_WRONG + ex.getMessage());
 		return ERROR;
 	}
 
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception ex) {
-		System.out.println(SOMETHING_WENT_WRONG + ex.getMessage());
+		LOGGER.info(SOMETHING_WENT_WRONG + ex.getMessage());
 		return ERROR;
 	}
 }

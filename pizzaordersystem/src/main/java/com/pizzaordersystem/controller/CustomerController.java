@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,9 @@ import com.pizzaordersystem.model.CustomerData;
 import com.pizzaordersystem.model.Feedback;
 import com.pizzaordersystem.model.Payment;
 import com.pizzaordersystem.model.PizzaOrder;
-import com.pizzaordersystem.service.PizzaService;
+import com.pizzaordersystem.service.CustomerService;
+import com.pizzaordersystem.service.EmployeeService;
+import com.pizzaordersystem.service.implementation.PizzaServiceImplementation;
 
 /**
  * @author Ankit Madhavi
@@ -40,7 +43,12 @@ public class CustomerController {
 	private static final String CITY_LIST = "cityList";
 
 	@Autowired
-	private PizzaService pizzaServiceImplementation;
+	private PizzaServiceImplementation pizzaServiceImplementation;
+	@Autowired 
+	private CustomerService customerServiceImplementation;
+	@Autowired 
+	private EmployeeService employeeServiceImplementation;
+	
 
 	/**
 	 * @param modelAndView
@@ -50,9 +58,9 @@ public class CustomerController {
 	 */
 	@GetMapping("/customerhome")
 	public ModelAndView customerDashboard(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
-		modelAndView.addObject(PAYMENTMODELIST, pizzaServiceImplementation.fetchPaymentModes());
-		modelAndView.addObject(COUPONLIST, pizzaServiceImplementation.fetchCoupons());
+		modelAndView.addObject(PIZZALIST, employeeServiceImplementation.fetchPizzaMenu());
+		modelAndView.addObject(PAYMENTMODELIST, employeeServiceImplementation.fetchPaymentModes());
+		modelAndView.addObject(COUPONLIST, employeeServiceImplementation.fetchCoupons());
 		modelAndView.addObject("cartList", pizzaServiceImplementation.getCartList());
 		modelAndView.setViewName("customerhome");
 		return modelAndView;
@@ -66,7 +74,7 @@ public class CustomerController {
 	 */
 	@GetMapping("/editcustomer")
 	public ModelAndView customer(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject("customer", pizzaServiceImplementation.fetchCustomerDetails());
+		modelAndView.addObject("customer", customerServiceImplementation.fetchCustomerDetails());
 		modelAndView.addObject(CITY_LIST, pizzaServiceImplementation.fetchCity());
 		modelAndView.setViewName("customerdetails");
 		return modelAndView;
@@ -80,9 +88,9 @@ public class CustomerController {
 	 * Update the customer details
 	 */
 	@PutMapping("/customer/{customerId}")
-	public void updateCustomer(@Valid @RequestBody CustomerData customerData, int customerId, BindingResult result)
+	public void updateCustomer(@Valid @RequestBody CustomerData customerData,@PathVariable int customerId, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.updateCustomer(customerData, customerId, result);
+		customerServiceImplementation.updateCustomer(customerData, customerId, result);
 	}
 
 	/**
@@ -93,7 +101,7 @@ public class CustomerController {
 	 */
 	@GetMapping("/feedback")
 	public ModelAndView addFeedback(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(FEEDBACKLIST, pizzaServiceImplementation.fetchFeedbackStatus());
+		modelAndView.addObject(FEEDBACKLIST, customerServiceImplementation.fetchFeedbackStatus());
 		modelAndView.setViewName("feedback");
 		return modelAndView;
 	}
@@ -108,7 +116,7 @@ public class CustomerController {
 	@PostMapping("/add/feedback")
 	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addFeedback(feedback, result);
+		customerServiceImplementation.addFeedback(feedback, result);
 	}
 
 	/**
@@ -122,7 +130,7 @@ public class CustomerController {
 	@PostMapping("/add/item")
 	public List<PizzaOrder> orderPizza(@Valid @RequestBody PizzaOrder pizza, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		return pizzaServiceImplementation.addItem(pizza, result);
+		return customerServiceImplementation.addItem(pizza, result);
 	}
 
 	/**
@@ -132,8 +140,8 @@ public class CustomerController {
 	 */
 	@GetMapping("/order/pizza")
 	public int orderDetails() throws SQLException {
-		pizzaServiceImplementation.addOrder();
-		return pizzaServiceImplementation.calculate();
+		customerServiceImplementation.addOrder();
+		return customerServiceImplementation.calculate();
 	}
 
 	/**
@@ -145,7 +153,7 @@ public class CustomerController {
 	 */
 	@PostMapping("/order/pizza/discount")
 	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
-		return pizzaServiceImplementation.discountPrice(pizzaOrder);
+		return customerServiceImplementation.discountPrice(pizzaOrder);
 	}
 
 	/**
@@ -158,6 +166,6 @@ public class CustomerController {
 	@PostMapping("/pay/order")
 	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addPayment(payment, result);
+		customerServiceImplementation.addPayment(payment, result);
 	}
 }

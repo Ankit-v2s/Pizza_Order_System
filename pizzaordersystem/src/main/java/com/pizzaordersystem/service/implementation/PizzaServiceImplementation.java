@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import com.pizzaordersystem.dao.PizzaDao;
+import com.pizzaordersystem.dao.PizzzaDao;
 import com.pizzaordersystem.exception.CredentialCheckerException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
@@ -28,28 +28,11 @@ import com.pizzaordersystem.service.PizzaService;
 public class PizzaServiceImplementation implements PizzaService {
 
 	@Autowired
-	private PizzaDao pizzaDaoImplementation;
-	private LoginCredentials loginCredentials;
-	private PizzaOrder pizzaOrder;
+	private PizzzaDao pizzaDaoImplementation;
+	static LoginCredentials loginCredentials;
+	static PizzaOrder pizzaOrder;
 	Connection connection;
-	private List<PizzaOrder> cart = new ArrayList<>();
-	
-	public LoginCredentials getLoginCredentials() {
-		return loginCredentials;
-	}
-	
-	public PizzaOrder getPizzaOrder() {
-		return pizzaOrder;
-	}
-
-	public void setPizzaOrder(PizzaOrder pizzaOrder) {
-		this.pizzaOrder = pizzaOrder;
-	}
-	
-	public void setLoginCredentials(LoginCredentials loginCredentials) {
-		this.loginCredentials = loginCredentials;
-	}
-	
+	static List<PizzaOrder> cart = new ArrayList<>();
 	
 	/**
 	 *@return List
@@ -68,7 +51,6 @@ public class PizzaServiceImplementation implements PizzaService {
 		this.connection = pizzaDaoImplementation.getConnection();
 	}
 
-//	==========Login==========
 	/**
 	 *@param loginCredentials
 	 *@param result
@@ -86,7 +68,7 @@ public class PizzaServiceImplementation implements PizzaService {
 			for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
 				if (credentials.getUserName().equals(loginCredentials.getUserName())
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
-					this.loginCredentials = credentials;
+					PizzaServiceImplementation.loginCredentials=credentials;
 					if (credentials.getEmployeeId() != 0) {
 						return "employeehome";
 					} else if (credentials.getCustomerId() != 0) {
@@ -144,13 +126,6 @@ public class PizzaServiceImplementation implements PizzaService {
 		throw new NullPointerException();
 	}
 
-//	==========Admin==========
-
-
-//	==========Customer==========
-	
-
-//	==========Logout==========
 	/**
 	 *To logout and close the connection with the database
 	 */

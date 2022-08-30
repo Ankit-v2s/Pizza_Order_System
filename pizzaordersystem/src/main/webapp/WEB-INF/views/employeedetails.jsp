@@ -166,6 +166,6 @@
 	<script type="text/javascript"
 		src="<c:url value="/static/js/validation.js" />"></script>
 	<script type="text/javascript"
-		src="<c:url value="/static/js/employee-detials.js" />"></script>
+		src="<c:url value="/static/js/employee-details.js" />"></script>
 </body>
 </html>

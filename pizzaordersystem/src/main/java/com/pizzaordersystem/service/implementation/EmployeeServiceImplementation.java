@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import com.pizzaordersystem.dao.PizzaDao;
+import com.pizzaordersystem.dao.EmployeeDao;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -21,12 +22,11 @@ import com.pizzaordersystem.model.PaymentModes;
 import com.pizzaordersystem.model.PizzaMenu;
 import com.pizzaordersystem.service.EmployeeService;
 
-public class EmployeeServiceImplementation implements EmployeeService {
+@Service
+public class EmployeeServiceImplementation extends PizzaServiceImplementation implements EmployeeService {
 
 	@Autowired
-	private PizzaDao pizzaDaoImplementation;
-	@Autowired
-	private PizzaServiceImplementation pizzaServiceImplementation;
+	private EmployeeDao employeeDao;
 	
 	/**
 	 *@return List
@@ -36,7 +36,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Order> fetchOrders() throws SQLException {
 		List<Order> orderList = new ArrayList<>();
-		return pizzaDaoImplementation.getOrders(orderList);
+		return employeeDao.getOrders(orderList);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Order> fetchAllOrders() throws SQLException {
 		List<Order> orderList = new ArrayList<>();
-		return pizzaDaoImplementation.getAllOrders(orderList);
+		return employeeDao.getAllOrders(orderList);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<OrderStatus> fetchOrderStatus() throws SQLException {
 		List<OrderStatus> orderStatusList = new ArrayList<>();
-		return pizzaDaoImplementation.getOrderStatus(orderStatusList);
+		return employeeDao.getOrderStatus(orderStatusList);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Order> fetchOrdersByStatusType(String statusType) throws SQLException {
 		List<Order> orderList = new ArrayList<>();
-		return pizzaDaoImplementation.getOrdersByStatusType(orderList, statusType);
+		return employeeDao.getOrdersByStatusType(orderList, statusType);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Order> fetchOrdersByDate(Date date) throws SQLException {
 		List<Order> orderList = new ArrayList<>();
-		return pizzaDaoImplementation.getOrdersByDate(orderList, date);
+		return employeeDao.getOrdersByDate(orderList, date);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Feedback> fetchFeedback() throws SQLException {
 		List<Feedback> feedbackList = new ArrayList<>();
-		return pizzaDaoImplementation.getFeedback(feedbackList);
+		return employeeDao.getFeedback(feedbackList);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<CustomerData> fetchCustomer() throws SQLException {
 		List<CustomerData> customerDataList = new ArrayList<>();
-		return pizzaDaoImplementation.getCustomerData(customerDataList);
+		return employeeDao.getCustomerData(customerDataList);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	 */
 	@Override
 	public Employee fetchEmployee() throws SQLException {
-		return pizzaDaoImplementation.getEmployee(pizzaServiceImplementation.getLoginCredentials());
+		return employeeDao.getEmployee(loginCredentials);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public void updateEmployee(Employee employee, int employeeId, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaDaoImplementation.updateEmployee(employee,employeeId);
+			employeeDao.updateEmployee(employee,employeeId);
 		} else {
 			throw new InvalidFieldException(result);
 		}
@@ -142,7 +142,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Payment> fetchPayments() throws SQLException {
 		List<Payment> paymentList = new ArrayList<>();
-		return pizzaDaoImplementation.getPayments(paymentList);
+		return employeeDao.getPayments(paymentList);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<PaymentModes> fetchPaymentModes() throws SQLException {
 		List<PaymentModes> paymentModeList = new ArrayList<>();
-		return pizzaDaoImplementation.getPaymentModes(paymentModeList);
+		return employeeDao.getPaymentModes(paymentModeList);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException {
 		List<Payment> paymentList = new ArrayList<>();
-		return pizzaDaoImplementation.getPaymentByMode(paymentList, paymentMode);
+		return employeeDao.getPaymentByMode(paymentList, paymentMode);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<PizzaMenu> fetchPizzaMenu() throws SQLException {
 		List<PizzaMenu> pizzaList = new ArrayList<>();
-		return pizzaDaoImplementation.getPizza(pizzaList);
+		return employeeDao.getPizza(pizzaList);
 	}
 
 	/**
@@ -190,9 +190,9 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	public void addEditPizza(PizzaMenu pizzaMenu, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
 			if (pizzaMenu.getPizzaId() == 0) {
-				pizzaDaoImplementation.addPizza(pizzaMenu);
+				employeeDao.addPizza(pizzaMenu);
 			} else {
-				pizzaDaoImplementation.updatePizza(pizzaMenu);
+				employeeDao.updatePizza(pizzaMenu);
 			}
 		} else {
 			throw new InvalidFieldException(result);
@@ -207,7 +207,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	 */
 	@Override
 	public PizzaMenu fetchPizza(int pizzaId) throws SQLException {
-		return pizzaDaoImplementation.getPizza(pizzaId);
+		return employeeDao.getPizza(pizzaId);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	 */
 	@Override
 	public void deletePizza(int pizzaId) throws SQLException {
-		pizzaDaoImplementation.deletePizza(pizzaId);
+		employeeDao.deletePizza(pizzaId);
 	}
 
 	/**
@@ -228,7 +228,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	@Override
 	public List<Coupon> fetchCoupons() throws SQLException {
 		List<Coupon> couponList = new ArrayList<>();
-		return pizzaDaoImplementation.getCoupons(couponList);
+		return employeeDao.getCoupons(couponList);
 	}
 
 	/**
@@ -242,9 +242,9 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	public void addEditCoupon(Coupon coupon, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
 			if (coupon.getCouponId() == 0) {
-				pizzaDaoImplementation.addCoupon(coupon);
+				employeeDao.addCoupon(coupon);
 			} else {
-				pizzaDaoImplementation.updateCoupon(coupon);
+				employeeDao.updateCoupon(coupon);
 			}
 		} else {
 			throw new InvalidFieldException(result);
@@ -259,7 +259,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	 */
 	@Override
 	public Coupon fetchCoupon(int couponId) throws SQLException {
-		return pizzaDaoImplementation.getcoupon(couponId);
+		return employeeDao.getcoupon(couponId);
 	}
 
 	/**
@@ -269,6 +269,6 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	 */
 	@Override
 	public void deleteCoupon(int couponId) throws SQLException {
-		pizzaDaoImplementation.deleteCoupon(couponId);
+		employeeDao.deleteCoupon(couponId);
 	}
 }

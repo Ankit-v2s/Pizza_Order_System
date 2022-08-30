@@ -114,9 +114,9 @@
 				</div>
 				<div class="modal-body"><spring:message code="employee.coupon.delete.modal.message" /></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.cancel.label" /></button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.button.cancel.label" /></button>
 					<a class="btn btn-danger btn-ok" id="confirmDeleteCoupon"
-						data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.delete.label" /></a>
+						data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.button.delete.label" /></a>
 				</div>
 			</div>
 		</div>

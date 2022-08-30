@@ -20,6 +20,7 @@ import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.Employee;
 import com.pizzaordersystem.model.PizzaMenu;
+import com.pizzaordersystem.service.EmployeeService;
 import com.pizzaordersystem.service.PizzaService;
 
 /**
@@ -53,6 +54,8 @@ public class EmployeeController {
 
 	@Autowired
 	private PizzaService pizzaServiceImplementation;
+	@Autowired
+	private EmployeeService employeeServiceImplementation;
 
 	/**
 	 * @param modelAndView
@@ -62,7 +65,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/employeehome")
 	public ModelAndView employeeDashboard(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(ORDERLIST, pizzaServiceImplementation.fetchOrders());
+		modelAndView.addObject(ORDERLIST, employeeServiceImplementation.fetchOrders());
 		modelAndView.setViewName(EMPLOYEEHOME);
 		return modelAndView;
 	}
@@ -75,7 +78,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/pizza")
 	public ModelAndView pizzaDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
+		modelAndView.addObject(PIZZALIST, employeeServiceImplementation.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
 		return modelAndView;
 	}
@@ -88,7 +91,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/pizza/{id}")
 	public PizzaMenu editPizza(@PathVariable int id) throws SQLException {
-		return pizzaServiceImplementation.fetchPizza(id);
+		return employeeServiceImplementation.fetchPizza(id);
 	}
 
 	/**
@@ -103,8 +106,8 @@ public class EmployeeController {
 	@PostMapping("/add/pizza")
 	public ModelAndView addPizza(@Valid @RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView,
 			BindingResult result) throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addEditPizza(pizzaMenu, result);
-		modelAndView.addObject(PIZZALIST, pizzaServiceImplementation.fetchPizzaMenu());
+		employeeServiceImplementation.addEditPizza(pizzaMenu, result);
+		modelAndView.addObject(PIZZALIST, employeeServiceImplementation.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
 		return modelAndView;
 	}
@@ -116,7 +119,7 @@ public class EmployeeController {
 	 */
 	@DeleteMapping("/delete/pizza/{pizzaId}")
 	public void deletePizza(@PathVariable int pizzaId) throws SQLException {
-		pizzaServiceImplementation.deletePizza(pizzaId);
+		employeeServiceImplementation.deletePizza(pizzaId);
 	}
 
 
@@ -128,7 +131,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/customer")
 	public ModelAndView customerDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(CUSTOMERLIST, pizzaServiceImplementation.fetchCustomer());
+		modelAndView.addObject(CUSTOMERLIST, employeeServiceImplementation.fetchCustomer());
 		modelAndView.setViewName(CUSTOMERLIST);
 		return modelAndView;
 	}
@@ -141,7 +144,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/employeedetails")
 	public ModelAndView employeeDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject("employee", pizzaServiceImplementation.fetchEmployee());
+		modelAndView.addObject("employee", employeeServiceImplementation.fetchEmployee());
 		modelAndView.addObject(CITY_LIST, pizzaServiceImplementation.fetchCity());
 		modelAndView.setViewName("employeedetails");
 		return modelAndView;
@@ -158,7 +161,7 @@ public class EmployeeController {
 	@PutMapping("/employee/{employeeId}")
 	public void updateEmployee(@Valid @RequestBody Employee employee, @PathVariable int employeeId, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.updateEmployee(employee,employeeId, result);
+		employeeServiceImplementation.updateEmployee(employee,employeeId, result);
 	}
 
 	/**
@@ -169,7 +172,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/coupons")
 	public ModelAndView couponDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(COUPONLIST, pizzaServiceImplementation.fetchCoupons());
+		modelAndView.addObject(COUPONLIST, employeeServiceImplementation.fetchCoupons());
 		modelAndView.setViewName(COUPONLIST);
 		return modelAndView;
 	}
@@ -182,7 +185,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/coupon/{id}")
 	public Coupon editCoupon(@PathVariable int id) throws SQLException {
-		return pizzaServiceImplementation.fetchCoupon(id);
+		return employeeServiceImplementation.fetchCoupon(id);
 	}
 
 	/**
@@ -195,7 +198,7 @@ public class EmployeeController {
 	@PostMapping("/add/coupon")
 	public void addCoupon(@Valid @RequestBody Coupon coupon, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addEditCoupon(coupon, result);
+		employeeServiceImplementation.addEditCoupon(coupon, result);
 	}
 
 	/**
@@ -205,7 +208,7 @@ public class EmployeeController {
 	 */
 	@DeleteMapping("/delete/coupon/{couponId}")
 	public void deleteCoupon(@PathVariable int couponId) throws SQLException {
-		pizzaServiceImplementation.deleteCoupon(couponId);
+		employeeServiceImplementation.deleteCoupon(couponId);
 	}
 
 	/**
@@ -216,8 +219,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/payments")
 	public ModelAndView paymentDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(PAYMENTMODELIST, pizzaServiceImplementation.fetchPaymentModes());
-		modelAndView.addObject(PAYMENTLIST, pizzaServiceImplementation.fetchPayments());
+		modelAndView.addObject(PAYMENTMODELIST, employeeServiceImplementation.fetchPaymentModes());
+		modelAndView.addObject(PAYMENTLIST, employeeServiceImplementation.fetchPayments());
 		modelAndView.setViewName(PAYMENTLIST);
 		return modelAndView;
 	}
@@ -231,8 +234,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/payment/{paymentMode}")
 	public ModelAndView filterPayment(@PathVariable String paymentMode, ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(PAYMENTMODELIST, pizzaServiceImplementation.fetchPaymentModes());
-		modelAndView.addObject(PAYMENTLIST, pizzaServiceImplementation.fetchPaymentByMode(paymentMode));
+		modelAndView.addObject(PAYMENTMODELIST, employeeServiceImplementation.fetchPaymentModes());
+		modelAndView.addObject(PAYMENTLIST, employeeServiceImplementation.fetchPaymentByMode(paymentMode));
 		modelAndView.setViewName(PAYMENTLIST);
 		return modelAndView;
 	}
@@ -245,8 +248,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/orders")
 	public ModelAndView orderDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(ORDERSTATUSLIST, pizzaServiceImplementation.fetchOrderStatus());
-		modelAndView.addObject(FULLORDERLIST, pizzaServiceImplementation.fetchAllOrders());
+		modelAndView.addObject(ORDERSTATUSLIST, employeeServiceImplementation.fetchOrderStatus());
+		modelAndView.addObject(FULLORDERLIST, employeeServiceImplementation.fetchAllOrders());
 		modelAndView.setViewName(ORDERLIST);
 		return modelAndView;
 	}
@@ -261,8 +264,8 @@ public class EmployeeController {
 	@GetMapping("/order/{statusType}")
 	public ModelAndView filterOrderByType(@PathVariable String statusType, ModelAndView modelAndView)
 			throws SQLException {
-		modelAndView.addObject(ORDERSTATUSLIST, pizzaServiceImplementation.fetchOrderStatus());
-		modelAndView.addObject(FULLORDERLIST, pizzaServiceImplementation.fetchOrdersByStatusType(statusType));
+		modelAndView.addObject(ORDERSTATUSLIST, employeeServiceImplementation.fetchOrderStatus());
+		modelAndView.addObject(FULLORDERLIST, employeeServiceImplementation.fetchOrdersByStatusType(statusType));
 		modelAndView.setViewName(ORDERLIST);
 		return modelAndView;
 	}
@@ -276,8 +279,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/order/date/{date}")
 	public ModelAndView filterOrderByDate(@PathVariable Date date, ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(ORDERSTATUSLIST, pizzaServiceImplementation.fetchOrderStatus());
-		modelAndView.addObject(FULLORDERLIST, pizzaServiceImplementation.fetchOrdersByDate(date));
+		modelAndView.addObject(ORDERSTATUSLIST, employeeServiceImplementation.fetchOrderStatus());
+		modelAndView.addObject(FULLORDERLIST, employeeServiceImplementation.fetchOrdersByDate(date));
 		modelAndView.setViewName(ORDERLIST);
 		return modelAndView;
 	}
@@ -290,7 +293,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/feedbacks")
 	public ModelAndView feedbackDetails(ModelAndView modelAndView) throws SQLException {
-		modelAndView.addObject(FEEDBACKLIST, pizzaServiceImplementation.fetchFeedback());
+		modelAndView.addObject(FEEDBACKLIST, employeeServiceImplementation.fetchFeedback());
 		modelAndView.setViewName(FEEDBACKLIST);
 		return modelAndView;
 	}
