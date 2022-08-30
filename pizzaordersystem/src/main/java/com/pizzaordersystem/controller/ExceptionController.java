@@ -1,4 +1,4 @@
-package com.pizzaordersystem.exception;
+package com.pizzaordersystem.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
