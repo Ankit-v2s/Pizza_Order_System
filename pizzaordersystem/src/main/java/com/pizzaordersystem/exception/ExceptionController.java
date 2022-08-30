@@ -12,7 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pizzaordersystem.model.ExceptionDetails;
 
@@ -46,17 +46,23 @@ public class ExceptionController {
 		}
 		return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ExceptionHandler(CredentialsNotValidException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public void credentialsNotValidException(CredentialsNotValidException ex) {
+		LOGGER.info(SOMETHING_WENT_WRONG + ex.getMessage());
+	}
 
 	@ExceptionHandler(SQLException.class)
-	public String sqlException(SQLException ex, ModelAndView modelAndView) {
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public void sqlException(SQLException ex) {
 		LOGGER.info(SOMETHING_WENT_WRONG + ex.getMessage());
-		return ERROR;
 	}
 
 	@ExceptionHandler(ClassNotFoundException.class)
-	public String classNotFoundException(ClassNotFoundException ex, ModelAndView modelAndView) {
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public void classNotFoundException(ClassNotFoundException ex) {
 		LOGGER.info(SOMETHING_WENT_WRONG + ex.getMessage());
-		return ERROR;
 	}
 
 	@ExceptionHandler(Exception.class)

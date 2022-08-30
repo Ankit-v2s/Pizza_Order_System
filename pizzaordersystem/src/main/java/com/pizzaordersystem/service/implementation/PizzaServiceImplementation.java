@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.dao.PizzzaDao;
 import com.pizzaordersystem.exception.CredentialCheckerException;
+import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;
@@ -31,6 +32,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	private PizzzaDao pizzaDaoImplementation;
 	static LoginCredentials loginCredentials;
 	static PizzaOrder pizzaOrder;
+	static String roles;
 	Connection connection;
 	static List<PizzaOrder> cart = new ArrayList<>();
 	
@@ -59,16 +61,18 @@ public class PizzaServiceImplementation implements PizzaService {
 	 *@throws CredentialCheckerException
 	 *@throws InvalidFieldException
 	 *To check the credentials
+	 * @throws CredentialsNotValidException 
 	 */
 	@Override
 	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
-			throws SQLException, CredentialCheckerException, InvalidFieldException {
+			throws SQLException, CredentialCheckerException, InvalidFieldException, CredentialsNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
 		if (!result.hasErrors()) {
 			for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
 				if (credentials.getUserName().equals(loginCredentials.getUserName())
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
 					PizzaServiceImplementation.loginCredentials=credentials;
+					roles=credentials.getRoles();
 					if (credentials.getEmployeeId() != 0) {
 						return "employeehome";
 					} else if (credentials.getCustomerId() != 0) {
@@ -133,4 +137,6 @@ public class PizzaServiceImplementation implements PizzaService {
 	public void logout() {
 		pizzaDaoImplementation.close();
 	}
+
+	
 }

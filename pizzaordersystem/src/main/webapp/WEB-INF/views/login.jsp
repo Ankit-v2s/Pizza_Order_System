@@ -24,7 +24,7 @@
 		</div>
 		   
 		<div class="col-md-12 login-body">
-		<div id="credentialError" class="error"></div>
+		<div id="credentialError" class="error">${error}</div>
 			<div class="form-group ">
 				<input type="text" class="login-txtbox" id="userName" name="userName" placeholder=<spring:message code="login.placeholder.username" />>
 				<div id="usernameError" class="error"></div>

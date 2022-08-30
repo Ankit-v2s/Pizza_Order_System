@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.validation.BindingResult;
 
+import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -19,6 +20,12 @@ import com.pizzaordersystem.model.PizzaMenu;
 
 public interface EmployeeService {
 
+	/**
+	 *@throws CredentialsNotValidException
+	 *To check if only admin has access
+	 */
+	void checker() throws CredentialsNotValidException;
+	
 	/**
 	 *@return List
 	 *@throws SQLException

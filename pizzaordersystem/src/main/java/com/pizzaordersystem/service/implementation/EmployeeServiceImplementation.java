@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.dao.EmployeeDao;
+import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
@@ -25,8 +26,20 @@ import com.pizzaordersystem.service.EmployeeService;
 @Service
 public class EmployeeServiceImplementation extends PizzaServiceImplementation implements EmployeeService {
 
+	private static final String ADMIN = "admin";
 	@Autowired
 	private EmployeeDao employeeDao;
+	
+	/**
+	 *@throws CredentialsNotValidException
+	 *To check if only admin has access
+	 */
+	@Override
+	public void checker() throws CredentialsNotValidException {
+		if(!roles.equals(ADMIN)) {
+			throw new CredentialsNotValidException("No Access to this Page");
+		}
+	}
 	
 	/**
 	 *@return List

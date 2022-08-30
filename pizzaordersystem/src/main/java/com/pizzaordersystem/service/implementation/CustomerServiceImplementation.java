@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.dao.CustomerDao;
+import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.exception.ZeroAmountException;
 import com.pizzaordersystem.model.CustomerData;
@@ -21,8 +22,20 @@ import com.pizzaordersystem.service.CustomerService;
 @Service
 public class CustomerServiceImplementation extends PizzaServiceImplementation implements CustomerService {
 
+	private static final String CUSTOMER = "customer";
 	@Autowired
 	private CustomerDao customerDao;
+	
+	/**
+	 *@throws CredentialsNotValidException
+	 *To check if only customer has access
+	 */
+	@Override
+	public void checker() throws CredentialsNotValidException {
+		if(!roles.equals(CUSTOMER)) {
+			throw new CredentialsNotValidException("No Access to this Page");
+		}
+	}
 	
 	/**
 	 *@return CustomerData

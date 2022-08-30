@@ -14,5 +14,6 @@ public class LoginCredentials {
 	private String password;
 	private int employeeId;
 	private int customerId;
+	private String roles;
 
 }

@@ -65,6 +65,7 @@ public class PizzaDaoImplementation implements PizzzaDao {
 			loginCredentials.setPassword(resultSet.getString(resultSet.getMetaData().getColumnName(3)));
 			loginCredentials.setEmployeeId(resultSet.getInt(resultSet.getMetaData().getColumnName(4)));
 			loginCredentials.setCustomerId(resultSet.getInt(resultSet.getMetaData().getColumnName(5)));
+			loginCredentials.setRoles(resultSet.getString(resultSet.getMetaData().getColumnName(6)));
 			credentialList.add(loginCredentials);
 		}
 		return credentialList;
