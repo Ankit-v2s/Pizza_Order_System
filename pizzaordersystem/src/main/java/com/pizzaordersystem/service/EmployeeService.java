@@ -18,6 +18,10 @@ import com.pizzaordersystem.model.Payment;
 import com.pizzaordersystem.model.PaymentModes;
 import com.pizzaordersystem.model.PizzaMenu;
 
+/**
+ * @author Ankit Madhavi
+ *
+ */
 public interface EmployeeService {
 
 	/**

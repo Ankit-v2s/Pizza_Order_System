@@ -14,11 +14,22 @@ import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.Payment;
 import com.pizzaordersystem.model.PizzaOrder;
 
+/**
+ * @author Ankit Madhavi
+ *
+ */
 @Repository
 public class CustomerDaoImplementation extends PizzaDaoImplementation implements CustomerDao{
 	
 	int orderId = 0;
 
+	
+	/**
+	 *@param loginCredentials
+	 *@return CustomerData
+	 *@throws SQLException
+	 *To get the specific customer's details
+	 */
 	@Override
 	public CustomerData getCustomer(LoginCredentials loginCredentials) throws SQLException {
 		CustomerData customerData = new CustomerData();
@@ -44,6 +55,12 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		return customerData;
 	}
 
+	/**
+	 *@param feedbackStatusList
+	 *@return List
+	 *@throws SQLException
+	 *To get all feedback status available
+	 */
 	@Override
 	public List<FeedbackStatus> getFeedbackStatus(List<FeedbackStatus> feedbackStatusList) throws SQLException {
 		preparedStatement = connection.prepareStatement("SELECT * FROM pizza_order.feedback_status;");
@@ -57,6 +74,12 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		return feedbackStatusList;
 	}
 
+	/**
+	 *@param customerData
+	 *@param customerId
+	 *@throws SQLException
+	 *To update the data of the customer
+	 */
 	@Override
 	public void updateCustomer(CustomerData customerData, int customerId) throws SQLException {
 		preparedStatement = connection.prepareStatement(
@@ -75,6 +98,12 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.executeUpdate();
 	}
 
+	/**
+	 *@param feedback
+	 *@param loginCredentials
+	 *@throws SQLException
+	 *To insert new feedback to the table
+	 */
 	@Override
 	public void addFeedback(Feedback feedback, LoginCredentials loginCredentials) throws SQLException {
 		preparedStatement = connection.prepareStatement("insert into feedback(customer_id,feedback_status_id,comments)"
@@ -85,6 +114,11 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.executeUpdate();
 	}
 
+	/**
+	 *@return int
+	 *@throws SQLException
+	 *To fetch the sum of all order items according to order
+	 */
 	@Override
 	public int calculateAmount() throws SQLException {
 		int amount = 0;
@@ -97,6 +131,11 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		return amount;
 	}
 
+	/**
+	 *@param loginCredentials
+	 *@throws SQLException
+	 *To insert new order to the table
+	 */
 	@Override
 	public void addOrder(LoginCredentials loginCredentials) throws SQLException {
 		preparedStatement = connection.prepareStatement(
@@ -110,6 +149,11 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		}
 	}
 
+	/**
+	 *@param cart
+	 *@throws SQLException
+	 *To insert new items to the table
+	 */
 	@Override
 	public void addItem(List<PizzaOrder> cart) throws SQLException {
 		for (PizzaOrder pizzaOrder : cart) {
@@ -126,6 +170,12 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		}
 	}
 
+	/**
+	 *@param credentials
+	 *@param payment
+	 *@throws SQLException
+	 *To insert new payment to the table
+	 */
 	@Override
 	public void addPayment(LoginCredentials credentials, Payment payment) throws SQLException {
 		preparedStatement = connection
@@ -139,6 +189,12 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.executeUpdate();
 	}
 
+	/**
+	 *@param pizzaOrder
+	 *@return int
+	 *@throws SQLException
+	 *To get the discount according to the coupon
+	 */
 	@Override
 	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException {
 		int discount = 0;

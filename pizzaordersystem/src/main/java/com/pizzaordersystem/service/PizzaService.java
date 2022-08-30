@@ -12,6 +12,10 @@ import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.RegisterDetails;
 
+/**
+ * @author Ankit Madhavi
+ *
+ */
 public interface PizzaService {
 
 	/**

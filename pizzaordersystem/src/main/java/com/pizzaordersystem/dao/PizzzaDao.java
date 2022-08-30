@@ -8,19 +8,45 @@ import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.RegisterDetails;
 
+/**
+ * @author Ankit Madhavi
+ *
+ */
 public interface PizzzaDao {
 
-	//	==========Connection==========
+	/**
+	 *@return Connection
+	 *@throws ClassNotFoundException
+	 *Create connection with database
+	 */
 	Connection getConnection() throws ClassNotFoundException;
 
+	/**
+	 *Close the resources
+	 */
 	void close();
 
-	//	==========Login==========
+	/**
+	 *@param credentialList
+	 *@return List
+	 *@throws SQLException
+	 *To get all the credentials
+	 */
 	List<LoginCredentials> login(List<LoginCredentials> credentialList) throws SQLException;
 
-	//	==========SignUp==========
+	/**
+	 *@param cityList
+	 *@return List
+	 *@throws SQLException
+	 *To get all the city details
+	 */
 	List<City> getcity(List<City> cityList) throws SQLException;
 
+	/**
+	 *@param details
+	 *@throws SQLException
+	 *To insert new customer to table
+	 */
 	void addCustomer(RegisterDetails details) throws SQLException;
 
 }

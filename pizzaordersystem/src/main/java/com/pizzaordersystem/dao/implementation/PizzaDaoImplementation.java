@@ -15,6 +15,10 @@ import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.RegisterDetails;
 
+/**
+ * @author Ankit Madhavi
+ *
+ */
 @Repository
 public class PizzaDaoImplementation implements PizzzaDao {
 
@@ -23,6 +27,11 @@ public class PizzaDaoImplementation implements PizzzaDao {
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
 
+	/**
+	 *@return Connection
+	 *@throws ClassNotFoundException
+	 *Create connection with database
+	 */
 	@Override
 	public Connection getConnection() throws ClassNotFoundException {
 		try {
@@ -35,6 +44,9 @@ public class PizzaDaoImplementation implements PizzzaDao {
 		return connection;
 	}
 
+	/**
+	 *Close the resources
+	 */
 	@Override
 	public void close() {
 		try {
@@ -54,6 +66,12 @@ public class PizzaDaoImplementation implements PizzzaDao {
 		}
 	}
 	
+	/**
+	 *@param credentialList
+	 *@return List
+	 *@throws SQLException
+	 *To get all the credentials
+	 */
 	@Override
 	public List<LoginCredentials> login(List<LoginCredentials> credentialList) throws SQLException {
 		preparedStatement = connection.prepareStatement("select * from login;");
@@ -71,6 +89,12 @@ public class PizzaDaoImplementation implements PizzzaDao {
 		return credentialList;
 	}
 
+	/**
+	 *@param cityList
+	 *@return List
+	 *@throws SQLException
+	 *To get all the city details
+	 */
 	@Override
 	public List<City> getcity(List<City> cityList) throws SQLException {
 		preparedStatement = connection.prepareStatement(
@@ -88,6 +112,11 @@ public class PizzaDaoImplementation implements PizzzaDao {
 		return cityList;
 	}
 
+	/**
+	 *@param details
+	 *@throws SQLException
+	 *To insert new customer to table
+	 */
 	@Override
 	public void addCustomer(RegisterDetails details) throws SQLException {
 		preparedStatement = connection.prepareStatement(
