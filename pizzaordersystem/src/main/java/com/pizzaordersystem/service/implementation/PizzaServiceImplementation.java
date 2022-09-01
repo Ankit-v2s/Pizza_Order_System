@@ -28,14 +28,19 @@ import com.pizzaordersystem.service.PizzaService;
 @Service
 public class PizzaServiceImplementation implements PizzaService {
 
-	private static final String INVALID_CREDENTIALS = "Invalid Credentials";
 	@Autowired
 	private PizzzaDao pizzaDaoImplementation;
+	
+	private static final String CUSTOMERHOME = "customerhome";
+	private static final String EMPLOYEEHOME = "employeehome";
+	private static final String INVALID_CREDENTIALS = "Invalid Credentials";
+	
 	static LoginCredentials loginCredentials;
 	static PizzaOrder pizzaOrder;
+	static List<PizzaOrder> cart = new ArrayList<>();
 	static String roles;
 	Connection connection;
-	static List<PizzaOrder> cart = new ArrayList<>();
+	
 	
 	/**
 	 *@return List
@@ -75,9 +80,9 @@ public class PizzaServiceImplementation implements PizzaService {
 					PizzaServiceImplementation.loginCredentials=credentials;
 					roles=credentials.getRoles();
 					if (credentials.getEmployeeId() != 0) {
-						return "employeehome";
+						return EMPLOYEEHOME;
 					} else if (credentials.getCustomerId() != 0) {
-						return "customerhome";
+						return CUSTOMERHOME;
 					}
 				}
 			}
