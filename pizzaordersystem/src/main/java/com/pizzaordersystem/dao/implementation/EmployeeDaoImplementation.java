@@ -38,7 +38,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement = connection
 				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) inner join order_status using(status_id)"
-						+ "where date_of_order=curdate() order by order_id;");
+						+ "where date_of_order=curdate() order by order_id desc;");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Order order = new Order();
@@ -61,7 +61,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	public List<Order> getAllOrders(List<Order> orderList) throws SQLException {
 		preparedStatement = connection
 				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
-						+ "inner join customer using (customer_id) inner join order_status using(status_id) order by order_id;");
+						+ "inner join customer using (customer_id) inner join order_status using(status_id) order by order_id desc;");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Order order = new Order();
@@ -105,7 +105,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement = connection
 				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) "
-						+ "inner join order_status using(status_id) where status_type =? order by order_id;");
+						+ "inner join order_status using(status_id) where status_type =? order by order_id desc;");
 		preparedStatement.setString(1, statusType);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
@@ -131,7 +131,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement = connection
 				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) "
-						+ "inner join order_status using(status_id) where date_of_order =? order by order_id;");
+						+ "inner join order_status using(status_id) where date_of_order =? order by order_id desc;");
 		preparedStatement.setDate(1, date);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {

@@ -73,6 +73,7 @@ public class HomeController {
 	 * @return ModelAndView
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * Open Sign up page
 	 */
 	@GetMapping("/signup")
 	public ModelAndView signUp(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
@@ -86,7 +87,8 @@ public class HomeController {
 	 * @param details
 	 * @param result
 	 * @throws SQLException
-	 * @throws InvalidFieldException To add Customer
+	 * @throws InvalidFieldException 
+	 * To add Customer
 	 */
 	@PostMapping("/add/customer")
 	public void addCustomer(@Valid @RequestBody RegisterDetails details, BindingResult result)
@@ -98,6 +100,7 @@ public class HomeController {
 	 * @param city
 	 * @return City
 	 * @throws SQLException
+	 * To get the city details
 	 */
 	@GetMapping("/city/{city}")
 	public City loadCityDetails(@PathVariable String city) throws SQLException {
