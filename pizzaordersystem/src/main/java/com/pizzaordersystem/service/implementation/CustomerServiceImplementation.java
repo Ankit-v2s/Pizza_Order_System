@@ -26,6 +26,8 @@ import com.pizzaordersystem.service.CustomerService;
 @Service
 public class CustomerServiceImplementation extends PizzaServiceImplementation implements CustomerService {
 
+	private static final String COUPON_NOT_APLLICABLE = "Coupon not apllicable";
+	private static final String NO_ACCESS_TO_THIS_PAGE = "No Access to this Page";
 	private static final String CUSTOMER = "customer";
 	@Autowired
 	private CustomerDao customerDao;
@@ -37,7 +39,7 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	@Override
 	public void checker() throws CredentialsNotValidException {
 		if(!roles.equals(CUSTOMER)) {
-			throw new CredentialsNotValidException("No Access to this Page");
+			throw new CredentialsNotValidException(NO_ACCESS_TO_THIS_PAGE);
 		}
 	}
 	
@@ -145,7 +147,7 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
 		pizzaOrder.setAmount(pizzaOrder.getAmount() - customerDao.discountPrice(pizzaOrder));
 		if (pizzaOrder.getAmount() < 0) {
-			throw new ZeroAmountException("Coupon not apllicable");
+			throw new ZeroAmountException(COUPON_NOT_APLLICABLE);
 		}
 		pizzaOrder.setAmount(pizzaOrder.getAmount());
 		return pizzaOrder.getAmount();

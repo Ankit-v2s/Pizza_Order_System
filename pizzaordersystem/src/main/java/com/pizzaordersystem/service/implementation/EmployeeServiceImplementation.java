@@ -30,6 +30,7 @@ import com.pizzaordersystem.service.EmployeeService;
 @Service
 public class EmployeeServiceImplementation extends PizzaServiceImplementation implements EmployeeService {
 
+	private static final String NO_ACCESS_TO_THIS_PAGE = "No Access to this Page";
 	private static final String ADMIN = "admin";
 	@Autowired
 	private EmployeeDao employeeDao;
@@ -41,7 +42,7 @@ public class EmployeeServiceImplementation extends PizzaServiceImplementation im
 	@Override
 	public void checker() throws CredentialsNotValidException {
 		if(!roles.equals(ADMIN)) {
-			throw new CredentialsNotValidException("No Access to this Page");
+			throw new CredentialsNotValidException(NO_ACCESS_TO_THIS_PAGE);
 		}
 	}
 	

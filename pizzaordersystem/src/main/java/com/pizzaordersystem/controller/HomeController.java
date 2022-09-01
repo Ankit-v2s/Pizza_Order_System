@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pizzaordersystem.exception.CredentialCheckerException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
@@ -55,7 +55,7 @@ public class HomeController {
 	 * @return String
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
-	 * @throws CredentialCheckerException
+	 * @throws InvalidCredentialException
 	 * @throws InvalidFieldException      
 	 * @throws CredentialsNotValidException 
 	 * API to check credentials
@@ -63,7 +63,7 @@ public class HomeController {
 	 */
 	@PostMapping("/login")
 	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result)
-			throws ClassNotFoundException, SQLException, CredentialCheckerException, InvalidFieldException, CredentialsNotValidException {
+			throws ClassNotFoundException, SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
 		pizzaServiceImplementation.createConnection();
 		return pizzaServiceImplementation.credentialChecker(loginCredentials, result);
 	}

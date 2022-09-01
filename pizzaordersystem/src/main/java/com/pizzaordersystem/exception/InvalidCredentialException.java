@@ -1,10 +1,10 @@
 package com.pizzaordersystem.exception;
 
-public class CredentialCheckerException extends Exception{
+public class InvalidCredentialException extends Exception{
 
 	private static final long serialVersionUID = 1L;
 
-	public CredentialCheckerException(String message) {
+	public InvalidCredentialException(String message) {
 		super(message);
 	}
 

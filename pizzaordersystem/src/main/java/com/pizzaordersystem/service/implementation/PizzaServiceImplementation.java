@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.dao.PizzzaDao;
-import com.pizzaordersystem.exception.CredentialCheckerException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
@@ -28,6 +28,7 @@ import com.pizzaordersystem.service.PizzaService;
 @Service
 public class PizzaServiceImplementation implements PizzaService {
 
+	private static final String INVALID_CREDENTIALS = "Invalid Credentials";
 	@Autowired
 	private PizzzaDao pizzaDaoImplementation;
 	static LoginCredentials loginCredentials;
@@ -58,14 +59,14 @@ public class PizzaServiceImplementation implements PizzaService {
 	 *@param result
 	 *@return String
 	 *@throws SQLException
-	 *@throws CredentialCheckerException
+	 *@throws InvalidCredentialException
 	 *@throws InvalidFieldException
 	 *To check the credentials
 	 * @throws CredentialsNotValidException 
 	 */
 	@Override
 	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
-			throws SQLException, CredentialCheckerException, InvalidFieldException, CredentialsNotValidException {
+			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
 		if (!result.hasErrors()) {
 			for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
@@ -80,12 +81,11 @@ public class PizzaServiceImplementation implements PizzaService {
 					}
 				}
 			}
-			throw new CredentialCheckerException("Invalid Credentials");
+			throw new InvalidCredentialException(INVALID_CREDENTIALS);
 		}
 		throw new InvalidFieldException(result);
 	}
 
-//	==========SignUp==========
 	/**
 	 *@param details
 	 *@param result

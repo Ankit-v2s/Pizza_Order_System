@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.validation.BindingResult;
 
-import com.pizzaordersystem.exception.CredentialCheckerException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
@@ -30,12 +30,12 @@ public interface PizzaService {
 	 *@param result
 	 *@return String
 	 *@throws SQLException
-	 *@throws CredentialCheckerException
+	 *@throws InvalidCredentialException
 	 *@throws InvalidFieldException
 	 *To check the credentials
 	 */
 	String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
-			throws SQLException, CredentialCheckerException, InvalidFieldException, CredentialsNotValidException;
+			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException;
 
 	//	==========SignUp==========
 	/**

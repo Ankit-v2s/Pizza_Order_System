@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pizzaordersystem.exception.CredentialCheckerException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.exception.ZeroAmountException;
@@ -31,8 +31,8 @@ public class ExceptionController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionController.class);
 
 
-	@ExceptionHandler(CredentialCheckerException.class)
-	public ResponseEntity<?> credentialCheckerException(CredentialCheckerException ex) {
+	@ExceptionHandler(InvalidCredentialException.class)
+	public ResponseEntity<?> credentialCheckerException(InvalidCredentialException ex) {
 		ExceptionDetails details = new ExceptionDetails(ex.getMessage());
 		return new ResponseEntity<>(details, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
