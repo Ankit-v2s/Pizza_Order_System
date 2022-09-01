@@ -1,13 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title><spring:message code="error.page.title" /></title>
-<link href="https://fonts.googleapis.com/css?family=Roboto:700"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
 <link rel="stylesheet" href="<c:url value="/static/css/Error.css" />" />
 </head>
 <body>

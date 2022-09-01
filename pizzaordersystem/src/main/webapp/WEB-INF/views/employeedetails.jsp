@@ -7,14 +7,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="<c:url value="/static/css/pizzaorder.css" />" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<c:url value="/static/css/pizzaorder.css" />" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -65,8 +61,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#employeeEdit">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#employeeEdit">
 								<spring:message code="employee.details.button.label.edit" /> <em class='fa fa-edit'></em>
 							</button>
 						</td>
@@ -74,26 +69,22 @@
 				</table>
 				</div>
 			</div>
-			<div class="modal" id="employeeEdit" tabindex="-1" role="dialog"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal" id="employeeEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel"><spring:message code="employee.details.modal.update.heading" /></h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<input type="hidden" id="employeeId"
-								value="${employee.employeeId}">
+							<input type="hidden" id="employeeId" value="${employee.employeeId}">
 							<div class="form-group row">
 								<label for="email" class="col-sm-3 col-form-label"><spring:message code="employee.details.modal.update.label.email" /></label>
 								<div class="col-sm-8">
-									<input type="email" class="form-control" id="email"
-										value="${employee.email}" name="email">
-										<div id="emailError" class="error"></div>
+									<input type="email" class="form-control" id="email" value="${employee.email}" name="email">
+									<div id="emailError" class="error"></div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -113,9 +104,7 @@
 							<div class="form-group row">
 								<label for="city" class="col-sm-3 col-form-label"><spring:message code="employee.details.modal.update.label.city" /></label>
 								<div class="col-sm-8">
-									<select
-										class="form-control" id="city" onmouseup="getCityDetails()"
-										name="city">
+									<select class="form-control" id="city" onmouseup="getCityDetails()" name="city">
 										<option selected value="${employee.cityName}">${employee.cityName}</option>
 										<c:forEach items="${cityList}" var="city">
 											<option value="${city.cityName}">${city.cityName}</option>
@@ -127,9 +116,8 @@
 							<div class="form-group row">
 								<label for="state" class="col-sm-3 col-form-label"><spring:message code="employee.details.modal.update.label.state" /></label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" id="state" disabled="disabled"
-										value="${employee.stateName}" name="state">
-										<div id="stateError" class="error"></div>
+									<input type="text" class="form-control" id="state" disabled="disabled" value="${employee.stateName}" name="state">
+									<div id="stateError" class="error"></div>
 								</div>
 							</div>
 
@@ -151,21 +139,16 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal"><spring:message code="employee.details.modal.update.button.close.label" /></button>
-							<button type="button" class="btn btn-primary"
-								 id="updateEmployee"><spring:message code="employee.details.modal.update.button.submit.label" /></button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal"><spring:message code="employee.details.modal.update.button.close.label" /></button>
+							<button type="button" class="btn btn-primary" id="updateEmployee"><spring:message code="employee.details.modal.update.button.submit.label" /></button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"
-		src="<c:url value="/static/js/login.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/static/js/validation.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/static/js/employee-details.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/login.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/validation.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/employee-details.js" />"></script>
 </body>
 </html>

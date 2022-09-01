@@ -7,16 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="<c:url value="/static/css/pizzaorder.css" />" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<c:url value="/static/css/pizzaorder.css" />" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -44,23 +39,20 @@
 								<div class="col-md-12 ">
 									<input type="hidden" id="couponId">
 									<div class="form-group ">
-										<label for="couponcode"><spring:message code="employee.coupon.add.edit.modal.coupon.code.label" /></label> <input type="text"
-											class="form-control" id="couponcode"
-											placeholder="<spring:message code="employee.coupon.add.edit.modal.coupon.code.placeholder" />">
-											<div id="couponcodeError" class="error"></div>
+										<label for="couponcode"><spring:message code="employee.coupon.add.edit.modal.coupon.code.label" /></label> 
+										<input type="text" class="form-control" id="couponcode" placeholder="<spring:message code="employee.coupon.add.edit.modal.coupon.code.placeholder" />">
+										<div id="couponcodeError" class="error"></div>
 									</div>
 									<div class="form-group ">
-										<label for="discount"><spring:message code="employee.coupon.add.edit.modal.discount.label" /></label> <input type="number"
-											class="form-control" id="discount"
-											placeholder="<spring:message code="employee.coupon.add.edit.modal.discount.placeholder" />">
-											<div id="discountError" class="error"></div>
+										<label for="discount"><spring:message code="employee.coupon.add.edit.modal.discount.label" /></label> 
+										<input type="number" class="form-control" id="discount" placeholder="<spring:message code="employee.coupon.add.edit.modal.discount.placeholder" />">
+										<div id="discountError" class="error"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal"><spring:message code="employee.coupon.add.edit.modal.button.close.label" /></button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal"><spring:message code="employee.coupon.add.edit.modal.button.close.label" /></button>
 							<button type="button" class="btn btn-primary" id="addEditCoupon"><spring:message code="employee.coupon.add.edit.modal.button.save.label" /></button>
 						</div>
 					</div>
@@ -68,8 +60,7 @@
 			</div>
 			<div class="main-body">
 				<div class="main-body table-wrapper-scroll-y my-custom-scrollbar">
-				<button type="button" class="btn btn-primary mb-2"
-					data-toggle="modal" onclick="addCoupon()"
+					<button type="button" class="btn btn-primary mb-2" data-toggle="modal" onclick="addCoupon()"
 					data-target="#couponAddEdit"><spring:message code="employee.coupon.add.button.label" /></button>
 				<table class="table table-hover table-light">
 					<tr>
@@ -84,16 +75,16 @@
 							<td>${couponlist.couponId}</td>
 							<td>${couponlist.couponCode}</td>
 							<td>${couponlist.discount}</td>
-							<td><button type='button' class='btn btn-info'
-									onclick="editCouponData('${couponlist.couponId}')"
-									data-toggle='modal' data-target='#couponAddEdit'>
+							<td>
+								<button type='button' class='btn btn-info' onclick="editCouponData('${couponlist.couponId}')" data-toggle='modal' data-target='#couponAddEdit'>
 									<em class='fa fa-edit'></em>
-								</button></td>
-							<td><button type='button' class='btn btn-info'
-									onclick="deleteCouponData('${couponlist.couponId}')"
-									data-toggle='modal' data-target='#deleteCoupon'>
+								</button>
+							</td>
+							<td>
+								<button type='button' class='btn btn-info' onclick="deleteCouponData('${couponlist.couponId}')" data-toggle='modal' data-target='#deleteCoupon'>
 									<em class='fa fa-trash'></em>
-								</button></td>
+								</button>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -101,31 +92,25 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal" id="deleteCoupon" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal" id="deleteCoupon" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<spring:message code="employee.coupon.delete.modal.heading" />
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body"><spring:message code="employee.coupon.delete.modal.message" /></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.button.cancel.label" /></button>
-					<a class="btn btn-danger btn-ok" id="confirmDeleteCoupon"
-						data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.button.delete.label" /></a>
+					<a class="btn btn-danger btn-ok" id="confirmDeleteCoupon" data-dismiss="modal"><spring:message code="employee.coupon.delete.modal.button.delete.label" /></a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"
-		src="<c:url value="/static/js/login.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/static/js/validation.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value="/static/js/coupon.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/login.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/validation.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/coupon.js" />"></script>
 </body>
 </html>
