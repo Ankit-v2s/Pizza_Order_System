@@ -23,7 +23,6 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 	
 	int orderId = 0;
 
-	
 	/**
 	 *@param loginCredentials
 	 *@return CustomerData
@@ -45,8 +44,6 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 		}
 		return customerData;
 	}
-
-	
 
 	/**
 	 *@param feedbackStatusList

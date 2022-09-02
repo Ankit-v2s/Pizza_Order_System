@@ -28,6 +28,105 @@ import com.pizzaordersystem.model.PizzaMenu;
 public class EmployeeDaoImplementation extends PizzaDaoImplementation implements EmployeeDao {
 	
 	/**
+	 * @param orderList
+	 * @throws SQLException
+	 * To add orders to the orderList
+	 */
+	private void addOrdersToOrderList(List<Order> orderList) throws SQLException {
+		Order order = new Order();
+		order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
+		order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+		orderList.add(order);
+	}
+	
+	/**
+	 * @param pizza
+	 * @throws SQLException
+	 * To set the pizza details
+	 */
+	private void setPizza(PizzaMenu pizza) throws SQLException {
+		pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		pizza.setPizzaName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		pizza.setPrice(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+	}
+	
+	/**
+	 * @param pizzaMenu
+	 * @throws SQLException
+	 * To get pizza name and price
+	 */
+	private void getPizzaNameAndPrice(PizzaMenu pizzaMenu) throws SQLException {
+		preparedStatement.setString(1, pizzaMenu.getPizzaName());
+		preparedStatement.setInt(2, pizzaMenu.getPrice());
+	}
+
+	/**
+	 * @param coupon
+	 * @throws SQLException
+	 * To set coupon details
+	 */
+	private void setCoupon(Coupon coupon) throws SQLException {
+		coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		coupon.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		coupon.setDiscount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+	}
+	
+	/**
+	 * @param coupon
+	 * @throws SQLException
+	 * To get the discount and Coupon Code
+	 */
+	private void getCouponCodeAndDiscount(Coupon coupon) throws SQLException {
+		preparedStatement.setString(1, coupon.getCouponCode());
+		preparedStatement.setInt(2, coupon.getDiscount());
+	}
+	
+	/**
+	 * @param payment
+	 * @throws SQLException
+	 * To set Payment Details
+	 */
+	private void setPayment(Payment payment) throws SQLException {
+		payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+		payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+	}
+
+	/**
+	 * @param paymentList
+	 * @throws SQLException
+	 * To set payment without Coupon
+	 */
+	private void setPaymentWithoutCoupon(List<Payment> paymentList) throws SQLException {
+		resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Payment payment = new Payment();
+			setPayment(payment);
+			payment.setCouponCode("null");
+			paymentList.add(payment);
+		}
+	}
+
+	/**
+	 * @param paymentList
+	 * @throws SQLException
+	 * To set payment with Coupon
+	 */
+	private void setPaymentWithCoupon(List<Payment> paymentList) throws SQLException {
+		resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Payment payment = new Payment();
+			setPayment(payment);
+			payment.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
+			paymentList.add(payment);
+		}
+	}
+
+
+	/**
 	 *@param orderList
 	 *@return List
 	 *@throws SQLException
@@ -44,20 +143,6 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 			addOrdersToOrderList(orderList);
 		}
 		return orderList;
-	}
-
-	/**
-	 * @param orderList
-	 * @throws SQLException
-	 * To add orders to the orderList
-	 */
-	private void addOrdersToOrderList(List<Order> orderList) throws SQLException {
-		Order order = new Order();
-		order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-		order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-		order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
-		order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-		orderList.add(order);
 	}
 
 	/**
@@ -204,17 +289,6 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 * @param pizza
-	 * @throws SQLException
-	 * To set the pizza details
-	 */
-	private void setPizza(PizzaMenu pizza) throws SQLException {
-		pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-		pizza.setPizzaName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-		pizza.setPrice(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
-	}
-
-	/**
 	 *@param pizzaMenu
 	 *@throws SQLException
 	 *To insert new pizza to the table
@@ -224,16 +298,6 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement = connection.prepareStatement("insert into pizza_menu(pizza_name,price) values(?,?);");
 		getPizzaNameAndPrice(pizzaMenu);
 		preparedStatement.executeUpdate();
-	}
-
-	/**
-	 * @param pizzaMenu
-	 * @throws SQLException
-	 * To get pizza name and price
-	 */
-	private void getPizzaNameAndPrice(PizzaMenu pizzaMenu) throws SQLException {
-		preparedStatement.setString(1, pizzaMenu.getPizzaName());
-		preparedStatement.setInt(2, pizzaMenu.getPrice());
 	}
 
 	/**
@@ -330,17 +394,6 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 * @param coupon
-	 * @throws SQLException
-	 * To set coupon details
-	 */
-	private void setCoupon(Coupon coupon) throws SQLException {
-		coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-		coupon.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-		coupon.setDiscount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
-	}
-
-	/**
 	 *@param coupon
 	 *@throws SQLException
 	 *To insert new coupon to table
@@ -350,16 +403,6 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement = connection.prepareStatement("insert into coupons(coupon_code,discount) values(?,?);");
 		getCouponCodeAndDiscount(coupon);
 		preparedStatement.executeUpdate();
-	}
-
-	/**
-	 * @param coupon
-	 * @throws SQLException
-	 * To get the discount and Coupon Code
-	 */
-	private void getCouponCodeAndDiscount(Coupon coupon) throws SQLException {
-		preparedStatement.setString(1, coupon.getCouponCode());
-		preparedStatement.setInt(2, coupon.getDiscount());
 	}
 
 	/**
@@ -418,42 +461,17 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 				.prepareStatement("select payment_id,customer_name,amount,mode,coupon_code from payment "
 						+ "inner join customer using(customer_id) inner join coupons using(coupon_id)"
 						+ "inner join payment_modes using(mode_id) inner join orders using(order_id); ");
-		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			Payment payment = new Payment();
-			setPayment(payment);
-			payment.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
-			paymentList.add(payment);
-		}
+		setPaymentWithCoupon(paymentList);
 
 		preparedStatement = connection.prepareStatement("select payment_id,customer_name,amount,mode from payment "
 				+ "inner join customer using(customer_id) "
 				+ "inner join payment_modes using(mode_id) inner join orders using(order_id) where coupon_id is null;");
-		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			Payment payment = new Payment();
-			setPayment(payment);
-			payment.setCouponCode("null");
-			paymentList.add(payment);
-		}
+		setPaymentWithoutCoupon(paymentList);
 
 		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId)).collect(Collectors.toList());
 
 		return paymentList;
 	}
-
-	/**
-	 * @param payment
-	 * @throws SQLException
-	 * To set Payment Details
-	 */
-	private void setPayment(Payment payment) throws SQLException {
-		payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-		payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-		payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
-		payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-	}
-
 
 	/**
 	 *@param paymentModeList
@@ -489,26 +507,14 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join payment_modes using(mode_id) "
 						+ "inner join orders using(order_id) where mode=?;");
 		preparedStatement.setString(1, paymentMode);
-		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			Payment payment = new Payment();
-			setPayment(payment);
-			payment.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
-			paymentList.add(payment);
-		}
+		setPaymentWithCoupon(paymentList);
 
 		preparedStatement = connection.prepareStatement(
 				"select payment_id,customer_name,amount,mode from payment " + "inner join customer using(customer_id) "
 						+ "inner join payment_modes using(mode_id) inner join orders using(order_id) "
 						+ "where coupon_id is null and mode=?;");
 		preparedStatement.setString(1, paymentMode);
-		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			Payment payment = new Payment();
-			setPayment(payment);
-			payment.setCouponCode("null");
-			paymentList.add(payment);
-		}
+		setPaymentWithoutCoupon(paymentList);
 
 		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
 				.collect(Collectors.toList());
