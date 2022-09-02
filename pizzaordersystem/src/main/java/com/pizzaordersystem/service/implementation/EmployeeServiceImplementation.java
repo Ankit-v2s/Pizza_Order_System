@@ -207,13 +207,22 @@ public class EmployeeServiceImplementation extends PizzaServiceImplementation im
 	@Override
 	public void addEditPizza(PizzaMenu pizzaMenu, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			if (pizzaMenu.getPizzaId() == 0) {
-				employeeDao.addPizza(pizzaMenu);
-			} else {
-				employeeDao.updatePizza(pizzaMenu);
-			}
+			checkAddOrUpdatePizza(pizzaMenu);
 		} else {
 			throw new InvalidFieldException(result);
+		}
+	}
+
+	/**
+	 * @param pizzaMenu
+	 * @throws SQLException
+	 * To check if Pizza is to be added or updated
+	 */
+	private void checkAddOrUpdatePizza(PizzaMenu pizzaMenu) throws SQLException {
+		if (pizzaMenu.getPizzaId() == 0) {
+			employeeDao.addPizza(pizzaMenu);
+		} else {
+			employeeDao.updatePizza(pizzaMenu);
 		}
 	}
 
@@ -259,13 +268,22 @@ public class EmployeeServiceImplementation extends PizzaServiceImplementation im
 	@Override
 	public void addEditCoupon(Coupon coupon, BindingResult result) throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			if (coupon.getCouponId() == 0) {
-				employeeDao.addCoupon(coupon);
-			} else {
-				employeeDao.updateCoupon(coupon);
-			}
+			checkAddOrUpdateCoupon(coupon);
 		} else {
 			throw new InvalidFieldException(result);
+		}
+	}
+
+	/**
+	 * @param coupon
+	 * @throws SQLException
+	 * Check if to add or update the coupon
+	 */
+	private void checkAddOrUpdateCoupon(Coupon coupon) throws SQLException {
+		if (coupon.getCouponId() == 0) {
+			employeeDao.addCoupon(coupon);
+		} else {
+			employeeDao.updateCoupon(coupon);
 		}
 	}
 

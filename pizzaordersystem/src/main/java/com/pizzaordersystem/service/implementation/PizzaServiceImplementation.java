@@ -77,18 +77,28 @@ public class PizzaServiceImplementation implements PizzaService {
 			for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
 				if (credentials.getUserName().equals(loginCredentials.getUserName())
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
-					PizzaServiceImplementation.loginCredentials=credentials;
-					roles=credentials.getRoles();
-					if (credentials.getEmployeeId() != 0) {
-						return EMPLOYEEHOME;
-					} else if (credentials.getCustomerId() != 0) {
-						return CUSTOMERHOME;
-					}
+					return setCredentialsAndReturnPage(credentials);
 				}
 			}
 			throw new InvalidCredentialException(INVALID_CREDENTIALS);
 		}
 		throw new InvalidFieldException(result);
+	}
+
+	/**
+	 * @param credentials
+	 * @return String
+	 * To return the employee or customer homepage
+	 */
+	private String setCredentialsAndReturnPage(LoginCredentials credentials) {
+		PizzaServiceImplementation.loginCredentials=credentials;
+		roles=credentials.getRoles();
+		if (credentials.getEmployeeId() != 0) {
+			return EMPLOYEEHOME;
+		} else if (credentials.getCustomerId() != 0) {
+			return CUSTOMERHOME;
+		}
+		throw new NullPointerException();
 	}
 
 	/**

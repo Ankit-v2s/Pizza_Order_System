@@ -41,14 +41,23 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "where date_of_order=curdate() order by order_id desc;");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Order order = new Order();
-			order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
-			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			orderList.add(order);
+			addOrdersToOrderList(orderList);
 		}
 		return orderList;
+	}
+
+	/**
+	 * @param orderList
+	 * @throws SQLException
+	 * To add orders to the orderList
+	 */
+	private void addOrdersToOrderList(List<Order> orderList) throws SQLException {
+		Order order = new Order();
+		order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
+		order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+		orderList.add(order);
 	}
 
 	/**
@@ -64,12 +73,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join customer using (customer_id) inner join order_status using(status_id) order by order_id desc;");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Order order = new Order();
-			order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
-			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			orderList.add(order);
+			addOrdersToOrderList(orderList);
 		}
 		return orderList;
 	}
@@ -109,12 +113,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.setString(1, statusType);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Order order = new Order();
-			order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
-			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			orderList.add(order);
+			addOrdersToOrderList(orderList);
 		}
 		return orderList;
 	}
@@ -135,12 +134,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.setDate(1, date);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Order order = new Order();
-			order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
-			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			orderList.add(order);
+			addOrdersToOrderList(orderList);
 		}
 		return orderList;
 	}
@@ -212,12 +206,21 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			PizzaMenu pizza = new PizzaMenu();
-			pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			pizza.setPizzaName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			pizza.setPrice(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+			setPizza(pizza);
 			pizzaList.add(pizza);
 		}
 		return pizzaList;
+	}
+
+	/**
+	 * @param pizza
+	 * @throws SQLException
+	 * To set the pizza details
+	 */
+	private void setPizza(PizzaMenu pizza) throws SQLException {
+		pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		pizza.setPizzaName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		pizza.setPrice(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
 	}
 
 	/**
@@ -246,9 +249,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		resultSet = preparedStatement.executeQuery();
 		PizzaMenu pizza = new PizzaMenu();
 		while (resultSet.next()) {
-			pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			pizza.setPizzaName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			pizza.setPrice(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+			setPizza(pizza);
 		}
 		return pizza;
 	}
@@ -323,12 +324,21 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Coupon coupon = new Coupon();
-			coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			coupon.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			coupon.setDiscount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+			setCoupon(coupon);
 			couponList.add(coupon);
 		}
 		return couponList;
+	}
+
+	/**
+	 * @param coupon
+	 * @throws SQLException
+	 * To set coupon details
+	 */
+	private void setCoupon(Coupon coupon) throws SQLException {
+		coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		coupon.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		coupon.setDiscount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
 	}
 
 	/**
@@ -357,9 +367,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		resultSet = preparedStatement.executeQuery();
 		Coupon coupon = new Coupon();
 		while (resultSet.next()) {
-			coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			coupon.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			coupon.setDiscount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+			setCoupon(coupon);
 		}
 		return coupon;
 	}
@@ -405,13 +413,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join payment_modes using(mode_id) inner join orders using(order_id); ");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Payment payment = new Payment();
-			payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			payment.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(3)));
-			payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(4)));
-			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
-			paymentList.add(payment);
+			addPaymentwithCouponToPaymentList(paymentList);
 		}
 
 		preparedStatement = connection.prepareStatement("select payment_id,customer_name,amount,mode from payment "
@@ -419,19 +421,42 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 				+ "inner join payment_modes using(mode_id) inner join orders using(order_id) where coupon_id is null;");
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Payment payment = new Payment();
-			payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			payment.setCouponCode("null");
-			payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
-			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			paymentList.add(payment);
+			addPaymentwithoutCouponToPaymentList(paymentList);
 		}
 
-		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
-				.collect(Collectors.toList());
+		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId)).collect(Collectors.toList());
 
 		return paymentList;
+	}
+
+	/**
+	 * @param paymentList
+	 * @throws SQLException
+	 * TO add payments with coupon to list
+	 */
+	private void addPaymentwithoutCouponToPaymentList(List<Payment> paymentList) throws SQLException {
+		Payment payment = new Payment();
+		payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		payment.setCouponCode("null");
+		payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
+		payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+		paymentList.add(payment);
+	}
+
+	/**
+	 * @param paymentList
+	 * @throws SQLException
+	 * To add payments without Coupon to List
+	 */
+	private void addPaymentwithCouponToPaymentList(List<Payment> paymentList) throws SQLException {
+		Payment payment = new Payment();
+		payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		payment.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(3)));
+		payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(4)));
+		payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
+		paymentList.add(payment);
 	}
 
 	/**
@@ -470,13 +495,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.setString(1, paymentMode);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Payment payment = new Payment();
-			payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			payment.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(3)));
-			payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(4)));
-			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
-			paymentList.add(payment);
+			addPaymentwithCouponToPaymentList(paymentList);
 		}
 
 		preparedStatement = connection.prepareStatement(
@@ -486,13 +505,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		preparedStatement.setString(1, paymentMode);
 		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			Payment payment = new Payment();
-			payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-			payment.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-			payment.setCouponCode("null");
-			payment.setAmount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
-			payment.setMode(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-			paymentList.add(payment);
+			addPaymentwithoutCouponToPaymentList(paymentList);
 		}
 
 		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
