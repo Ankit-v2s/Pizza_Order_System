@@ -26,36 +26,36 @@ import com.pizzaordersystem.model.PizzaMenu;
  */
 @Repository
 public class EmployeeDaoImplementation extends PizzaDaoImplementation implements EmployeeDao {
-	
+
 	/**
 	 * @param orderList
-	 * @throws SQLException
-	 * To add orders to the orderList
+	 * @throws SQLException To add orders to the orderList
 	 */
-	private void addOrdersToOrderList(List<Order> orderList) throws SQLException {
-		Order order = new Order();
-		order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
-		order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
-		order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
-		order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
-		orderList.add(order);
+	private List<Order> addOrdersToOrderList(List<Order> orderList) throws SQLException {
+		while (resultSet.next()) {
+			Order order = new Order();
+			order.setOrderId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+			order.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+			order.setDateOfOrder(resultSet.getDate(resultSet.getMetaData().getColumnName(3)));
+			order.setStatusType(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+			orderList.add(order);
+		}
+		return orderList;
 	}
-	
+
 	/**
 	 * @param pizza
-	 * @throws SQLException
-	 * To set the pizza details
+	 * @throws SQLException To set the pizza details
 	 */
 	private void setPizza(PizzaMenu pizza) throws SQLException {
 		pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
 		pizza.setPizzaName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
 		pizza.setPrice(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
 	}
-	
+
 	/**
 	 * @param pizzaMenu
-	 * @throws SQLException
-	 * To get pizza name and price
+	 * @throws SQLException To get pizza name and price
 	 */
 	private void getPizzaNameAndPrice(PizzaMenu pizzaMenu) throws SQLException {
 		preparedStatement.setString(1, pizzaMenu.getPizzaName());
@@ -64,29 +64,26 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param coupon
-	 * @throws SQLException
-	 * To set coupon details
+	 * @throws SQLException To set coupon details
 	 */
 	private void setCoupon(Coupon coupon) throws SQLException {
 		coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
 		coupon.setCouponCode(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
 		coupon.setDiscount(resultSet.getInt(resultSet.getMetaData().getColumnName(3)));
 	}
-	
+
 	/**
 	 * @param coupon
-	 * @throws SQLException
-	 * To get the discount and Coupon Code
+	 * @throws SQLException To get the discount and Coupon Code
 	 */
 	private void getCouponCodeAndDiscount(Coupon coupon) throws SQLException {
 		preparedStatement.setString(1, coupon.getCouponCode());
 		preparedStatement.setInt(2, coupon.getDiscount());
 	}
-	
+
 	/**
 	 * @param payment
-	 * @throws SQLException
-	 * To set Payment Details
+	 * @throws SQLException To set Payment Details
 	 */
 	private void setPayment(Payment payment) throws SQLException {
 		payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
@@ -97,11 +94,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param paymentList
-	 * @throws SQLException
-	 * To set payment without Coupon
+	 * @throws SQLException To set payment without Coupon
 	 */
 	private void setPaymentWithoutCoupon(List<Payment> paymentList) throws SQLException {
-		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Payment payment = new Payment();
 			setPayment(payment);
@@ -112,11 +107,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param paymentList
-	 * @throws SQLException
-	 * To set payment with Coupon
+	 * @throws SQLException To set payment with Coupon
 	 */
 	private void setPaymentWithCoupon(List<Payment> paymentList) throws SQLException {
-		resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Payment payment = new Payment();
 			setPayment(payment);
@@ -125,12 +118,10 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		}
 	}
 
-
 	/**
-	 *@param orderList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the orders according to the today's date
+	 * @param orderList
+	 * @return List
+	 * @throws SQLException To get all the orders according to the today's date
 	 */
 	@Override
 	public List<Order> getOrders(List<Order> orderList) throws SQLException {
@@ -139,17 +130,13 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join customer using (customer_id) inner join order_status using(status_id)"
 						+ "where date_of_order=curdate() order by order_id desc;");
 		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			addOrdersToOrderList(orderList);
-		}
-		return orderList;
+		return addOrdersToOrderList(orderList);
 	}
 
 	/**
-	 *@param orderList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the orders
+	 * @param orderList
+	 * @return List
+	 * @throws SQLException To get all the orders
 	 */
 	@Override
 	public List<Order> getAllOrders(List<Order> orderList) throws SQLException {
@@ -157,17 +144,13 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 				.prepareStatement("select order_id,customer_name,date_of_order,status_type from orders "
 						+ "inner join customer using (customer_id) inner join order_status using(status_id) order by order_id desc;");
 		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			addOrdersToOrderList(orderList);
-		}
-		return orderList;
+		return addOrdersToOrderList(orderList);
 	}
 
 	/**
-	 *@param orderStatusList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the order status available
+	 * @param orderStatusList
+	 * @return List
+	 * @throws SQLException To get all the order status available
 	 */
 	@Override
 	public List<OrderStatus> getOrderStatus(List<OrderStatus> orderStatusList) throws SQLException {
@@ -183,11 +166,10 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param orderList
-	 *@param statusType
-	 *@return List
-	 *@throws SQLException
-	 *To get all the orders according to the status type
+	 * @param orderList
+	 * @param statusType
+	 * @return List
+	 * @throws SQLException To get all the orders according to the status type
 	 */
 	@Override
 	public List<Order> getOrdersByStatusType(List<Order> orderList, String statusType) throws SQLException {
@@ -197,18 +179,14 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join order_status using(status_id) where status_type =? order by order_id desc;");
 		preparedStatement.setString(1, statusType);
 		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			addOrdersToOrderList(orderList);
-		}
-		return orderList;
+		return addOrdersToOrderList(orderList);
 	}
 
 	/**
-	 *@param orderList
-	 *@param date
-	 *@return List
-	 *@throws SQLException
-	 *To get all the orders according to the date selected
+	 * @param orderList
+	 * @param date
+	 * @return List
+	 * @throws SQLException To get all the orders according to the date selected
 	 */
 	@Override
 	public List<Order> getOrdersByDate(List<Order> orderList, Date date) throws SQLException {
@@ -218,17 +196,13 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join order_status using(status_id) where date_of_order =? order by order_id desc;");
 		preparedStatement.setDate(1, date);
 		resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			addOrdersToOrderList(orderList);
-		}
-		return orderList;
+		return addOrdersToOrderList(orderList);
 	}
 
 	/**
-	 *@param customerDataList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the customers details available
+	 * @param customerDataList
+	 * @return List
+	 * @throws SQLException To get all the customers details available
 	 */
 	@Override
 	public List<CustomerData> getCustomerData(List<CustomerData> customerDataList) throws SQLException {
@@ -247,10 +221,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param feedbackList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the feedback details available
+	 * @param feedbackList
+	 * @return List
+	 * @throws SQLException To get all the feedback details available
 	 */
 	@Override
 	public List<Feedback> getFeedback(List<Feedback> feedbackList) throws SQLException {
@@ -271,10 +244,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param pizzaList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the pizza details available
+	 * @param pizzaList
+	 * @return List
+	 * @throws SQLException To get all the pizza details available
 	 */
 	@Override
 	public List<PizzaMenu> getPizza(List<PizzaMenu> pizzaList) throws SQLException {
@@ -289,9 +261,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param pizzaMenu
-	 *@throws SQLException
-	 *To insert new pizza to the table
+	 * @param pizzaMenu
+	 * @throws SQLException To insert new pizza to the table
 	 */
 	@Override
 	public void addPizza(PizzaMenu pizzaMenu) throws SQLException {
@@ -301,10 +272,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param pizzaId
-	 *@return PizzaMenu
-	 *@throws SQLException
-	 *To get the pizza details according to the selected pizza
+	 * @param pizzaId
+	 * @return PizzaMenu
+	 * @throws SQLException To get the pizza details according to the selected pizza
 	 */
 	@Override
 	public PizzaMenu getPizza(int pizzaId) throws SQLException {
@@ -319,23 +289,20 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param pizzaMenu
-	 *@throws SQLException
-	 *To update the pizza details of particular pizza
+	 * @param pizzaMenu
+	 * @throws SQLException To update the pizza details of particular pizza
 	 */
 	@Override
 	public void updatePizza(PizzaMenu pizzaMenu) throws SQLException {
-		preparedStatement = connection
-				.prepareStatement("update pizza_menu set pizza_name=?,price=? where pizza_id=?;");
+		preparedStatement = connection.prepareStatement("update pizza_menu set pizza_name=?,price=? where pizza_id=?;");
 		getPizzaNameAndPrice(pizzaMenu);
 		preparedStatement.setInt(3, pizzaMenu.getPizzaId());
 		preparedStatement.executeUpdate();
 	}
 
 	/**
-	 *@param pizzaId
-	 *@throws SQLException
-	 *To delete the selected pizza
+	 * @param pizzaId
+	 * @throws SQLException To delete the selected pizza
 	 */
 	@Override
 	public void deletePizza(int pizzaId) throws SQLException {
@@ -345,10 +312,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param loginCredentials
-	 *@return Employee
-	 *@throws SQLException
-	 *To get the details of specific employee
+	 * @param loginCredentials
+	 * @return Employee
+	 * @throws SQLException To get the details of specific employee
 	 */
 	@Override
 	public Employee getEmployee(LoginCredentials loginCredentials) throws SQLException {
@@ -376,10 +342,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param couponList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the coupons available
+	 * @param couponList
+	 * @return List
+	 * @throws SQLException To get all the coupons available
 	 */
 	@Override
 	public List<Coupon> getCoupons(List<Coupon> couponList) throws SQLException {
@@ -394,9 +359,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param coupon
-	 *@throws SQLException
-	 *To insert new coupon to table
+	 * @param coupon
+	 * @throws SQLException To insert new coupon to table
 	 */
 	@Override
 	public void addCoupon(Coupon coupon) throws SQLException {
@@ -406,10 +370,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param couponId
-	 *@return Coupon
-	 *@throws SQLException
-	 *To get the coupon details of the selected coupon
+	 * @param couponId
+	 * @return Coupon
+	 * @throws SQLException To get the coupon details of the selected coupon
 	 */
 	@Override
 	public Coupon getcoupon(int couponId) throws SQLException {
@@ -424,9 +387,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param coupon
-	 *@throws SQLException
-	 *To update the specific coupon details
+	 * @param coupon
+	 * @throws SQLException To update the specific coupon details
 	 */
 	@Override
 	public void updateCoupon(Coupon coupon) throws SQLException {
@@ -438,9 +400,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param couponId
-	 *@throws SQLException
-	 *To delete the specific coupon
+	 * @param couponId
+	 * @throws SQLException To delete the specific coupon
 	 */
 	@Override
 	public void deleteCoupon(int couponId) throws SQLException {
@@ -450,10 +411,9 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param paymentList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the payments available in the table
+	 * @param paymentList
+	 * @return List
+	 * @throws SQLException To get all the payments available in the table
 	 */
 	@Override
 	public List<Payment> getPayments(List<Payment> paymentList) throws SQLException {
@@ -461,23 +421,25 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 				.prepareStatement("select payment_id,customer_name,amount,mode,coupon_code from payment "
 						+ "inner join customer using(customer_id) inner join coupons using(coupon_id)"
 						+ "inner join payment_modes using(mode_id) inner join orders using(order_id); ");
+		resultSet = preparedStatement.executeQuery();
 		setPaymentWithCoupon(paymentList);
 
 		preparedStatement = connection.prepareStatement("select payment_id,customer_name,amount,mode from payment "
 				+ "inner join customer using(customer_id) "
 				+ "inner join payment_modes using(mode_id) inner join orders using(order_id) where coupon_id is null;");
+		resultSet = preparedStatement.executeQuery();
 		setPaymentWithoutCoupon(paymentList);
 
-		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId)).collect(Collectors.toList());
+		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
+				.collect(Collectors.toList());
 
 		return paymentList;
 	}
 
 	/**
-	 *@param paymentModeList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the payments modes available in the table
+	 * @param paymentModeList
+	 * @return List
+	 * @throws SQLException To get all the payments modes available in the table
 	 */
 	@Override
 	public List<PaymentModes> getPaymentModes(List<PaymentModes> paymentModeList) throws SQLException {
@@ -493,11 +455,10 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param paymentList
-	 *@param paymentMode
-	 *@return List
-	 *@throws SQLException
-	 *To get all the payments according to payment mode 
+	 * @param paymentList
+	 * @param paymentMode
+	 * @return List
+	 * @throws SQLException To get all the payments according to payment mode
 	 */
 	@Override
 	public List<Payment> getPaymentByMode(List<Payment> paymentList, String paymentMode) throws SQLException {
@@ -507,6 +468,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join payment_modes using(mode_id) "
 						+ "inner join orders using(order_id) where mode=?;");
 		preparedStatement.setString(1, paymentMode);
+		resultSet = preparedStatement.executeQuery();
 		setPaymentWithCoupon(paymentList);
 
 		preparedStatement = connection.prepareStatement(
@@ -514,6 +476,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 						+ "inner join payment_modes using(mode_id) inner join orders using(order_id) "
 						+ "where coupon_id is null and mode=?;");
 		preparedStatement.setString(1, paymentMode);
+		resultSet = preparedStatement.executeQuery();
 		setPaymentWithoutCoupon(paymentList);
 
 		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
@@ -522,13 +485,12 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	}
 
 	/**
-	 *@param employee
-	 *@param employeeId
-	 *@throws SQLException
-	 *To update the details for the employee
+	 * @param employee
+	 * @param employeeId
+	 * @throws SQLException To update the details for the employee
 	 */
 	@Override
-	public void updateEmployee(Employee employee,int employeeId) throws SQLException {
+	public void updateEmployee(Employee employee, int employeeId) throws SQLException {
 		preparedStatement = connection.prepareStatement("update employee set employee_email=?, address_line1=?,"
 				+ "address_line2=?,city_id = (select city_id from city where city_name=?),state_id="
 				+ "(select state_id from state where state_name=?), country_id="
