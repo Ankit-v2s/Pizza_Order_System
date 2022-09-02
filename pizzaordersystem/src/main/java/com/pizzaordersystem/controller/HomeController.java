@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;

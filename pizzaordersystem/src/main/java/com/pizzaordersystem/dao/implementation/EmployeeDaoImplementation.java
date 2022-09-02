@@ -29,7 +29,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param orderList
-	 * @throws SQLException To add orders to the orderList
+	 * @throws SQLException 
+	 * To add orders to the orderList
 	 */
 	private List<Order> addOrdersToOrderList(List<Order> orderList) throws SQLException {
 		while (resultSet.next()) {
@@ -45,7 +46,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param pizza
-	 * @throws SQLException To set the pizza details
+	 * @throws SQLException 
+	 * To set the pizza details
 	 */
 	private void setPizza(PizzaMenu pizza) throws SQLException {
 		pizza.setPizzaId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
@@ -55,7 +57,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param pizzaMenu
-	 * @throws SQLException To get pizza name and price
+	 * @throws SQLException 
+	 * To get pizza name and price
 	 */
 	private void getPizzaNameAndPrice(PizzaMenu pizzaMenu) throws SQLException {
 		preparedStatement.setString(1, pizzaMenu.getPizzaName());
@@ -64,7 +67,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param coupon
-	 * @throws SQLException To set coupon details
+	 * @throws SQLException 
+	 * To set coupon details
 	 */
 	private void setCoupon(Coupon coupon) throws SQLException {
 		coupon.setCouponId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
@@ -74,7 +78,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param coupon
-	 * @throws SQLException To get the discount and Coupon Code
+	 * @throws SQLException 
+	 * To get the discount and Coupon Code
 	 */
 	private void getCouponCodeAndDiscount(Coupon coupon) throws SQLException {
 		preparedStatement.setString(1, coupon.getCouponCode());
@@ -83,7 +88,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param payment
-	 * @throws SQLException To set Payment Details
+	 * @throws SQLException 
+	 * To set Payment Details
 	 */
 	private void setPayment(Payment payment) throws SQLException {
 		payment.setPaymentId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
@@ -94,7 +100,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param paymentList
-	 * @throws SQLException To set payment without Coupon
+	 * @throws SQLException 
+	 * To set payment without Coupon
 	 */
 	private void setPaymentWithoutCoupon(List<Payment> paymentList) throws SQLException {
 		while (resultSet.next()) {
@@ -107,7 +114,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param paymentList
-	 * @throws SQLException To set payment with Coupon
+	 * @throws SQLException 
+	 * To set payment with Coupon
 	 */
 	private void setPaymentWithCoupon(List<Payment> paymentList) throws SQLException {
 		while (resultSet.next()) {
@@ -121,7 +129,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param orderList
 	 * @return List
-	 * @throws SQLException To get all the orders according to the today's date
+	 * @throws SQLException 
+	 * To get all the orders according to the today's date
 	 */
 	@Override
 	public List<Order> getOrders(List<Order> orderList) throws SQLException {
@@ -136,7 +145,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param orderList
 	 * @return List
-	 * @throws SQLException To get all the orders
+	 * @throws SQLException 
+	 * To get all the orders
 	 */
 	@Override
 	public List<Order> getAllOrders(List<Order> orderList) throws SQLException {
@@ -150,7 +160,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param orderStatusList
 	 * @return List
-	 * @throws SQLException To get all the order status available
+	 * @throws SQLException 
+	 * To get all the order status available
 	 */
 	@Override
 	public List<OrderStatus> getOrderStatus(List<OrderStatus> orderStatusList) throws SQLException {
@@ -169,7 +180,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	 * @param orderList
 	 * @param statusType
 	 * @return List
-	 * @throws SQLException To get all the orders according to the status type
+	 * @throws SQLException 
+	 * To get all the orders according to the status type
 	 */
 	@Override
 	public List<Order> getOrdersByStatusType(List<Order> orderList, String statusType) throws SQLException {
@@ -186,7 +198,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	 * @param orderList
 	 * @param date
 	 * @return List
-	 * @throws SQLException To get all the orders according to the date selected
+	 * @throws SQLException 
+	 * To get all the orders according to the date selected
 	 */
 	@Override
 	public List<Order> getOrdersByDate(List<Order> orderList, Date date) throws SQLException {
@@ -202,7 +215,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param customerDataList
 	 * @return List
-	 * @throws SQLException To get all the customers details available
+	 * @throws SQLException 
+	 * To get all the customers details available
 	 */
 	@Override
 	public List<CustomerData> getCustomerData(List<CustomerData> customerDataList) throws SQLException {
@@ -223,7 +237,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param feedbackList
 	 * @return List
-	 * @throws SQLException To get all the feedback details available
+	 * @throws SQLException 
+	 * To get all the feedback details available
 	 */
 	@Override
 	public List<Feedback> getFeedback(List<Feedback> feedbackList) throws SQLException {
@@ -246,7 +261,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param pizzaList
 	 * @return List
-	 * @throws SQLException To get all the pizza details available
+	 * @throws SQLException 
+	 * To get all the pizza details available
 	 */
 	@Override
 	public List<PizzaMenu> getPizza(List<PizzaMenu> pizzaList) throws SQLException {
@@ -262,7 +278,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param pizzaMenu
-	 * @throws SQLException To insert new pizza to the table
+	 * @throws SQLException 
+	 * To insert new pizza to the table
 	 */
 	@Override
 	public void addPizza(PizzaMenu pizzaMenu) throws SQLException {
@@ -274,7 +291,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param pizzaId
 	 * @return PizzaMenu
-	 * @throws SQLException To get the pizza details according to the selected pizza
+	 * @throws SQLException 
+	 * To get the pizza details according to the selected pizza
 	 */
 	@Override
 	public PizzaMenu getPizza(int pizzaId) throws SQLException {
@@ -290,7 +308,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param pizzaMenu
-	 * @throws SQLException To update the pizza details of particular pizza
+	 * @throws SQLException 
+	 * To update the pizza details of particular pizza
 	 */
 	@Override
 	public void updatePizza(PizzaMenu pizzaMenu) throws SQLException {
@@ -302,7 +321,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param pizzaId
-	 * @throws SQLException To delete the selected pizza
+	 * @throws SQLException 
+	 * To delete the selected pizza
 	 */
 	@Override
 	public void deletePizza(int pizzaId) throws SQLException {
@@ -314,7 +334,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param loginCredentials
 	 * @return Employee
-	 * @throws SQLException To get the details of specific employee
+	 * @throws SQLException 
+	 * To get the details of specific employee
 	 */
 	@Override
 	public Employee getEmployee(LoginCredentials loginCredentials) throws SQLException {
@@ -344,7 +365,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param couponList
 	 * @return List
-	 * @throws SQLException To get all the coupons available
+	 * @throws SQLException 
+	 * To get all the coupons available
 	 */
 	@Override
 	public List<Coupon> getCoupons(List<Coupon> couponList) throws SQLException {
@@ -360,7 +382,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param coupon
-	 * @throws SQLException To insert new coupon to table
+	 * @throws SQLException 
+	 * To insert new coupon to table
 	 */
 	@Override
 	public void addCoupon(Coupon coupon) throws SQLException {
@@ -372,7 +395,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param couponId
 	 * @return Coupon
-	 * @throws SQLException To get the coupon details of the selected coupon
+	 * @throws SQLException 
+	 * To get the coupon details of the selected coupon
 	 */
 	@Override
 	public Coupon getcoupon(int couponId) throws SQLException {
@@ -388,7 +412,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param coupon
-	 * @throws SQLException To update the specific coupon details
+	 * @throws SQLException 
+	 * To update the specific coupon details
 	 */
 	@Override
 	public void updateCoupon(Coupon coupon) throws SQLException {
@@ -401,7 +426,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 
 	/**
 	 * @param couponId
-	 * @throws SQLException To delete the specific coupon
+	 * @throws SQLException 
+	 * To delete the specific coupon
 	 */
 	@Override
 	public void deleteCoupon(int couponId) throws SQLException {
@@ -413,7 +439,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param paymentList
 	 * @return List
-	 * @throws SQLException To get all the payments available in the table
+	 * @throws SQLException 
+	 * To get all the payments available in the table
 	 */
 	@Override
 	public List<Payment> getPayments(List<Payment> paymentList) throws SQLException {
@@ -430,7 +457,7 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		resultSet = preparedStatement.executeQuery();
 		setPaymentWithoutCoupon(paymentList);
 
-		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
+		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId).reversed())
 				.collect(Collectors.toList());
 
 		return paymentList;
@@ -439,7 +466,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	/**
 	 * @param paymentModeList
 	 * @return List
-	 * @throws SQLException To get all the payments modes available in the table
+	 * @throws SQLException 
+	 * To get all the payments modes available in the table
 	 */
 	@Override
 	public List<PaymentModes> getPaymentModes(List<PaymentModes> paymentModeList) throws SQLException {
@@ -458,7 +486,8 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 	 * @param paymentList
 	 * @param paymentMode
 	 * @return List
-	 * @throws SQLException To get all the payments according to payment mode
+	 * @throws SQLException 
+	 * To get all the payments according to payment mode
 	 */
 	@Override
 	public List<Payment> getPaymentByMode(List<Payment> paymentList, String paymentMode) throws SQLException {
@@ -479,15 +508,15 @@ public class EmployeeDaoImplementation extends PizzaDaoImplementation implements
 		resultSet = preparedStatement.executeQuery();
 		setPaymentWithoutCoupon(paymentList);
 
-		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId))
-				.collect(Collectors.toList());
+		paymentList = paymentList.stream().sorted(Comparator.comparingInt(Payment::getPaymentId).reversed()).collect(Collectors.toList());
 		return paymentList;
 	}
 
 	/**
 	 * @param employee
 	 * @param employeeId
-	 * @throws SQLException To update the details for the employee
+	 * @throws SQLException 
+	 * To update the details for the employee
 	 */
 	@Override
 	public void updateEmployee(Employee employee, int employeeId) throws SQLException {

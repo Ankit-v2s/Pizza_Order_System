@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.validation.BindingResult;
 
-import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;
@@ -24,7 +24,6 @@ public interface PizzaService {
 	 */
 	void createConnection() throws ClassNotFoundException;
 
-	//	==========Login==========
 	/**
 	 *@param loginCredentials
 	 *@param result
@@ -37,7 +36,6 @@ public interface PizzaService {
 	String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
 			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException;
 
-	//	==========SignUp==========
 	/**
 	 *@param details
 	 *@param result
@@ -62,7 +60,6 @@ public interface PizzaService {
 	 */
 	City fetchCityDetails(String city) throws SQLException;
 
-	//	==========Logout==========
 	/**
 	 *To logout and close the connection with the database
 	 */
