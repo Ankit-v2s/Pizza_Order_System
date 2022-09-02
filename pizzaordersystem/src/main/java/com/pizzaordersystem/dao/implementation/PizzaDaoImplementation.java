@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pizzaordersystem.dao.PizzzaDao;
 import com.pizzaordersystem.model.City;
+import com.pizzaordersystem.model.CustomerData;
 import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.RegisterDetails;
 
@@ -141,6 +142,24 @@ public class PizzaDaoImplementation implements PizzzaDao {
 		preparedStatement.setString(2, details.getPassword());
 		preparedStatement.setString(3, details.getEmail());
 		preparedStatement.executeUpdate();
+	}
+	
+	/**
+	 * @param customerData
+	 * @throws SQLException
+	 * To set Customer details
+	 */
+	public void setCustomer(CustomerData customerData) throws SQLException {
+		customerData.setCustomerId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
+		customerData.setCustomerName(resultSet.getString(resultSet.getMetaData().getColumnName(2)));
+		customerData.setEmail(resultSet.getString(resultSet.getMetaData().getColumnName(3)));
+		customerData.setGender(resultSet.getString(resultSet.getMetaData().getColumnName(4)));
+		customerData.setAddress1(resultSet.getString(resultSet.getMetaData().getColumnName(5)));
+		customerData.setAddress2(resultSet.getString(resultSet.getMetaData().getColumnName(6)));
+		customerData.setCity(resultSet.getString(resultSet.getMetaData().getColumnName(7)));
+		customerData.setState(resultSet.getString(resultSet.getMetaData().getColumnName(8)));
+		customerData.setCountry(resultSet.getString(resultSet.getMetaData().getColumnName(9)));
+		customerData.setPhoneNumber(resultSet.getString(resultSet.getMetaData().getColumnName(10)));
 	}
 	
 }
