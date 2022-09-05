@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -137,12 +138,8 @@ public class PizzaServiceImplementation implements PizzaService {
 	 */
 	@Override
 	public City fetchCityDetails(String city) throws SQLException {
-		for (City cityDetails : fetchCity()) {
-			if (cityDetails.getCityName().equals(city)) {
-				return cityDetails;
-			}
-		}
-		throw new NullPointerException();
+		return fetchCity().stream().filter(cityDetails -> cityDetails.getCityName().equalsIgnoreCase(city)).findFirst()
+				.orElseThrow();
 	}
 
 	/**
