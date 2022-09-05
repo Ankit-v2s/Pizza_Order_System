@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.pizzaordersystem.dao.PizzzaDao;
-import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
+import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.InvalidFieldException;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.LoginCredentials;
@@ -30,7 +29,7 @@ import com.pizzaordersystem.service.PizzaService;
 public class PizzaServiceImplementation implements PizzaService {
 
 	@Autowired
-	private PizzzaDao pizzaDaoImplementation;
+	private PizzzaDao pizzaDao;
 	
 	private static final String CUSTOMERHOME = "customerhome";
 	private static final String EMPLOYEEHOME = "employeehome";
@@ -73,7 +72,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	 */
 	@Override
 	public void createConnection() throws ClassNotFoundException {
-		this.connection = pizzaDaoImplementation.getConnection();
+		this.connection = pizzaDao.getConnection();
 	}
 
 	/**
@@ -83,15 +82,15 @@ public class PizzaServiceImplementation implements PizzaService {
 	 *@throws SQLException
 	 *@throws InvalidCredentialException
 	 *@throws InvalidFieldException
+	 *@throws CredentialsNotValidException 
 	 *To check the credentials
-	 * @throws CredentialsNotValidException 
 	 */
 	@Override
 	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
 			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
 		if (!result.hasErrors()) {
-			for (LoginCredentials credentials : pizzaDaoImplementation.login(credentialList)) {
+			for (LoginCredentials credentials : pizzaDao.login(credentialList)) {
 				if (credentials.getUserName().equals(loginCredentials.getUserName())
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
 					return setCredentialsAndReturnPage(credentials);
@@ -113,7 +112,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	public void addCustomer(@Valid RegisterDetails details, BindingResult result)
 			throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			pizzaDaoImplementation.addCustomer(details);
+			pizzaDao.addCustomer(details);
 		} else {
 			throw new InvalidFieldException(result);
 		}
@@ -127,7 +126,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	@Override
 	public List<City> fetchCity() throws SQLException {
 		List<City> cityList = new ArrayList<>();
-		return pizzaDaoImplementation.getcity(cityList);
+		return pizzaDao.getcity(cityList);
 	}
 
 	/**
@@ -147,7 +146,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	 */
 	@Override
 	public void logout() {
-		pizzaDaoImplementation.close();
+		pizzaDao.close();
 	}
 
 	

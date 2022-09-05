@@ -34,7 +34,7 @@ public class HomeController {
 	private static final String LOGIN = "login";
 	
 	@Autowired
-	private PizzaService pizzaServiceImplementation;
+	private PizzaService pizzaService;
 
 	/**
 	 * @param modelAndView
@@ -44,7 +44,7 @@ public class HomeController {
 	 */ 
 	@RequestMapping("/")
 	public ModelAndView loginPage(ModelAndView modelAndView) {
-		pizzaServiceImplementation.logout();
+		pizzaService.logout();
 		modelAndView.setViewName(LOGIN);
 		return modelAndView;
 	}
@@ -64,8 +64,8 @@ public class HomeController {
 	@PostMapping("/login")
 	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result)
 			throws ClassNotFoundException, SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
-		pizzaServiceImplementation.createConnection();
-		return pizzaServiceImplementation.credentialChecker(loginCredentials, result);
+		pizzaService.createConnection();
+		return pizzaService.credentialChecker(loginCredentials, result);
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class HomeController {
 	 */
 	@GetMapping("/signup")
 	public ModelAndView signUp(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
-		pizzaServiceImplementation.createConnection();
-		modelAndView.addObject(CITY_LIST, pizzaServiceImplementation.fetchCity());
+		pizzaService.createConnection();
+		modelAndView.addObject(CITY_LIST, pizzaService.fetchCity());
 		modelAndView.setViewName("signup");
 		return modelAndView;
 	}
@@ -93,7 +93,7 @@ public class HomeController {
 	@PostMapping("/add/customer")
 	public void addCustomer(@Valid @RequestBody RegisterDetails details, BindingResult result)
 			throws SQLException, InvalidFieldException {
-		pizzaServiceImplementation.addCustomer(details, result);
+		pizzaService.addCustomer(details, result);
 	}
 
 	/**
@@ -104,6 +104,6 @@ public class HomeController {
 	 */
 	@GetMapping("/city/{city}")
 	public City loadCityDetails(@PathVariable String city) throws SQLException {
-		return pizzaServiceImplementation.fetchCityDetails(city);
+		return pizzaService.fetchCityDetails(city);
 	}
 }

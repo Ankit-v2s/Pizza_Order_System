@@ -54,9 +54,9 @@ public class EmployeeController {
 	private static final String EMPLOYEEHOME = "employeehome";
 
 	@Autowired
-	private PizzaService pizzaServiceImplementation;
+	private PizzaService pizzaService;
 	@Autowired
-	private EmployeeService employeeServiceImplementation;
+	private EmployeeService employeeService;
 
 	/**
 	 * @param modelAndView
@@ -67,8 +67,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/employeehome")
 	public ModelAndView employeeDashboard(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(ORDERLIST, employeeServiceImplementation.fetchOrders());
+		employeeService.checker();
+		modelAndView.addObject(ORDERLIST, employeeService.fetchOrders());
 		modelAndView.setViewName(EMPLOYEEHOME);
 		return modelAndView;
 	}
@@ -82,8 +82,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/pizza")
 	public ModelAndView pizzaDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(PIZZALIST, employeeServiceImplementation.fetchPizzaMenu());
+		employeeService.checker();
+		modelAndView.addObject(PIZZALIST, employeeService.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
 		return modelAndView;
 	}
@@ -97,8 +97,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/pizza/{id}")
 	public PizzaMenu editPizza(@PathVariable int id) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		return employeeServiceImplementation.fetchPizza(id);
+		employeeService.checker();
+		return employeeService.fetchPizza(id);
 	}
 
 	/**
@@ -114,9 +114,9 @@ public class EmployeeController {
 	@PostMapping("/add/pizza")
 	public ModelAndView addPizza(@Valid @RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView,
 			BindingResult result) throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		employeeServiceImplementation.addEditPizza(pizzaMenu, result);
-		modelAndView.addObject(PIZZALIST, employeeServiceImplementation.fetchPizzaMenu());
+		employeeService.checker();
+		employeeService.addEditPizza(pizzaMenu, result);
+		modelAndView.addObject(PIZZALIST, employeeService.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
 		return modelAndView;
 	}
@@ -129,8 +129,8 @@ public class EmployeeController {
 	 */
 	@DeleteMapping("/delete/pizza/{pizzaId}")
 	public void deletePizza(@PathVariable int pizzaId) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		employeeServiceImplementation.deletePizza(pizzaId);
+		employeeService.checker();
+		employeeService.deletePizza(pizzaId);
 	}
 
 
@@ -143,8 +143,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/customer")
 	public ModelAndView customerDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(CUSTOMERLIST, employeeServiceImplementation.fetchCustomer());
+		employeeService.checker();
+		modelAndView.addObject(CUSTOMERLIST, employeeService.fetchCustomer());
 		modelAndView.setViewName(CUSTOMERLIST);
 		return modelAndView;
 	}
@@ -158,9 +158,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/employeedetails")
 	public ModelAndView employeeDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject("employee", employeeServiceImplementation.fetchEmployee());
-		modelAndView.addObject(CITY_LIST, pizzaServiceImplementation.fetchCity());
+		employeeService.checker();
+		modelAndView.addObject("employee", employeeService.fetchEmployee());
+		modelAndView.addObject(CITY_LIST, pizzaService.fetchCity());
 		modelAndView.setViewName("employeedetails");
 		return modelAndView;
 	}
@@ -177,8 +177,8 @@ public class EmployeeController {
 	@PutMapping("/employee/{employeeId}")
 	public void updateEmployee(@Valid @RequestBody Employee employee, @PathVariable int employeeId, BindingResult result)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		employeeServiceImplementation.updateEmployee(employee,employeeId, result);
+		employeeService.checker();
+		employeeService.updateEmployee(employee,employeeId, result);
 	}
 
 	/**
@@ -190,8 +190,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/coupons")
 	public ModelAndView couponDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(COUPONLIST, employeeServiceImplementation.fetchCoupons());
+		employeeService.checker();
+		modelAndView.addObject(COUPONLIST, employeeService.fetchCoupons());
 		modelAndView.setViewName(COUPONLIST);
 		return modelAndView;
 	}
@@ -205,8 +205,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/coupon/{id}")
 	public Coupon editCoupon(@PathVariable int id) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		return employeeServiceImplementation.fetchCoupon(id);
+		employeeService.checker();
+		return employeeService.fetchCoupon(id);
 	}
 
 	/**
@@ -220,8 +220,8 @@ public class EmployeeController {
 	@PostMapping("/add/coupon")
 	public void addCoupon(@Valid @RequestBody Coupon coupon, BindingResult result)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		employeeServiceImplementation.addEditCoupon(coupon, result);
+		employeeService.checker();
+		employeeService.addEditCoupon(coupon, result);
 	}
 
 	/**
@@ -232,8 +232,8 @@ public class EmployeeController {
 	 */
 	@DeleteMapping("/delete/coupon/{couponId}")
 	public void deleteCoupon(@PathVariable int couponId) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		employeeServiceImplementation.deleteCoupon(couponId);
+		employeeService.checker();
+		employeeService.deleteCoupon(couponId);
 	}
 
 	/**
@@ -245,9 +245,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/payments")
 	public ModelAndView paymentDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(PAYMENTMODELIST, employeeServiceImplementation.fetchPaymentModes());
-		modelAndView.addObject(PAYMENTLIST, employeeServiceImplementation.fetchPayments());
+		employeeService.checker();
+		modelAndView.addObject(PAYMENTMODELIST, employeeService.fetchPaymentModes());
+		modelAndView.addObject(PAYMENTLIST, employeeService.fetchPayments());
 		modelAndView.setViewName(PAYMENTLIST);
 		return modelAndView;
 	}
@@ -262,9 +262,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/payment/{paymentMode}")
 	public ModelAndView filterPayment(@PathVariable String paymentMode, ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(PAYMENTMODELIST, employeeServiceImplementation.fetchPaymentModes());
-		modelAndView.addObject(PAYMENTLIST, employeeServiceImplementation.fetchPaymentByMode(paymentMode));
+		employeeService.checker();
+		modelAndView.addObject(PAYMENTMODELIST, employeeService.fetchPaymentModes());
+		modelAndView.addObject(PAYMENTLIST, employeeService.fetchPaymentByMode(paymentMode));
 		modelAndView.setViewName(PAYMENTLIST);
 		return modelAndView;
 	}
@@ -278,9 +278,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/orders")
 	public ModelAndView orderDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(ORDERSTATUSLIST, employeeServiceImplementation.fetchOrderStatus());
-		modelAndView.addObject(FULLORDERLIST, employeeServiceImplementation.fetchAllOrders());
+		employeeService.checker();
+		modelAndView.addObject(ORDERSTATUSLIST, employeeService.fetchOrderStatus());
+		modelAndView.addObject(FULLORDERLIST, employeeService.fetchAllOrders());
 		modelAndView.setViewName(ORDERLIST);
 		return modelAndView;
 	}
@@ -296,9 +296,9 @@ public class EmployeeController {
 	@GetMapping("/order/{statusType}")
 	public ModelAndView filterOrderByType(@PathVariable String statusType, ModelAndView modelAndView)
 			throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(ORDERSTATUSLIST, employeeServiceImplementation.fetchOrderStatus());
-		modelAndView.addObject(FULLORDERLIST, employeeServiceImplementation.fetchOrdersByStatusType(statusType));
+		employeeService.checker();
+		modelAndView.addObject(ORDERSTATUSLIST, employeeService.fetchOrderStatus());
+		modelAndView.addObject(FULLORDERLIST, employeeService.fetchOrdersByStatusType(statusType));
 		modelAndView.setViewName(ORDERLIST);
 		return modelAndView;
 	}
@@ -313,9 +313,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/order/date/{date}")
 	public ModelAndView filterOrderByDate(@PathVariable Date date, ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(ORDERSTATUSLIST, employeeServiceImplementation.fetchOrderStatus());
-		modelAndView.addObject(FULLORDERLIST, employeeServiceImplementation.fetchOrdersByDate(date));
+		employeeService.checker();
+		modelAndView.addObject(ORDERSTATUSLIST, employeeService.fetchOrderStatus());
+		modelAndView.addObject(FULLORDERLIST, employeeService.fetchOrdersByDate(date));
 		modelAndView.setViewName(ORDERLIST);
 		return modelAndView;
 	}
@@ -329,8 +329,8 @@ public class EmployeeController {
 	 */
 	@GetMapping("/feedbacks")
 	public ModelAndView feedbackDetails(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		employeeServiceImplementation.checker();
-		modelAndView.addObject(FEEDBACKLIST, employeeServiceImplementation.fetchFeedback());
+		employeeService.checker();
+		modelAndView.addObject(FEEDBACKLIST, employeeService.fetchFeedback());
 		modelAndView.setViewName(FEEDBACKLIST);
 		return modelAndView;
 	}

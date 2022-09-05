@@ -46,9 +46,9 @@ public class CustomerController {
 	@Autowired
 	private PizzaServiceImplementation pizzaServiceImplementation;
 	@Autowired 
-	private CustomerService customerServiceImplementation;
+	private CustomerService customerService;
 	@Autowired 
-	private EmployeeService employeeServiceImplementation;
+	private EmployeeService employeeService;
 	
 
 	/**
@@ -60,10 +60,10 @@ public class CustomerController {
 	 */
 	@GetMapping("/customerhome")
 	public ModelAndView customerDashboard(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		modelAndView.addObject(PIZZALIST, employeeServiceImplementation.fetchPizzaMenu());
-		modelAndView.addObject(PAYMENTMODELIST, employeeServiceImplementation.fetchPaymentModes());
-		modelAndView.addObject(COUPONLIST, employeeServiceImplementation.fetchCoupons());
+		customerService.checker();
+		modelAndView.addObject(PIZZALIST, employeeService.fetchPizzaMenu());
+		modelAndView.addObject(PAYMENTMODELIST, employeeService.fetchPaymentModes());
+		modelAndView.addObject(COUPONLIST, employeeService.fetchCoupons());
 		modelAndView.addObject("cartList", pizzaServiceImplementation.getCartList());
 		modelAndView.setViewName("customerhome");
 		return modelAndView;
@@ -78,8 +78,8 @@ public class CustomerController {
 	 */
 	@GetMapping("/editcustomer")
 	public ModelAndView customer(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		modelAndView.addObject("customer", customerServiceImplementation.fetchCustomerDetails());
+		customerService.checker();
+		modelAndView.addObject("customer", customerService.fetchCustomerDetails());
 		modelAndView.addObject(CITY_LIST, pizzaServiceImplementation.fetchCity());
 		modelAndView.setViewName("customerdetails");
 		return modelAndView;
@@ -96,8 +96,8 @@ public class CustomerController {
 	@PutMapping("/customer/{customerId}")
 	public void updateCustomer(@Valid @RequestBody CustomerData customerData,@PathVariable int customerId, BindingResult result)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		customerServiceImplementation.updateCustomer(customerData, customerId, result);
+		customerService.checker();
+		customerService.updateCustomer(customerData, customerId, result);
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class CustomerController {
 	 */
 	@GetMapping("/feedback")
 	public ModelAndView addFeedback(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		modelAndView.addObject(FEEDBACKLIST, customerServiceImplementation.fetchFeedbackStatus());
+		customerService.checker();
+		modelAndView.addObject(FEEDBACKLIST, customerService.fetchFeedbackStatus());
 		modelAndView.setViewName("feedback");
 		return modelAndView;
 	}
@@ -126,8 +126,8 @@ public class CustomerController {
 	@PostMapping("/add/feedback")
 	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		customerServiceImplementation.addFeedback(feedback, result);
+		customerService.checker();
+		customerService.addFeedback(feedback, result);
 	}
 
 	/**
@@ -142,8 +142,8 @@ public class CustomerController {
 	@PostMapping("/add/item")
 	public List<PizzaOrder> orderPizza(@Valid @RequestBody PizzaOrder pizza, BindingResult result)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		return customerServiceImplementation.addItem(pizza, result);
+		customerService.checker();
+		return customerService.addItem(pizza, result);
 	}
 
 	/**
@@ -154,23 +154,23 @@ public class CustomerController {
 	 */
 	@GetMapping("/order/pizza")
 	public int orderDetails() throws SQLException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		customerServiceImplementation.addOrder();
-		return customerServiceImplementation.calculate();
+		customerService.checker();
+		customerService.addOrder();
+		return customerService.calculate();
 	}
 
 	/**
 	 * @param pizzaOrder
-	 * @return int
+	 * @return discount
 	 * @throws SQLException
 	 * @throws ZeroAmountException
-	 * Apply discount according to the coupon
 	 * @throws CredentialsNotValidException 
+	 * Apply discount according to the coupon
 	 */
 	@PostMapping("/order/pizza/discount")
 	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		return customerServiceImplementation.discountPrice(pizzaOrder);
+		customerService.checker();
+		return customerService.discountPrice(pizzaOrder);
 	}
 
 	/**
@@ -178,13 +178,13 @@ public class CustomerController {
 	 * @param result
 	 * @throws SQLException
 	 * @throws InvalidFieldException
-	 * Add payment
 	 * @throws CredentialsNotValidException 
+	 * Add payment
 	 */
 	@PostMapping("/pay/order")
 	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
-		customerServiceImplementation.checker();
-		customerServiceImplementation.addPayment(payment, result);
+		customerService.checker();
+		customerService.addPayment(payment, result);
 	}
 }
