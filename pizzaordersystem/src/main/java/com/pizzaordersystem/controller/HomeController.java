@@ -37,10 +37,10 @@ public class HomeController {
 	private PizzaService pizzaService;
 
 	/**
-	 * @param modelAndView
-	 * @return ModelAndView
 	 * To load the application and open the first page 
 	 * Logout functionality
+	 * @param modelAndView
+	 * @return ModelAndView
 	 */ 
 	@RequestMapping("/")
 	public ModelAndView loginPage(ModelAndView modelAndView) {
@@ -50,6 +50,7 @@ public class HomeController {
 	}
 
 	/**
+	 * API to check credentials
 	 * @param loginCredentials
 	 * @param result
 	 * @return String
@@ -58,7 +59,6 @@ public class HomeController {
 	 * @throws InvalidCredentialException
 	 * @throws InvalidFieldException      
 	 * @throws CredentialsNotValidException 
-	 * API to check credentials
 	 * 
 	 */
 	@PostMapping("/login")
@@ -69,11 +69,11 @@ public class HomeController {
 	}
 
 	/**
+	 * Open Sign up page
 	 * @param modelAndView
 	 * @return ModelAndView
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
-	 * Open Sign up page
 	 */
 	@GetMapping("/signup")
 	public ModelAndView signUp(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
@@ -84,11 +84,11 @@ public class HomeController {
 	}
 
 	/**
+	 * To add Customer
 	 * @param details
 	 * @param result
 	 * @throws SQLException
 	 * @throws InvalidFieldException 
-	 * To add Customer
 	 */
 	@PostMapping("/add/customer")
 	public void addCustomer(@Valid @RequestBody RegisterDetails details, BindingResult result)
@@ -97,10 +97,10 @@ public class HomeController {
 	}
 
 	/**
+	 * To get the city details
 	 * @param city
 	 * @return City
 	 * @throws SQLException
-	 * To get the city details
 	 */
 	@GetMapping("/city/{city}")
 	public City loadCityDetails(@PathVariable String city) throws SQLException {

@@ -30,34 +30,33 @@ public class PizzaServiceImplementation implements PizzaService {
 
 	@Autowired
 	private PizzzaDao pizzaDao;
-	
+
 	private static final String CUSTOMERHOME = "customerhome";
 	private static final String EMPLOYEEHOME = "employeehome";
 	private static final String INVALID_CREDENTIALS = "Invalid Credentials";
-	
+
 	static LoginCredentials loginCredentials;
 	static PizzaOrder pizzaOrder;
 	static List<PizzaOrder> cart = new ArrayList<>();
 	static String roles;
 	Connection connection;
-	
-	
+
 	/**
-	 *@return List
-	 *getter for the List cart
+	 * @return List getter for the List cart
 	 */
 	public List<PizzaOrder> getCartList() {
 		return cart;
 	}
 
 	/**
+	 * To return the employee or customer homepage
+	 * 
 	 * @param credentials
 	 * @return String
-	 * To return the employee or customer homepage
 	 */
 	private String setCredentialsAndReturnPage(LoginCredentials credentials) {
-		PizzaServiceImplementation.loginCredentials=credentials;
-		roles=credentials.getRoles();
+		PizzaServiceImplementation.loginCredentials = credentials;
+		roles = credentials.getRoles();
 		if (credentials.getEmployeeId() != 0) {
 			return EMPLOYEEHOME;
 		} else if (credentials.getCustomerId() != 0) {
@@ -65,10 +64,11 @@ public class PizzaServiceImplementation implements PizzaService {
 		}
 		throw new NullPointerException();
 	}
-	
+
 	/**
-	 *@throws ClassNotFoundException
-	 *To make a connection database
+	 * To make a connection database
+	 * 
+	 * @throws ClassNotFoundException
 	 */
 	@Override
 	public void createConnection() throws ClassNotFoundException {
@@ -76,14 +76,15 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	/**
-	 *@param loginCredentials
-	 *@param result
-	 *@return String
-	 *@throws SQLException
-	 *@throws InvalidCredentialException
-	 *@throws InvalidFieldException
-	 *@throws CredentialsNotValidException 
-	 *To check the credentials
+	 * To check the credentials
+	 * 
+	 * @param loginCredentials
+	 * @param result
+	 * @return String
+	 * @throws SQLException
+	 * @throws InvalidCredentialException
+	 * @throws InvalidFieldException
+	 * @throws CredentialsNotValidException
 	 */
 	@Override
 	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
@@ -102,11 +103,12 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	/**
-	 *@param details
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
-	 *To add new customer 
+	 * To add new customer
+	 * 
+	 * @param details
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	@Override
 	public void addCustomer(@Valid RegisterDetails details, BindingResult result)
@@ -119,9 +121,10 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the cities in list
+	 * To fetch the cities in list
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<City> fetchCity() throws SQLException {
@@ -130,10 +133,11 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	/**
-	 *@param city
-	 *@return City
-	 *@throws SQLException
-	 *To fetch the details of the particular city
+	 * To fetch the details of the particular city
+	 * 
+	 * @param city
+	 * @return City
+	 * @throws SQLException
 	 */
 	@Override
 	public City fetchCityDetails(String city) throws SQLException {
@@ -142,12 +146,11 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	/**
-	 *To logout and close the connection with the database
+	 * To logout and close the connection with the database
 	 */
 	@Override
 	public void logout() {
 		pizzaDao.close();
 	}
 
-	
 }

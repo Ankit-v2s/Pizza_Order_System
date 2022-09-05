@@ -33,8 +33,8 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	private CustomerDao customerDao;
 	
 	/**
-	 *@throws CredentialsNotValidException
 	 *To check if only customer has access
+	 *@throws CredentialsNotValidException
 	 */
 	@Override
 	public void checker() throws CredentialsNotValidException {
@@ -44,9 +44,9 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 	
 	/**
+	 *To fetch the details of the particular customer who is logged in
 	 *@return CustomerData
 	 *@throws SQLException
-	 *To fetch the details of the particular customer who is logged in
 	 */
 	@Override
 	public CustomerData fetchCustomerDetails() throws SQLException {
@@ -54,12 +54,12 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
+	 *To update the details of customer
 	 *@param customerData
 	 *@param customerId
 	 *@param result
 	 *@throws SQLException,
 	 *@throws InvalidFieldException
-	 *To update the details of customer
 	 */
 	@Override
 	public void updateCustomer(CustomerData customerData, int customerId, BindingResult result)
@@ -72,9 +72,9 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
+	 *To fetch all the feedback Status available
 	 *@return List
 	 *@throws SQLException,
-	 *To fetch all the feedback Status available
 	 */
 	@Override
 	public List<FeedbackStatus> fetchFeedbackStatus() throws SQLException {
@@ -83,11 +83,11 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 	
 	/**
+	 *To add new feedback
 	 *@param feedback
 	 *@param result
 	 *@throws SQLException,
 	 *@throws InvalidFieldException
-	 *To add new feedback
 	 */
 	@Override
 	public void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException {
@@ -99,9 +99,9 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
+	 *To calculate total amount of the items available in cart
 	 *@return int
 	 *@throws SQLException,
-	 *To calculate total amount of the items available in cart
 	 */
 	@Override
 	public int calculate() throws SQLException {
@@ -109,8 +109,8 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
-	 *@throws SQLException,
 	 *To add new order and new order items
+	 *@throws SQLException,
 	 */
 	@Override
 	public void addOrder() throws SQLException {
@@ -119,11 +119,11 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
+	 *To add the items to the cart list
 	 *@param pizza
 	 *@param result
 	 *@throws SQLException,
 	 *@throws InvalidFieldException
-	 *To add the items to the cart list
 	 */
 	@Override
 	public List<PizzaOrder> addItem(PizzaOrder pizza, BindingResult result) throws SQLException, InvalidFieldException {
@@ -137,11 +137,11 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
+	 *To deduct the amount according to the discount applied for the coupon
 	 *@param pizzaOrder
 	 *@return int
 	 *@throws SQLException,
 	 *@throws ZeroAmountException
-	 *To deduct the amount according to the discount applied for the coupon
 	 */
 	@Override
 	public int discountPrice(PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException {
@@ -154,11 +154,12 @@ public class CustomerServiceImplementation extends PizzaServiceImplementation im
 	}
 
 	/**
-	 *@param payment
-	 *@param result
-	 *@throws SQLException,
-	 *@throws InvalidFieldException
-	 *To add new payment
+	 * To add new payment
+	 * 
+	 * @param payment
+	 * @param result
+	 * @throws SQLException,
+	 * @throws InvalidFieldException
 	 */
 	@Override
 	public void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException {

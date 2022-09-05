@@ -47,16 +47,16 @@ public class CustomerController {
 	private PizzaServiceImplementation pizzaServiceImplementation;
 	@Autowired 
 	private CustomerService customerService;
-	@Autowired 
+	@Autowired
 	private EmployeeService employeeService;
 	
 
 	/**
+	 * Load Customer Homepage
 	 * @param modelAndView
 	 * @return ModelAndView
 	 * @throws CredentialsNotValidException 
 	 * @throws SQLException. 
-	 * Load Customer Homepage
 	 */
 	@GetMapping("/customerhome")
 	public ModelAndView customerDashboard(ModelAndView modelAndView) throws SQLException, CredentialsNotValidException {
@@ -70,10 +70,10 @@ public class CustomerController {
 	}
 
 	/**
+	 * Fetch the details of the specific customer who is logged in
 	 * @param modelAndView
 	 * @return ModelAndView
 	 * @throws SQLException
-	 * Fetch the details of the specific customer who is logged in
 	 * @throws CredentialsNotValidException 
 	 */
 	@GetMapping("/editcustomer")
@@ -86,11 +86,11 @@ public class CustomerController {
 	}
 
 	/**
+	 * Update the customer details
 	 * @param customerData
 	 * @param result
 	 * @throws SQLException
 	 * @throws InvalidFieldException
-	 * Update the customer details
 	 * @throws CredentialsNotValidException 
 	 */
 	@PutMapping("/customer/{customerId}")
@@ -101,10 +101,10 @@ public class CustomerController {
 	}
 
 	/**
+	 * Load feedback page
 	 * @param modelAndView
 	 * @return ModelAndView
 	 * @throws SQLException
-	 * Load feedback page
 	 * @throws CredentialsNotValidException 
 	 */
 	@GetMapping("/feedback")
@@ -116,11 +116,11 @@ public class CustomerController {
 	}
 
 	/**
+	 * Add feedback
 	 * @param feedback
 	 * @param result
 	 * @throws SQLException
 	 * @throws InvalidFieldException
-	 * Add feedback
 	 * @throws CredentialsNotValidException 
 	 */
 	@PostMapping("/add/feedback")
@@ -131,12 +131,12 @@ public class CustomerController {
 	}
 
 	/**
+	 * Load the cart table according to the pizza added
 	 * @param pizza
 	 * @param result
 	 * @return List<PizzaOrder>
 	 * @throws SQLException
 	 * @throws InvalidFieldException
-	 * Load the cart table according to the pizza added
 	 * @throws CredentialsNotValidException 
 	 */
 	@PostMapping("/add/item")
@@ -147,9 +147,9 @@ public class CustomerController {
 	}
 
 	/**
+	 * Add the order
 	 * @return int
 	 * @throws SQLException
-	 * Add the order
 	 * @throws CredentialsNotValidException 
 	 */
 	@GetMapping("/order/pizza")
@@ -160,12 +160,12 @@ public class CustomerController {
 	}
 
 	/**
+	 * Apply discount according to the coupon
 	 * @param pizzaOrder
 	 * @return discount
 	 * @throws SQLException
 	 * @throws ZeroAmountException
 	 * @throws CredentialsNotValidException 
-	 * Apply discount according to the coupon
 	 */
 	@PostMapping("/order/pizza/discount")
 	public int discountPrice(@RequestBody PizzaOrder pizzaOrder) throws SQLException, ZeroAmountException, CredentialsNotValidException {
@@ -174,12 +174,12 @@ public class CustomerController {
 	}
 
 	/**
+	 * Add payment
 	 * @param payment
 	 * @param result
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * @throws CredentialsNotValidException 
-	 * Add payment
 	 */
 	@PostMapping("/pay/order")
 	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result)
