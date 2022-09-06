@@ -1,6 +1,5 @@
 package com.pizzaordersystem.dao;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,13 +12,6 @@ import com.pizzaordersystem.model.RegisterDetails;
  *
  */
 public interface PizzaDao {
-
-	/**
-	 *@return Connection
-	 *@throws ClassNotFoundException
-	 *Create connection with database
-	 */
-	Connection getConnection() throws ClassNotFoundException;
 
 	/**
 	 *Close the resources

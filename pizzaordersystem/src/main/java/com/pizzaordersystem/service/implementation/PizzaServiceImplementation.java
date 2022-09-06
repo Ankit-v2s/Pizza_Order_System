@@ -65,16 +65,6 @@ public class PizzaServiceImplementation implements PizzaService {
 	}
 
 	/**
-	 * To make a connection database
-	 * 
-	 * @throws ClassNotFoundException
-	 */
-	@Override
-	public void createConnection() throws ClassNotFoundException {
-		this.connection = pizzaDao.getConnection();
-	}
-
-	/**
 	 * To check the credentials
 	 * 
 	 * @param loginCredentials

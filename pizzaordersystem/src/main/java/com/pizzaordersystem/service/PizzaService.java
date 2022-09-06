@@ -21,12 +21,6 @@ import com.pizzaordersystem.model.RegisterDetails;
 public interface PizzaService {
 
 	/**
-	 *@throws ClassNotFoundException
-	 *To make a connection database
-	 */
-	void createConnection() throws ClassNotFoundException;
-
-	/**
 	 *@param loginCredentials
 	 *@param result
 	 *@param request

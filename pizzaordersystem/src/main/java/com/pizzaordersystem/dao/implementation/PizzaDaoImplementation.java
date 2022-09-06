@@ -1,13 +1,13 @@
 package com.pizzaordersystem.dao.implementation;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pizzaordersystem.dao.PizzaDao;
@@ -23,30 +23,14 @@ import com.pizzaordersystem.model.RegisterDetails;
 @Repository("pizzaDaoImplementation")
 public class PizzaDaoImplementation implements PizzaDao {
 
-	static Connection connection = null;
+	@Autowired
+	Connection connection;
 	Statement statement = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
 
 	/**
-	 *@return Connection
-	 *@throws ClassNotFoundException
-	 *Create connection with database
-	 */
-	@Override
-	public Connection getConnection() throws ClassNotFoundException {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/pizza_order", "root", "Password@123");
-			statement = connection.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return connection;
-	}
-
-	/**
-	 *Close the resources
+	 * Close the resources
 	 */
 	@Override
 	public void close() {
@@ -58,20 +42,15 @@ public class PizzaDaoImplementation implements PizzaDao {
 			if (statement != null) {
 				statement.close();
 			}
-
-			if (connection != null) {
-				connection.close();
-			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
-	
+
 	/**
-	 *@param credentialList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the credentials
+	 * @param credentialList
+	 * @return List
+	 * @throws SQLException To get all the credentials
 	 */
 	@Override
 	public List<LoginCredentials> login(List<LoginCredentials> credentialList) throws SQLException {
@@ -91,10 +70,9 @@ public class PizzaDaoImplementation implements PizzaDao {
 	}
 
 	/**
-	 *@param cityList
-	 *@return List
-	 *@throws SQLException
-	 *To get all the city details
+	 * @param cityList
+	 * @return List
+	 * @throws SQLException To get all the city details
 	 */
 	@Override
 	public List<City> getcity(List<City> cityList) throws SQLException {
@@ -114,9 +92,8 @@ public class PizzaDaoImplementation implements PizzaDao {
 	}
 
 	/**
-	 *@param details
-	 *@throws SQLException
-	 *To insert new customer to table
+	 * @param details
+	 * @throws SQLException To insert new customer to table
 	 */
 	@Override
 	public void addCustomer(RegisterDetails details) throws SQLException {
@@ -143,11 +120,10 @@ public class PizzaDaoImplementation implements PizzaDao {
 		preparedStatement.setString(3, details.getEmail());
 		preparedStatement.executeUpdate();
 	}
-	
+
 	/**
 	 * @param customerData
-	 * @throws SQLException
-	 * To set Customer details
+	 * @throws SQLException To set Customer details
 	 */
 	public void setCustomer(CustomerData customerData) throws SQLException {
 		customerData.setCustomerId(resultSet.getInt(resultSet.getMetaData().getColumnName(1)));
@@ -161,5 +137,5 @@ public class PizzaDaoImplementation implements PizzaDao {
 		customerData.setCountry(resultSet.getString(resultSet.getMetaData().getColumnName(9)));
 		customerData.setPhoneNumber(resultSet.getString(resultSet.getMetaData().getColumnName(10)));
 	}
-	
+
 }
