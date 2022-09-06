@@ -12,7 +12,7 @@ import com.pizzaordersystem.model.RegisterDetails;
  * @author Ankit Madhavi
  *
  */
-public interface PizzzaDao {
+public interface PizzaDao {
 
 	/**
 	 *@return Connection

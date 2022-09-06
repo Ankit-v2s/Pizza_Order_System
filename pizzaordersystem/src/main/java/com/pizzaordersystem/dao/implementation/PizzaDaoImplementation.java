@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.pizzaordersystem.dao.PizzzaDao;
+import com.pizzaordersystem.dao.PizzaDao;
 import com.pizzaordersystem.model.City;
 import com.pizzaordersystem.model.CustomerData;
 import com.pizzaordersystem.model.LoginCredentials;
@@ -20,8 +20,8 @@ import com.pizzaordersystem.model.RegisterDetails;
  * @author Ankit Madhavi
  *
  */
-@Repository
-public class PizzaDaoImplementation implements PizzzaDao {
+@Repository("pizzaDaoImplementation")
+public class PizzaDaoImplementation implements PizzaDao {
 
 	static Connection connection = null;
 	Statement statement = null;

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class HomeController {
 	private static final String LOGIN = "login";
 	
 	@Autowired
+	@Qualifier("pizzaServiceImplementation")
 	private PizzaService pizzaService;
 
 	/**

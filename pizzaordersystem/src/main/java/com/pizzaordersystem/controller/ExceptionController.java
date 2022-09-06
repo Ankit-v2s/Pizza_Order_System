@@ -46,11 +46,17 @@ public class ExceptionController {
 	@ExceptionHandler(InvalidFieldException.class)
 	public ResponseEntity<?> getInvalidFieldException(InvalidFieldException ex) {
 		Map<String, String> map = new HashMap<>();
-		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+//		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+//			String filedName = ((FieldError) error).getField();
+//			String message = error.getDefaultMessage();
+//			map.put(filedName, message);
+//		}
+		ex.getBindingResult().getAllErrors().forEach((error)->{
 			String filedName = ((FieldError) error).getField();
 			String message = error.getDefaultMessage();
 			map.put(filedName, message);
-		}
+		});
+		
 		return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

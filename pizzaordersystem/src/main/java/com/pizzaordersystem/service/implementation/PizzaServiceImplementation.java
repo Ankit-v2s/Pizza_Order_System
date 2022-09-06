@@ -8,10 +8,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import com.pizzaordersystem.dao.PizzzaDao;
+import com.pizzaordersystem.dao.PizzaDao;
 import com.pizzaordersystem.exception.CredentialsNotValidException;
 import com.pizzaordersystem.exception.InvalidCredentialException;
 import com.pizzaordersystem.exception.InvalidFieldException;
@@ -25,11 +26,12 @@ import com.pizzaordersystem.service.PizzaService;
  * @author Ankit Madhavi
  *
  */
-@Service
+@Service("pizzaServiceImplementation")
 public class PizzaServiceImplementation implements PizzaService {
 
 	@Autowired
-	private PizzzaDao pizzaDao;
+	@Qualifier("pizzaDaoImplementation")
+	private PizzaDao pizzaDao;
 
 	private static final String CUSTOMERHOME = "customerhome";
 	private static final String EMPLOYEEHOME = "employeehome";

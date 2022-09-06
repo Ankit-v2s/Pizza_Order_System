@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,7 @@ public class EmployeeController {
 	private static final String EMPLOYEEHOME = "employeehome";
 
 	@Autowired
+	@Qualifier("pizzaServiceImplementation")
 	private PizzaService pizzaService;
 	@Autowired
 	private EmployeeService employeeService;
