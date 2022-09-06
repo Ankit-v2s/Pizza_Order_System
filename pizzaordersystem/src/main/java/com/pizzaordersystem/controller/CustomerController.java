@@ -56,6 +56,7 @@ public class CustomerController {
 	 * Load Customer Homepage
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws CredentialsNotValidException
 	 * @throws SQLException.
@@ -77,6 +78,7 @@ public class CustomerController {
 	 * Fetch the details of the specific customer who is logged in
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
@@ -97,6 +99,7 @@ public class CustomerController {
 	 * 
 	 * @param customerData
 	 * @param result
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * @throws CredentialsNotValidException
@@ -113,6 +116,7 @@ public class CustomerController {
 	 * Load feedback page
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
@@ -132,6 +136,7 @@ public class CustomerController {
 	 * 
 	 * @param feedback
 	 * @param result
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * @throws CredentialsNotValidException
@@ -149,6 +154,7 @@ public class CustomerController {
 	 * 
 	 * @param pizza
 	 * @param result
+	 * @param credentials
 	 * @return List<PizzaOrder>
 	 * @throws SQLException
 	 * @throws InvalidFieldException
@@ -165,6 +171,7 @@ public class CustomerController {
 	/**
 	 * Add the order
 	 * 
+	 * @param credentials
 	 * @return int
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
@@ -181,6 +188,7 @@ public class CustomerController {
 	 * Apply discount according to the coupon
 	 * 
 	 * @param pizzaOrder
+	 * @param credentials
 	 * @return discount
 	 * @throws SQLException
 	 * @throws ZeroAmountException
@@ -199,6 +207,7 @@ public class CustomerController {
 	 * 
 	 * @param payment
 	 * @param result
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * @throws CredentialsNotValidException

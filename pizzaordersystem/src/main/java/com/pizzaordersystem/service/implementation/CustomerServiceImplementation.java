@@ -38,6 +38,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	/**
 	 * To check if only customer has access
 	 * 
+	 * @param loginCredentials
 	 * @throws CredentialsNotValidException
 	 */
 	@Override
@@ -50,6 +51,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	/**
 	 * To fetch the details of the particular customer who is logged in
 	 * 
+	 * @param credentials
 	 * @return CustomerData
 	 * @throws SQLException
 	 */
@@ -94,6 +96,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	 * 
 	 * @param feedback
 	 * @param result
+	 * @param credentials
 	 * @throws SQLException,
 	 * @throws InvalidFieldException
 	 */
@@ -121,6 +124,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	/**
 	 * To add new order and new order items
 	 * 
+	 * @param credentials
 	 * @throws SQLException,
 	 */
 	@Override
@@ -170,6 +174,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	 * 
 	 * @param payment
 	 * @param result
+	 * @param credentials
 	 * @throws SQLException,
 	 * @throws InvalidFieldException
 	 */

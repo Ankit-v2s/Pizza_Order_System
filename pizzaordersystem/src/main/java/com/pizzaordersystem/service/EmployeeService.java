@@ -26,161 +26,184 @@ import com.pizzaordersystem.model.PizzaMenu;
 public interface EmployeeService {
 
 	/**
-	 *@throws CredentialsNotValidException
-	 *To check if only admin has access
+	 * To check if only admin has access
+	 * 
+	 * @param loginCredentials
+	 * @throws CredentialsNotValidException
 	 */
 	void checker(LoginCredentials loginCredentials) throws CredentialsNotValidException;
-	
+
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of orders for the present day;
+	 * To fetch the list of orders for the present day;
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Order> fetchOrders() throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch list of all the available orders
+	 * To fetch list of all the available orders
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Order> fetchAllOrders() throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch list of order status available
+	 * To fetch list of order status available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<OrderStatus> fetchOrderStatus() throws SQLException;
 
 	/**
-	 *@param statusType
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of orders according to the order status selected
+	 * To fetch the list of orders according to the order status selected
+	 * 
+	 * @param statusType
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Order> fetchOrdersByStatusType(String statusType) throws SQLException;
 
 	/**
-	 *@param date
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of orders according to the date selected
+	 * To fetch the list of orders according to the date selected
+	 * 
+	 * @param date
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Order> fetchOrdersByDate(Date date) throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of all the feedbacks available
+	 * To fetch the list of all the feedbacks available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Feedback> fetchFeedback() throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of all the customers available
+	 * To fetch the list of all the customers available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<CustomerData> fetchCustomer() throws SQLException;
 
 	/**
-	 *@return Employee
-	 *@throws SQLException
-	 *To fetch the data of the logged in employee
+	 * To fetch the data of the logged in employee
+	 * 
+	 * @param credentials
+	 * @return Employee
+	 * @throws SQLException
 	 */
 	Employee fetchEmployee(LoginCredentials credentials) throws SQLException;
 
 	/**
-	 *@param employee
-	 *@param employeeId
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
-	 *To update the details of the employee
+	 * To update the details of the employee
+	 * 
+	 * @param employee
+	 * @param employeeId
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	void updateEmployee(Employee employee, int employeeId, BindingResult result)
 			throws SQLException, InvalidFieldException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of all the payments available
+	 * To fetch the list of all the payments available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Payment> fetchPayments() throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of all the payment modes available
+	 * To fetch the list of all the payment modes available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<PaymentModes> fetchPaymentModes() throws SQLException;
 
 	/**
-	 *@param paymentMode
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of payments according to payment modes
+	 * To fetch the list of payments according to payment modes
+	 * 
+	 * @param paymentMode
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch all the list of pizza available
+	 * To fetch all the list of pizza available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<PizzaMenu> fetchPizzaMenu() throws SQLException;
 
 	/**
-	 *@param pizzaMenu
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
-	 *To add new pizza or edit the available pizza
+	 * To add new pizza or edit the available pizza
+	 * 
+	 * @param pizzaMenu
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	void addEditPizza(PizzaMenu pizzaMenu, BindingResult result) throws SQLException, InvalidFieldException;
 
 	/**
-	 *@param pizzaId
-	 *@return PizzaMenu
-	 *@throws SQLException
-	 *To fetch the details of the particular pizza 
+	 * To fetch the details of the particular pizza
+	 * 
+	 * @param pizzaId
+	 * @return PizzaMenu
+	 * @throws SQLException
 	 */
 	PizzaMenu fetchPizza(int pizzaId) throws SQLException;
 
 	/**
-	 *@param pizzaId
-	 *@throws SQLException
-	 *To delete the particular pizza
+	 * To delete the particular pizza
+	 * 
+	 * @param pizzaId
+	 * @throws SQLException
 	 */
 	void deletePizza(int pizzaId) throws SQLException;
 
 	/**
-	 *@return List
-	 *@throws SQLException
-	 *To fetch the list of all the coupons available
+	 * To fetch the list of all the coupons available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	List<Coupon> fetchCoupons() throws SQLException;
 
 	/**
-	 *@param coupon
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
-	 *To add new coupon or edit the existing coupon
+	 * To add new coupon or edit the existing coupon
+	 * 
+	 * @param coupon
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	void addEditCoupon(Coupon coupon, BindingResult result) throws SQLException, InvalidFieldException;
 
 	/**
-	 *@param couponId
-	 *@return Coupon
-	 *@throws SQLException
-	 *To fetch the details of the particular coupon
+	 * To fetch the details of the particular coupon
+	 * 
+	 * @param couponId
+	 * @return Coupon
+	 * @throws SQLException
 	 */
 	Coupon fetchCoupon(int couponId) throws SQLException;
 
 	/**
-	 *@param couponId
-	 *@throws SQLException
-	 *To delete the particular coupon available
+	 * To delete the particular coupon available
+	 * 
+	 * @param couponId
+	 * @throws SQLException
 	 */
 	void deleteCoupon(int couponId) throws SQLException;
 

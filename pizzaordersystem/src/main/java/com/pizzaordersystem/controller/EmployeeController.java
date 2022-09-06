@@ -66,12 +66,15 @@ public class EmployeeController {
 	 * Load the employee home page with Orders of today's date
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/employeehome")
-	public ModelAndView employeeDashboard(ModelAndView modelAndView, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView employeeDashboard(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(ORDERLIST, employeeService.fetchOrders());
 		modelAndView.setViewName(EMPLOYEEHOME);
@@ -82,12 +85,15 @@ public class EmployeeController {
 	 * To show the Details about all the Pizza available
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/pizza")
-	public ModelAndView pizzaDetails(ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView pizzaDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(PIZZALIST, employeeService.fetchPizzaMenu());
 		modelAndView.setViewName(PIZZALIST);
@@ -98,12 +104,14 @@ public class EmployeeController {
 	 * Fetch the details of a specific Pizza
 	 * 
 	 * @param id
+	 * @param credentials
 	 * @return PizzaMenu
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/pizza/{id}")
-	public PizzaMenu editPizza(@PathVariable int id,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public PizzaMenu editPizza(@PathVariable int id, @SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		return employeeService.fetchPizza(id);
 	}
@@ -114,6 +122,7 @@ public class EmployeeController {
 	 * @param pizzaMenu
 	 * @param modelAndView
 	 * @param result
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws InvalidFieldException
@@ -121,7 +130,8 @@ public class EmployeeController {
 	 */
 	@PostMapping("/add/pizza")
 	public ModelAndView addPizza(@Valid @RequestBody PizzaMenu pizzaMenu, ModelAndView modelAndView,
-			BindingResult result, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, InvalidFieldException, CredentialsNotValidException {
+			BindingResult result, @SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		employeeService.addEditPizza(pizzaMenu, result);
 		modelAndView.addObject(PIZZALIST, employeeService.fetchPizzaMenu());
@@ -133,11 +143,13 @@ public class EmployeeController {
 	 * Delete the specific pizza
 	 * 
 	 * @param pizzaId
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@DeleteMapping("/delete/pizza/{pizzaId}")
-	public void deletePizza(@PathVariable int pizzaId, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public void deletePizza(@PathVariable int pizzaId, @SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		employeeService.deletePizza(pizzaId);
 	}
@@ -146,12 +158,15 @@ public class EmployeeController {
 	 * To show the details of all the customers
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/customer")
-	public ModelAndView customerDetails(ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView customerDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(CUSTOMERLIST, employeeService.fetchCustomer());
 		modelAndView.setViewName(CUSTOMERLIST);
@@ -162,12 +177,15 @@ public class EmployeeController {
 	 * To show the details of the specific employee
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/employeedetails")
-	public ModelAndView employeeDetails(ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView employeeDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject("employee", employeeService.fetchEmployee(credentials));
 		modelAndView.addObject(CITY_LIST, pizzaService.fetchCity());
@@ -181,13 +199,15 @@ public class EmployeeController {
 	 * @param employee
 	 * @param result
 	 * @param employeeId
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * @throws CredentialsNotValidException
 	 */
 	@PutMapping("/employee/{employeeId}")
 	public void updateEmployee(@Valid @RequestBody Employee employee, @PathVariable int employeeId,
-			BindingResult result, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, InvalidFieldException, CredentialsNotValidException {
+			BindingResult result, @SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		employeeService.updateEmployee(employee, employeeId, result);
 	}
@@ -196,12 +216,15 @@ public class EmployeeController {
 	 * To show the details of all the coupons available
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/coupons")
-	public ModelAndView couponDetails(ModelAndView modelAndView, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView couponDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(COUPONLIST, employeeService.fetchCoupons());
 		modelAndView.setViewName(COUPONLIST);
@@ -212,12 +235,14 @@ public class EmployeeController {
 	 * Fetch details of the specific coupon
 	 * 
 	 * @param id
+	 * @param credentials
 	 * @return Coupon
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/coupon/{id}")
-	public Coupon editCoupon(@PathVariable int id, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public Coupon editCoupon(@PathVariable int id, @SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		return employeeService.fetchCoupon(id);
 	}
@@ -227,12 +252,14 @@ public class EmployeeController {
 	 * 
 	 * @param coupon
 	 * @param result
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws InvalidFieldException
 	 * @throws CredentialsNotValidException
 	 */
 	@PostMapping("/add/coupon")
-	public void addCoupon(@Valid @RequestBody Coupon coupon, BindingResult result, @SessionAttribute("credentials") LoginCredentials credentials)
+	public void addCoupon(@Valid @RequestBody Coupon coupon, BindingResult result,
+			@SessionAttribute("credentials") LoginCredentials credentials)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		employeeService.addEditCoupon(coupon, result);
@@ -242,11 +269,13 @@ public class EmployeeController {
 	 * Delete the specific coupon
 	 * 
 	 * @param couponId
+	 * @param credentials
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@DeleteMapping("/delete/coupon/{couponId}")
-	public void deleteCoupon(@PathVariable int couponId, @SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public void deleteCoupon(@PathVariable int couponId, @SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		employeeService.deleteCoupon(couponId);
 	}
@@ -255,12 +284,15 @@ public class EmployeeController {
 	 * To show the payment list
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/payments")
-	public ModelAndView paymentDetails(ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView paymentDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(PAYMENTMODELIST, employeeService.fetchPaymentModes());
 		modelAndView.addObject(PAYMENTLIST, employeeService.fetchPayments());
@@ -273,12 +305,14 @@ public class EmployeeController {
 	 * 
 	 * @param paymentMode
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/payment/{paymentMode}")
-	public ModelAndView filterPayment(@PathVariable String paymentMode, ModelAndView modelAndView, @SessionAttribute("credentials") LoginCredentials credentials)
+	public ModelAndView filterPayment(@PathVariable String paymentMode, ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(PAYMENTMODELIST, employeeService.fetchPaymentModes());
@@ -291,12 +325,15 @@ public class EmployeeController {
 	 * To display all the orders available
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/orders")
-	public ModelAndView orderDetails(ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView orderDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(ORDERSTATUSLIST, employeeService.fetchOrderStatus());
 		modelAndView.addObject(FULLORDERLIST, employeeService.fetchAllOrders());
@@ -309,12 +346,14 @@ public class EmployeeController {
 	 * 
 	 * @param statusType
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/order/{statusType}")
-	public ModelAndView filterOrderByType(@PathVariable String statusType, ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials)
+	public ModelAndView filterOrderByType(@PathVariable String statusType, ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(ORDERSTATUSLIST, employeeService.fetchOrderStatus());
@@ -328,12 +367,14 @@ public class EmployeeController {
 	 * 
 	 * @param date
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/order/date/{date}")
-	public ModelAndView filterOrderByDate(@PathVariable Date date, ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials)
+	public ModelAndView filterOrderByDate(@PathVariable Date date, ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(ORDERSTATUSLIST, employeeService.fetchOrderStatus());
@@ -346,12 +387,15 @@ public class EmployeeController {
 	 * To display all the feedbacks
 	 * 
 	 * @param modelAndView
+	 * @param credentials
 	 * @return ModelAndView
 	 * @throws SQLException
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/feedbacks")
-	public ModelAndView feedbackDetails(ModelAndView modelAndView,@SessionAttribute("credentials") LoginCredentials credentials) throws SQLException, CredentialsNotValidException {
+	public ModelAndView feedbackDetails(ModelAndView modelAndView,
+			@SessionAttribute("credentials") LoginCredentials credentials)
+			throws SQLException, CredentialsNotValidException {
 		employeeService.checker(credentials);
 		modelAndView.addObject(FEEDBACKLIST, employeeService.fetchFeedback());
 		modelAndView.setViewName(FEEDBACKLIST);

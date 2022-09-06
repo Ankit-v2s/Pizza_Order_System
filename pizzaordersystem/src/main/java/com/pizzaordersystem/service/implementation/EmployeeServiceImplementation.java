@@ -35,22 +35,25 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	private static final String ADMIN = "admin";
 	@Autowired
 	private EmployeeDao employeeDao;
-	
+
 	/**
-	 *To check if only admin has access
-	 *@throws CredentialsNotValidException
+	 * To check if only admin has access
+	 * 
+	 * @param loginCredentials
+	 * @throws CredentialsNotValidException
 	 */
 	@Override
 	public void checker(LoginCredentials loginCredentials) throws CredentialsNotValidException {
-		if(!loginCredentials.getRoles().equals(ADMIN)) {
+		if (!loginCredentials.getRoles().equals(ADMIN)) {
 			throw new CredentialsNotValidException(NO_ACCESS_TO_THIS_PAGE);
 		}
 	}
-	
+
 	/**
-	 *To fetch the list of orders for the present day;
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of orders for the present day;
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Order> fetchOrders() throws SQLException {
@@ -59,9 +62,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch list of all the available orders
-	 *@return List
-	 *@throws SQLException
+	 * To fetch list of all the available orders
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Order> fetchAllOrders() throws SQLException {
@@ -70,9 +74,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch list of order status available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch list of order status available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<OrderStatus> fetchOrderStatus() throws SQLException {
@@ -81,10 +86,11 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of orders according to the order status selected
-	 *@param statusType
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of orders according to the order status selected
+	 * 
+	 * @param statusType
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Order> fetchOrdersByStatusType(String statusType) throws SQLException {
@@ -93,10 +99,11 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of orders according to the date selected
-	 *@param date
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of orders according to the date selected
+	 * 
+	 * @param date
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Order> fetchOrdersByDate(Date date) throws SQLException {
@@ -105,9 +112,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of all the feedbacks available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of all the feedbacks available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Feedback> fetchFeedback() throws SQLException {
@@ -116,9 +124,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of all the customers available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of all the customers available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<CustomerData> fetchCustomer() throws SQLException {
@@ -127,9 +136,11 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the data of the logged in employee
-	 *@return Employee
-	 *@throws SQLException
+	 * To fetch the data of the logged in employee
+	 * 
+	 * @param credentials
+	 * @return Employee
+	 * @throws SQLException
 	 */
 	@Override
 	public Employee fetchEmployee(LoginCredentials credentials) throws SQLException {
@@ -137,26 +148,29 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To update the details of the employee
-	 *@param employee
-	 *@param employeeId
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
+	 * To update the details of the employee
+	 * 
+	 * @param employee
+	 * @param employeeId
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	@Override
-	public void updateEmployee(Employee employee, int employeeId, BindingResult result) throws SQLException, InvalidFieldException {
+	public void updateEmployee(Employee employee, int employeeId, BindingResult result)
+			throws SQLException, InvalidFieldException {
 		if (!result.hasErrors()) {
-			employeeDao.updateEmployee(employee,employeeId);
+			employeeDao.updateEmployee(employee, employeeId);
 		} else {
 			throw new InvalidFieldException(result);
 		}
 	}
 
 	/**
-	 *To fetch the list of all the payments available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of all the payments available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Payment> fetchPayments() throws SQLException {
@@ -165,9 +179,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of all the payment modes available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of all the payment modes available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<PaymentModes> fetchPaymentModes() throws SQLException {
@@ -176,10 +191,11 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of payments according to payment modes
-	 *@param paymentMode
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of payments according to payment modes
+	 * 
+	 * @param paymentMode
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Payment> fetchPaymentByMode(String paymentMode) throws SQLException {
@@ -188,9 +204,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch all the list of pizza available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch all the list of pizza available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<PizzaMenu> fetchPizzaMenu() throws SQLException {
@@ -199,11 +216,12 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To add new pizza or edit the available pizza
-	 *@param pizzaMenu
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
+	 * To add new pizza or edit the available pizza
+	 * 
+	 * @param pizzaMenu
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	@Override
 	public void addEditPizza(PizzaMenu pizzaMenu, BindingResult result) throws SQLException, InvalidFieldException {
@@ -216,6 +234,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 
 	/**
 	 * To check if Pizza is to be added or updated
+	 * 
 	 * @param pizzaMenu
 	 * @throws SQLException
 	 */
@@ -228,10 +247,11 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the details of the particular pizza 
-	 *@param pizzaId
-	 *@return PizzaMenu
-	 *@throws SQLException
+	 * To fetch the details of the particular pizza
+	 * 
+	 * @param pizzaId
+	 * @return PizzaMenu
+	 * @throws SQLException
 	 */
 	@Override
 	public PizzaMenu fetchPizza(int pizzaId) throws SQLException {
@@ -239,9 +259,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To delete the particular pizza
-	 *@param pizzaId
-	 *@throws SQLException
+	 * To delete the particular pizza
+	 * 
+	 * @param pizzaId
+	 * @throws SQLException
 	 */
 	@Override
 	public void deletePizza(int pizzaId) throws SQLException {
@@ -249,9 +270,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the list of all the coupons available
-	 *@return List
-	 *@throws SQLException
+	 * To fetch the list of all the coupons available
+	 * 
+	 * @return List
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Coupon> fetchCoupons() throws SQLException {
@@ -260,11 +282,12 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To add new coupon or edit the existing coupon
-	 *@param coupon
-	 *@param result
-	 *@throws SQLException
-	 *@throws InvalidFieldException
+	 * To add new coupon or edit the existing coupon
+	 * 
+	 * @param coupon
+	 * @param result
+	 * @throws SQLException
+	 * @throws InvalidFieldException
 	 */
 	@Override
 	public void addEditCoupon(Coupon coupon, BindingResult result) throws SQLException, InvalidFieldException {
@@ -277,6 +300,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
 
 	/**
 	 * Check if to add or update the coupon
+	 * 
 	 * @param coupon
 	 * @throws SQLException
 	 */
@@ -289,10 +313,11 @@ public class EmployeeServiceImplementation implements EmployeeService {
 	}
 
 	/**
-	 *To fetch the details of the particular coupon
-	 *@param couponId
-	 *@return Coupon
-	 *@throws SQLException
+	 * To fetch the details of the particular coupon
+	 * 
+	 * @param couponId
+	 * @return Coupon
+	 * @throws SQLException
 	 */
 	@Override
 	public Coupon fetchCoupon(int couponId) throws SQLException {

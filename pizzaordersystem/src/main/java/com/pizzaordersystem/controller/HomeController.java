@@ -60,7 +60,6 @@ public class HomeController {
 	 * @param result
 	 * @param request
 	 * @return String
-	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 * @throws InvalidCredentialException
 	 * @throws InvalidFieldException      
@@ -69,8 +68,7 @@ public class HomeController {
 	 */
 	@PostMapping("/login")
 	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result, HttpServletRequest request)
-			throws ClassNotFoundException, SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
-		pizzaService.createConnection();
+			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
 		return pizzaService.credentialChecker(loginCredentials, result,request);
 	}
 
@@ -78,12 +76,10 @@ public class HomeController {
 	 * Open Sign up page
 	 * @param modelAndView
 	 * @return ModelAndView
-	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
 	@GetMapping("/signup")
-	public ModelAndView signUp(ModelAndView modelAndView) throws ClassNotFoundException, SQLException {
-		pizzaService.createConnection();
+	public ModelAndView signUp(ModelAndView modelAndView) throws SQLException {
 		modelAndView.addObject(CITY_LIST, pizzaService.fetchCity());
 		modelAndView.setViewName("signup");
 		return modelAndView;
