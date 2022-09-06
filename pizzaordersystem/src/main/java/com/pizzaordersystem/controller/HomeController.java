@@ -2,6 +2,7 @@ package com.pizzaordersystem.controller;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaordersystem.exception.CredentialsNotValidException;
@@ -28,6 +30,7 @@ import com.pizzaordersystem.service.PizzaService;
  *
  */
 @RestController
+@SessionAttributes("credentials")
 public class HomeController {
 
 	private static final String CITY_LIST = "cityList";
@@ -37,7 +40,7 @@ public class HomeController {
 	@Autowired
 	@Qualifier("pizzaServiceImplementation")
 	private PizzaService pizzaService;
-
+	
 	/**
 	 * To load the application and open the first page 
 	 * Logout functionality
@@ -55,6 +58,7 @@ public class HomeController {
 	 * API to check credentials
 	 * @param loginCredentials
 	 * @param result
+	 * @param request
 	 * @return String
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -64,10 +68,10 @@ public class HomeController {
 	 * 
 	 */
 	@PostMapping("/login")
-	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result)
+	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result, HttpServletRequest request)
 			throws ClassNotFoundException, SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
 		pizzaService.createConnection();
-		return pizzaService.credentialChecker(loginCredentials, result);
+		return pizzaService.credentialChecker(loginCredentials, result,request);
 	}
 
 	/**

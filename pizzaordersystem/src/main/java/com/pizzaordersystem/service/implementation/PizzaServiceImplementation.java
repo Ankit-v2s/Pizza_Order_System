@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +84,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	 * 
 	 * @param loginCredentials
 	 * @param result
+	 * @param request
 	 * @return String
 	 * @throws SQLException
 	 * @throws InvalidCredentialException
@@ -89,13 +92,15 @@ public class PizzaServiceImplementation implements PizzaService {
 	 * @throws CredentialsNotValidException
 	 */
 	@Override
-	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result)
+	public String credentialChecker(LoginCredentials loginCredentials, BindingResult result, HttpServletRequest request)
 			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
 		List<LoginCredentials> credentialList = new ArrayList<>();
 		if (!result.hasErrors()) {
 			for (LoginCredentials credentials : pizzaDao.login(credentialList)) {
 				if (credentials.getUserName().equals(loginCredentials.getUserName())
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
+					HttpSession session =  request.getSession();
+					session.setAttribute("credentials", credentials);
 					return setCredentialsAndReturnPage(credentials);
 				}
 			}
