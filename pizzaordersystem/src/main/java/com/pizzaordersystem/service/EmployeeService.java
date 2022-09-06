@@ -12,6 +12,7 @@ import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
 import com.pizzaordersystem.model.Employee;
 import com.pizzaordersystem.model.Feedback;
+import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.Order;
 import com.pizzaordersystem.model.OrderStatus;
 import com.pizzaordersystem.model.Payment;
@@ -28,7 +29,7 @@ public interface EmployeeService {
 	 *@throws CredentialsNotValidException
 	 *To check if only admin has access
 	 */
-	void checker() throws CredentialsNotValidException;
+	void checker(LoginCredentials loginCredentials) throws CredentialsNotValidException;
 	
 	/**
 	 *@return List
@@ -86,7 +87,7 @@ public interface EmployeeService {
 	 *@throws SQLException
 	 *To fetch the data of the logged in employee
 	 */
-	Employee fetchEmployee() throws SQLException;
+	Employee fetchEmployee(LoginCredentials credentials) throws SQLException;
 
 	/**
 	 *@param employee

@@ -39,10 +39,7 @@ public class PizzaServiceImplementation implements PizzaService {
 	private static final String EMPLOYEEHOME = "employeehome";
 	private static final String INVALID_CREDENTIALS = "Invalid Credentials";
 
-	static LoginCredentials loginCredentials;
-	static PizzaOrder pizzaOrder;
 	static List<PizzaOrder> cart = new ArrayList<>();
-	static String roles;
 	Connection connection;
 
 	/**
@@ -59,8 +56,6 @@ public class PizzaServiceImplementation implements PizzaService {
 	 * @return String
 	 */
 	private String setCredentialsAndReturnPage(LoginCredentials credentials) {
-		PizzaServiceImplementation.loginCredentials = credentials;
-		roles = credentials.getRoles();
 		if (credentials.getEmployeeId() != 0) {
 			return EMPLOYEEHOME;
 		} else if (credentials.getCustomerId() != 0) {
@@ -99,7 +94,7 @@ public class PizzaServiceImplementation implements PizzaService {
 			for (LoginCredentials credentials : pizzaDao.login(credentialList)) {
 				if (credentials.getUserName().equals(loginCredentials.getUserName())
 						&& credentials.getPassword().equals(loginCredentials.getPassword())) {
-					HttpSession session =  request.getSession();
+					HttpSession session = request.getSession();
 					session.setAttribute("credentials", credentials);
 					return setCredentialsAndReturnPage(credentials);
 				}

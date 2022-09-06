@@ -11,6 +11,7 @@ import com.pizzaordersystem.exception.ZeroAmountException;
 import com.pizzaordersystem.model.CustomerData;
 import com.pizzaordersystem.model.Feedback;
 import com.pizzaordersystem.model.FeedbackStatus;
+import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.Payment;
 import com.pizzaordersystem.model.PizzaOrder;
 
@@ -24,14 +25,14 @@ public interface CustomerService {
 	 *@throws CredentialsNotValidException
 	 *To check if only customer has access
 	 */
-	void checker() throws CredentialsNotValidException;
+	void checker(LoginCredentials loginCredentials) throws CredentialsNotValidException;
 	
 	/**
 	 *@return CustomerData
 	 *@throws SQLException
 	 *To fetch the details of the particular customer who is logged in
 	 */
-	CustomerData fetchCustomerDetails() throws SQLException;
+	CustomerData fetchCustomerDetails(LoginCredentials credentials) throws SQLException;
 
 	/**
 	 *@param customerData
@@ -58,7 +59,7 @@ public interface CustomerService {
 	 *@throws InvalidFieldException
 	 *To add new feedback
 	 */
-	void addFeedback(Feedback feedback, BindingResult result) throws SQLException, InvalidFieldException;
+	void addFeedback(Feedback feedback, BindingResult result, LoginCredentials credentials) throws SQLException, InvalidFieldException;
 
 	/**
 	 *@return int
@@ -71,7 +72,7 @@ public interface CustomerService {
 	 *@throws SQLException,
 	 *To add new order and new order items
 	 */
-	void addOrder() throws SQLException;
+	void addOrder(LoginCredentials credentials) throws SQLException;
 
 	/**
 	 *@param pizza
@@ -98,6 +99,6 @@ public interface CustomerService {
 	 *@throws InvalidFieldException
 	 *To add new payment
 	 */
-	void addPayment(Payment payment, BindingResult result) throws SQLException, InvalidFieldException;
+	void addPayment(Payment payment, BindingResult result,LoginCredentials credentials) throws SQLException, InvalidFieldException;
 
 }

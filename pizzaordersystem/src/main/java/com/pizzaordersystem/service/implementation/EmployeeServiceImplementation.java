@@ -16,6 +16,7 @@ import com.pizzaordersystem.model.Coupon;
 import com.pizzaordersystem.model.CustomerData;
 import com.pizzaordersystem.model.Employee;
 import com.pizzaordersystem.model.Feedback;
+import com.pizzaordersystem.model.LoginCredentials;
 import com.pizzaordersystem.model.Order;
 import com.pizzaordersystem.model.OrderStatus;
 import com.pizzaordersystem.model.Payment;
@@ -28,7 +29,7 @@ import com.pizzaordersystem.service.EmployeeService;
  *
  */
 @Service
-public class EmployeeServiceImplementation extends PizzaServiceImplementation implements EmployeeService {
+public class EmployeeServiceImplementation implements EmployeeService {
 
 	private static final String NO_ACCESS_TO_THIS_PAGE = "No Access to this Page";
 	private static final String ADMIN = "admin";
@@ -40,8 +41,8 @@ public class EmployeeServiceImplementation extends PizzaServiceImplementation im
 	 *@throws CredentialsNotValidException
 	 */
 	@Override
-	public void checker() throws CredentialsNotValidException {
-		if(!roles.equals(ADMIN)) {
+	public void checker(LoginCredentials loginCredentials) throws CredentialsNotValidException {
+		if(!loginCredentials.getRoles().equals(ADMIN)) {
 			throw new CredentialsNotValidException(NO_ACCESS_TO_THIS_PAGE);
 		}
 	}
@@ -131,8 +132,8 @@ public class EmployeeServiceImplementation extends PizzaServiceImplementation im
 	 *@throws SQLException
 	 */
 	@Override
-	public Employee fetchEmployee() throws SQLException {
-		return employeeDao.getEmployee(loginCredentials);
+	public Employee fetchEmployee(LoginCredentials credentials) throws SQLException {
+		return employeeDao.getEmployee(credentials);
 	}
 
 	/**
