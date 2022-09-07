@@ -1,6 +1,5 @@
 package com.pizzaordersystem.service.implementation;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,6 @@ public class PizzaServiceImplementation implements PizzaService {
 	private static final String INVALID_CREDENTIALS = "Invalid Credentials";
 
 	static List<PizzaOrder> cart = new ArrayList<>();
-	Connection connection;
 
 	/**
 	 * @return List getter for the List cart
