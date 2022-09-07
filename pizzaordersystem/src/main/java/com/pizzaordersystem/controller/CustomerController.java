@@ -35,6 +35,8 @@ import com.pizzaordersystem.service.implementation.PizzaServiceImplementation;
 @RestController
 public class CustomerController {
 
+	private static final String CREDENTIALS = "credentials";
+
 	private static final String PAYMENTMODELIST = "paymentmodelist";
 
 	private static final String FEEDBACKLIST = "feedbacklist";
@@ -63,7 +65,7 @@ public class CustomerController {
 	 */
 	@GetMapping("/customerhome")
 	public ModelAndView customerDashboard(ModelAndView modelAndView,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		modelAndView.addObject(PIZZALIST, employeeService.fetchPizzaMenu());
@@ -85,7 +87,7 @@ public class CustomerController {
 	 */
 	@GetMapping("/editcustomer")
 	public ModelAndView customer(ModelAndView modelAndView,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		modelAndView.addObject("customer", customerService.fetchCustomerDetails(credentials));
@@ -106,7 +108,7 @@ public class CustomerController {
 	 */
 	@PutMapping("/customer/{customerId}")
 	public void updateCustomer(@Valid @RequestBody CustomerData customerData, @PathVariable int customerId,
-			BindingResult result, @SessionAttribute("credentials") LoginCredentials credentials)
+			BindingResult result, @SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		customerService.updateCustomer(customerData, customerId, result);
@@ -123,7 +125,7 @@ public class CustomerController {
 	 */
 	@GetMapping("/feedback")
 	public ModelAndView addFeedback(ModelAndView modelAndView,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		modelAndView.addObject(FEEDBACKLIST, customerService.fetchFeedbackStatus());
@@ -143,7 +145,7 @@ public class CustomerController {
 	 */
 	@PostMapping("/add/feedback")
 	public void addFeedback(@Valid @RequestBody Feedback feedback, BindingResult result,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		customerService.addFeedback(feedback, result, credentials);
@@ -162,7 +164,7 @@ public class CustomerController {
 	 */
 	@PostMapping("/add/item")
 	public List<PizzaOrder> orderPizza(@Valid @RequestBody PizzaOrder pizza, BindingResult result,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		return customerService.addItem(pizza, result);
@@ -177,7 +179,7 @@ public class CustomerController {
 	 * @throws CredentialsNotValidException
 	 */
 	@GetMapping("/order/pizza")
-	public int orderDetails(@SessionAttribute("credentials") LoginCredentials credentials)
+	public int orderDetails(@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		customerService.addOrder(credentials);
@@ -196,7 +198,7 @@ public class CustomerController {
 	 */
 	@PostMapping("/order/pizza/discount")
 	public int discountPrice(@RequestBody PizzaOrder pizzaOrder,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, ZeroAmountException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		return customerService.discountPrice(pizzaOrder);
@@ -214,7 +216,7 @@ public class CustomerController {
 	 */
 	@PostMapping("/pay/order")
 	public void addPayment(@Valid @RequestBody Payment payment, BindingResult result,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			@SessionAttribute(CREDENTIALS) LoginCredentials credentials)
 			throws SQLException, InvalidFieldException, CredentialsNotValidException {
 		customerService.checker(credentials);
 		customerService.addPayment(payment, result, credentials);
