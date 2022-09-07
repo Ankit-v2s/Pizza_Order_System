@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaordersystem.exception.CredentialsNotValidException;
@@ -36,44 +37,56 @@ public class HomeController {
 	private static final String CITY_LIST = "cityList";
 
 	private static final String LOGIN = "login";
-	
+
 	@Autowired
 	@Qualifier("pizzaServiceImplementation")
 	private PizzaService pizzaService;
-	
+
 	/**
-	 * To load the application and open the first page 
-	 * Logout functionality
+	 * To load the application and open the first page
+	 * 
 	 * @param modelAndView
+	 * @param status
 	 * @return ModelAndView
-	 */ 
+	 */
 	@RequestMapping("/")
 	public ModelAndView loginPage(ModelAndView modelAndView) {
-		pizzaService.logout();
 		modelAndView.setViewName(LOGIN);
 		return modelAndView;
 	}
 
 	/**
+	 * To destroy the session
+	 * 
+	 * @param status
+	 */
+	@GetMapping("/session-close")
+	public void closeSession(SessionStatus status) {
+		status.setComplete();
+	}
+
+	/**
 	 * API to check credentials
+	 * 
 	 * @param loginCredentials
 	 * @param result
 	 * @param request
 	 * @return String
 	 * @throws SQLException
 	 * @throws InvalidCredentialException
-	 * @throws InvalidFieldException      
-	 * @throws CredentialsNotValidException 
-	 * 
+	 * @throws InvalidFieldException
+	 * @throws CredentialsNotValidException
 	 */
 	@PostMapping("/login")
-	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result, HttpServletRequest request)
+	public String checkLogin(@Valid @RequestBody LoginCredentials loginCredentials, BindingResult result,
+			HttpServletRequest request)
 			throws SQLException, InvalidCredentialException, InvalidFieldException, CredentialsNotValidException {
-		return pizzaService.credentialChecker(loginCredentials, result,request);
+		return pizzaService.credentialChecker(loginCredentials, result, request);
 	}
 
 	/**
 	 * Open Sign up page
+	 * 
 	 * @param modelAndView
 	 * @return ModelAndView
 	 * @throws SQLException
@@ -87,10 +100,11 @@ public class HomeController {
 
 	/**
 	 * To add Customer
+	 * 
 	 * @param details
 	 * @param result
 	 * @throws SQLException
-	 * @throws InvalidFieldException 
+	 * @throws InvalidFieldException
 	 */
 	@PostMapping("/add/customer")
 	public void addCustomer(@Valid @RequestBody RegisterDetails details, BindingResult result)
@@ -100,6 +114,7 @@ public class HomeController {
 
 	/**
 	 * To get the city details
+	 * 
 	 * @param city
 	 * @return City
 	 * @throws SQLException
@@ -107,5 +122,19 @@ public class HomeController {
 	@GetMapping("/city/{city}")
 	public City loadCityDetails(@PathVariable String city) throws SQLException {
 		return pizzaService.fetchCityDetails(city);
+	}
+	
+	/**
+	 * To logout and return to login page
+	 * 
+	 * @param status
+	 * @param modelAndView
+	 * @return ModelAndView
+	 */
+	@GetMapping("/logout")
+	public ModelAndView logout(SessionStatus status,ModelAndView modelAndView) {
+		pizzaService.logout();
+		closeSession(status);
+		return loginPage(modelAndView);
 	}
 }

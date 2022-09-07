@@ -4,6 +4,15 @@ $(window).on("load", function() {
 const uri = "http://192.168.20.183:8080/pizzaordersystem";
 
 $("#login").on("click", function() {
+	
+	$.ajax({
+		url: uri+"/session-close",
+		type: 'GET',
+		success: function(){
+			console.log("Session Closed");
+		}
+	})
+	
 	var username = $("#userName").val();
 	var password = $("#password").val();
 	var loginCredentials = {

@@ -3,6 +3,7 @@ package com.pizzaordersystem.controller;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/employeehome")
 	public ModelAndView employeeDashboard(ModelAndView modelAndView,
-			@SessionAttribute("credentials") LoginCredentials credentials)
+			HttpSession session)
 			throws SQLException, CredentialsNotValidException {
+		LoginCredentials credentials =  (LoginCredentials) session.getAttribute("credentials");
 		employeeService.checker(credentials);
 		modelAndView.addObject(ORDERLIST, employeeService.fetchOrders());
 		modelAndView.setViewName(EMPLOYEEHOME);

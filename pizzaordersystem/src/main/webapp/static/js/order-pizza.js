@@ -31,7 +31,7 @@ $("#addItem").on("click", function() {
 				$("#itemAddedSuccess").delay(8000).fadeOut("slow");
 				for (res in response) {
 					$("#cart").append("<tr><td>" + response[res].pizzaName + "</td><td>" + response[res].quantity + "</td></tr>");
-					}
+				}
 			},
 				error: function(response) {
 					$("#pizzanameError").html(response.responseJSON.pizzaName);

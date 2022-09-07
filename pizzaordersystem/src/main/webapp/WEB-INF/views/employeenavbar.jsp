@@ -15,7 +15,7 @@
 			<li><a href="/pizzaordersystem/payments"><spring:message code="employee.home.nav.payments" /></a></li>
 			<li><a href="/pizzaordersystem/orders"><spring:message code="employee.home.nav.orders" /></a></li>
 			<li><a href="/pizzaordersystem/feedbacks"><spring:message code="employee.home.nav.feedbacks" /></a></li>
-			<li><a href="/pizzaordersystem/"><spring:message code="employee.home.nav.logout" /></a></li>
+			<li><a href="/pizzaordersystem/logout"><spring:message code="employee.home.nav.logout" /></a></li>
 		</ul>
 	</body>
 </html>
