@@ -27,13 +27,16 @@ import com.pizzaordersystem.service.CustomerService;
 @Service
 public class CustomerServiceImplementation implements CustomerService {
 
-	private static final String COUPON_NOT_APLLICABLE = "Coupon not apllicable";
-	private static final String NO_ACCESS_TO_THIS_PAGE = "No Access to this Page";
-	private static final String CUSTOMER = "customer";
 	@Autowired
 	private CustomerDao customerDao;
 	@Autowired
 	private PizzaServiceImplementation pizzaServiceImplementation;
+	
+	private static final String COUPON_NOT_APLLICABLE = "Coupon not apllicable";
+	
+	private static final String NO_ACCESS_TO_THIS_PAGE = "No Access to this Page";
+	
+	private static final String CUSTOMER = "customer";
 
 	/**
 	 * To check if only customer has access
