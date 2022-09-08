@@ -1,13 +1,13 @@
 package com.pizzaordersystem.configuration;
 
-import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -41,4 +41,13 @@ public class ProjectConfig implements WebMvcConfigurer {
 		return messageSource;
 	}
 
+	@Bean
+	public Connection connection() throws SQLException {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/pizza_order");
+		dataSource.setUsername("root");
+		dataSource.setPassword("Password@123");
+		return dataSource.getConnection();
+	}
 }

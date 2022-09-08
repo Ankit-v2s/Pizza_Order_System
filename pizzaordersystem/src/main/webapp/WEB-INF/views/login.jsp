@@ -1,14 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page isELIgnored="false"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="<c:url value="/static/css/pizzaorder.css" />" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <title><spring:message code="login.title" /></title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
@@ -24,7 +22,7 @@
 		</div>
 		   
 		<div class="col-md-12 login-body">
-		<div id="credentialError" class="error"></div>
+		<div id="credentialError" class="error">${error}</div>
 			<div class="form-group ">
 				<input type="text" class="login-txtbox" id="userName" name="userName" placeholder=<spring:message code="login.placeholder.username" />>
 				<div id="usernameError" class="error"></div>
@@ -43,5 +41,7 @@
 	</div>
 	<script type="text/javascript"
 		src="<c:url value="/static/js/login.js" />"></script>
+	<script type="text/javascript"
+		src="<c:url value="/static/js/validation.js" />"></script>
 </body>
 </html>

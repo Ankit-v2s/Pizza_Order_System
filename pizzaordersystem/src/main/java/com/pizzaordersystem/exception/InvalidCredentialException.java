@@ -1,11 +1,12 @@
 package com.pizzaordersystem.exception;
 
-public class RequiredFieldException extends Exception{
+public class InvalidCredentialException extends Exception{
 
 	private static final long serialVersionUID = 1L;
 
-	public RequiredFieldException(String message) {
+	public InvalidCredentialException(String message) {
 		super(message);
 	}
 
+	
 }

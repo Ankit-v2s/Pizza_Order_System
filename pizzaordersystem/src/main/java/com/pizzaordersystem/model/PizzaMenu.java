@@ -1,33 +1,17 @@
 package com.pizzaordersystem.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
+import lombok.Data;
+
+@Data
 public class PizzaMenu {
 
 	private int pizzaId;
+	@NotBlank
 	private String pizzaName;
+	@Min(value = 1,message = "Price must be entered")
 	private int price;
-
-	public int getPizzaId() {
-		return pizzaId;
-	}
-
-	public void setPizzaId(int pizzaId) {
-		this.pizzaId = pizzaId;
-	}
-
-	public String getPizzaName() {
-		return pizzaName;
-	}
-
-	public void setPizzaName(String pizzaName) {
-		this.pizzaName = pizzaName;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
 
 }
