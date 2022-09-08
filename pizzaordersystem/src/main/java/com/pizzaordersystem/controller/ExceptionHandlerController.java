@@ -23,11 +23,11 @@ import com.pizzaordersystem.model.ExceptionDetails;
  * @author Ankit Madhavi
  */
 @ControllerAdvice
-public class ExceptionController {
+public class ExceptionHandlerController {
 
 	private static final String SOMETHING_WENT_WRONG = "Something went wrong : ";
 	private static final String ERROR = "Error";
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
 
 	@ExceptionHandler(InvalidCredentialException.class)
