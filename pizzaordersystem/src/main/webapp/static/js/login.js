@@ -1,7 +1,7 @@
 $(window).on("load", function() {
 
 });
-const uri = "http://192.168.20.184:8080/pizzaordersystem";
+const uri = "http://192.168.231.166:8080/pizzaordersystem";
 
 $("#login").on("click", function() {
 	
