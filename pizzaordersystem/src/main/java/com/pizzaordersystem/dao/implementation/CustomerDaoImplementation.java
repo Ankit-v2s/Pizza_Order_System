@@ -146,18 +146,19 @@ public class CustomerDaoImplementation extends PizzaDaoImplementation implements
 	 */
 	@Override
 	public void addItem(List<PizzaOrder> cart) throws SQLException {
+		preparedStatement = connection
+				.prepareStatement("insert into order_items(order_id,pizza_id,quantity,amount) "
+						+ "values(?,(select pizza_id from pizza_menu where pizza_name=?),?,"
+						+ "((select price from pizza_menu where pizza_name=?)*?));");
 		for (PizzaOrder pizzaOrder : cart) {
-			preparedStatement = connection
-					.prepareStatement("insert into order_items(order_id,pizza_id,quantity,amount) "
-							+ "values(?,(select pizza_id from pizza_menu where pizza_name=?),?,"
-							+ "((select price from pizza_menu where pizza_name=?)*?));");
 			preparedStatement.setInt(1, orderId);
 			preparedStatement.setString(2, pizzaOrder.getPizzaName());
 			preparedStatement.setInt(3, pizzaOrder.getQuantity());
 			preparedStatement.setString(4, pizzaOrder.getPizzaName());
 			preparedStatement.setInt(5, pizzaOrder.getQuantity());
-			preparedStatement.executeUpdate();
+			preparedStatement.addBatch();
 		}
+		preparedStatement.executeBatch();
 	}
 
 	/**
